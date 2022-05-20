@@ -1,5 +1,6 @@
 
 import { useFormContext } from "react-hook-form";
+import { Family } from "./Section";
 
 var days = ["GG","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
 var months = ["MM","Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
@@ -9,28 +10,24 @@ export default function DatePicker({name}) {
     
     const { register , formState : { errors } } = useFormContext();
 
-    const today = new Date();
-
-    console.log(today.getFullYear());
-    console.log(today.getMonth());
-    console.log(today.getDate());
+    const f = Family()
 
     return (
         <div className="flex flex-col w-full gap-1">
         <div className="flex flex-grow w-full gap-1">
-             <select {...register(`anno_${name}`, {  validate: value => value !== 'YYYY' })} >
-                {year.map((year) => <option key={year}>{year}</option>)}
+             <select {...register(`${f}anno_${name}`, {  validate: value => value !== 'YYYY' })} >
+                {year.map((year,index) => <option key={index} value={year} >{year}</option>)}
             </select>
             
-            <select  {...register(`mese_${name}`, { validate: value => value !== 'MM' })} >
-                {months.map((month, index) => <option key={index}>{month}</option>)}
+            <select  {...register(`${f}mese_${name}`, { validate: value => value !== 'MM' })} >
+                {months.map((month, index) => <option key={index} value={month}>{month}</option>)}
             </select>
            
-            <select {...register(`giorno_${name}`, { validate: value => value !== 'GG' })} >
-                {days.map((day, index) => <option key={index}>{day}</option>)}
+            <select {...register(`${f}giorno_${name}`, { validate: value => value !== 'GG' })} >
+                {days.map((day, index) => <option key={index} value={day}>{day}</option>)}
             </select>
         </div>
-        {(errors[`anno_${name}`] || errors[`mese_${name}`] || errors[`giorno_${name}`] ) && <span className="text-red-500 text-sm">Questo campo è obbligatorio</span>}
+        {(errors[`${f}anno_${name}`] || errors[`${f}mese_${name}`] || errors[`${f}giorno_${name}`] ) && <span className="text-red-500 text-sm">Questo campo è obbligatorio</span>}
         </div>
     );
 }

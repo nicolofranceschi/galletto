@@ -3,11 +3,21 @@ import DatiAnagrafici from "../forms/DatiAnagrafici";
 import { useForm, FormProvider } from "react-hook-form";
 import Section from "../components/Section";
 import CheckBox from "../components/CheckBox";
+import toast from "react-hot-toast";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function A() {
-  const methods = useForm({ mode: "onChange" });
 
-  const onSubmit = (data) => console.log(data);
+  const [storedValues,setStoredValue] = useLocalStorage("DA", {});
+
+  const methods = useForm({ mode: "onChange" , defaultValues: storedValues});
+
+  const onSubmit = (data) => {
+    const valuetostore = Object.entries(data).reduce((acc, [key,val]) => {return key.startsWith("DA") ? { ...acc,[key]: val} : acc},{})
+    console.log(valuetostore);
+    setStoredValue(valuetostore);
+    toast.success("Dati salvati sul tuo dispositivo");
+  };
 
   return (
     <FormProvider {...methods}>
@@ -27,6 +37,7 @@ export default function A() {
               <div className="flex flex-col gap-2 bg-white p-4 rounded-xl drop-shadow-lg ">
                 <h3>DOMANDA DI TESSERAMENTO ALLA GSA SSD RL</h3>
                 <p>Mod.A</p>
+                <p onClick={()=> methods.reset()}>reset</p>
               </div>
               <DatiAnagrafici />
               <Section>

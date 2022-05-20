@@ -1,6 +1,6 @@
 
 import { useFormContext } from "react-hook-form";
-import { Family } from "./Section";
+import { useFamily } from "./Section";
 
 var days = ["GG","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
 var months = ["MM","Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
@@ -10,7 +10,7 @@ export default function DatePicker({name}) {
     
     const { register , formState : { errors } } = useFormContext();
 
-    const f = Family()
+    const f = useFamily()
 
     return (
         <div className="flex flex-col w-full gap-1">

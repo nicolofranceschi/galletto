@@ -60,8 +60,8 @@ export default function Home() {
             </p>
             <div className="drop-shadow-lg p-4 rounded-xl text-white bg-indigo-400">
               <p>
-                Se non sei ancora tesseraro oppure è passato più di un anno dal
-                tuo ultimo tesseremanto e vuoi iscriverti a Galletto Summer 2022
+                Se non sei ancora tesserato oppure è passato più di un anno dal
+                tuo ultimo tesseramento e vuoi iscriverti a Galletto Summer 2022
                 compila questo modulo
               </p>
             </div>

@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
-import { Family } from "./Section";
+import { useFamily } from "./Section";
 
 export default function Number(props) {
 
     const { register , formState: { errors } } = useFormContext();
 
-    const f = Family()
+    const f = useFamily()
 
     return (
         <div className="flex flex-grow flex-col gap-1">

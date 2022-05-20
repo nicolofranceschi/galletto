@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Toaster } from "react-hot-toast";
 import "../styles/globals.css";
+import '../firebase';
 
 function MyApp({ Component, pageProps }) {
   return (

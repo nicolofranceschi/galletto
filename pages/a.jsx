@@ -5,12 +5,39 @@ import Section from "../components/Section";
 import CheckBox from "../components/CheckBox";
 import toast from "react-hot-toast";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { upload } from "../firebase/storage";
+import { useState, useCallback } from "react";
+import Compressor from 'compressorjs';
+import { useDropzone } from "react-dropzone";
+
+const compressFile = async (file) =>
+  new Promise((success, error) => {
+    new Compressor(file, { quality: 0.1, success, error });
+  });
 
 export default function A() {
 
   const [storedValues,setStoredValue] = useLocalStorage("DA", {});
 
   const methods = useForm({ mode: "onChange" , defaultValues: storedValues});
+  const [files, setFiles] = useState([]);
+  
+  const onDrop = useCallback(
+    async (acceptedFiles) => {
+      const files = await Promise.all(
+        acceptedFiles.map(async file => ({
+          file: !file.type.startsWith('image') ? file : await compressFile(file),
+          preview: URL.createObjectURL(file),
+        })),
+      );
+      const urls = await Promise.all(files.map(({ file }) => upload({ file, name: file.name, setPercent })));
+      console.log(urls)
+      setFiles(files.map(({ preview }, i) => ({ preview, url: urls[i] })));
+    },
+    [],
+    );
+    
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const onSubmit = (data) => {
     const valuetostore = Object.entries(data).reduce((acc, [key,val]) => {return key.startsWith("DA") ? { ...acc,[key]: val} : acc},{})
@@ -18,6 +45,8 @@ export default function A() {
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
   };
+
+  const [percent, setPercent] = useState(0);
 
   return (
     <FormProvider {...methods}>
@@ -78,6 +107,10 @@ export default function A() {
                   registername="accetto5"
                 />
               </Section>
+              <div {...getRootProps()} className="w-52 h-32 border-2 border-gray-600">
+                <input {...getInputProps()} />
+              </div>
+              {percent}
               <input type="submit" />
             </div>
           </div>

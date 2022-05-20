@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 const FamilyContext = createContext();
 
-export const Family = () => useContext(FamilyContext);
+export const useFamily = () => useContext(FamilyContext);
 
 export default function Section({ family, title, children }) {
   return (

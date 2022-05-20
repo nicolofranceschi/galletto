@@ -37,9 +37,9 @@ export default function DatiAnagrafici() {
         <Wrapper title="Cellulare">
           <Number name="Cellulare" />
         </Wrapper>
-        <Wrapper title="E-mail">
+        <Wrapper title="Email">
           <Input
-            name="E-mail"
+            name="Email"
             placeholder="example:email@gmail.com"
             type="email"
           />

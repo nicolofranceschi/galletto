@@ -4,26 +4,30 @@ import Section from "../components/Section";
 import CheckBox from "../components/CheckBox";
 import toast from "react-hot-toast";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { useState} from "react";
+import { useState } from "react";
 import FileUploader from "../components/FileUploader";
 
-
 export default function A() {
-    
   const [storedValues, setStoredValue] = useLocalStorage("DA", {});
 
   const methods = useForm({ mode: "onChange", defaultValues: storedValues });
 
-  const [files, setFiles] = useState([]);
+  //const [files, setFiles] = useState([]);
 
-  const [percent, setPercent] = useState(0);
+  //const [percent, setPercent] = useState(0);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const valuetostore = Object.entries(data).reduce((acc, [key, val]) => {
       return key.startsWith("DA") ? { ...acc, [key]: val } : acc;
     }, {});
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
+    const response = await fetch('api/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+    console.log(response.json());
   };
 
   return (
@@ -85,8 +89,12 @@ export default function A() {
                   registername="accetto5"
                 />
               </Section>
-              <FileUploader {...{files,setFiles,percent, setPercent}} />
-              <input type="submit" />
+              <button
+                className="w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"
+                type="submit"
+              >
+                INVIA
+              </button>
             </div>
           </div>
         </div>

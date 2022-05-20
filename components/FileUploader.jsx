@@ -28,7 +28,7 @@ export default function FileUploader({ files, setFiles , percent, setPercent }) 
       ...files.map(({ preview, type }, i) => ({ preview, url: urls[i], type })),
     ]);
     setPercent(0);
-    
+
   }, [setFiles,setPercent]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
@@ -91,7 +91,7 @@ export default function FileUploader({ files, setFiles , percent, setPercent }) 
               d="M480 352h-160c0 35.35-28.65 64-64 64s-64-28.65-64-64H32c-17.67 0-32 14.33-32 32v96c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-96C512 366.3 497.7 352 480 352zM432 456c-13.2 0-24-10.8-24-24c0-13.2 10.8-24 24-24s24 10.8 24 24C456 445.2 445.2 456 432 456z"
             />
           </svg>
-          <h2>Tascina o clicca per aggiungere il libretto dello sportivo</h2>
+          <h2 className="text-center">Tascina o clicca per aggiungere il libretto dello sportivo</h2>
         </div>
       )}
       <input {...getInputProps()} />

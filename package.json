@@ -11,7 +11,6 @@
   "dependencies": {
     "@firebase/storage": "^0.9.6",
     "@sendgrid/mail": "^7.7.0",
-    "base64-stream": "^1.0.0",
     "compressorjs": "^1.1.1",
     "next": "12.1.6",
     "pdfkit": "^0.13.0",
@@ -20,7 +19,8 @@
     "react-dropzone": "^14.2.1",
     "react-hook-form": "^7.31.1",
     "react-hot-toast": "^2.2.0",
-    "react-query": "^3.39.0"
+    "react-query": "^3.39.0",
+    "streamtoarray": "^3.0.7"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.2",

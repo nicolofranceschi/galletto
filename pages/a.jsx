@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useMutation } from "react-query";
 
 export default function A() {
-  const [storedValues, setStoredValue] = useLocalStorage("DA", {});
+  const [storedValues, setStoredValue] = useLocalStorage("da", {});
 
   const methods = useForm({ mode: "onChange", defaultValues: storedValues });
 
@@ -28,7 +28,7 @@ export default function A() {
 
   const onSubmit = async (data) => {
     const valuetostore = Object.entries(data).reduce((acc, [key, val]) => {
-      return key.startsWith("DA") ? { ...acc, [key]: val } : acc;
+      return key.startsWith("da") ? { ...acc, [key]: val } : acc;
     }, {});
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
@@ -148,7 +148,8 @@ export default function A() {
                      </svg>
                     </div>
                   </div>
-                  <button className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-[#1E137C] ">
+                  <Link href="/b">
+                  <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-[#1E137C] ">
                     <p className="text-[#c8c5e6] font-bold ">
                       Compila il modulo B
                     </p>
@@ -161,7 +162,8 @@ export default function A() {
                         <path d="M257.1 242.4C276.1 220.1 288 191.6 288 160c0-70.58-57.42-128-128-128H32c-17.67 0-32 14.33-32 32v384c0 17.67 14.33 32 32 32l160-.0049c70.58 0 128-57.42 128-128C320 305.3 294.6 264.8 257.1 242.4zM64 96.01h96c35.3 0 64 28.7 64 64s-28.7 64-64 64H64V96.01zM192 416H64v-128h128c35.3 0 64 28.7 64 64S227.3 416 192 416z" />
                       </svg>
                     </div>
-                  </button>
+                  </a>
+                  </Link>
                   <Link href="/">
                     <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-white ">
                       <div className="p-3 flex items-center w-10 h-10 bg-slate-200 rounded-md">

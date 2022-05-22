@@ -8,15 +8,15 @@ export default function DatiAnagrafici() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Section title="IL/LA SOTTOSCRITTO/A" family="DA_">
-        <Wrapper title="Dati dei tutore">
+      <Section title="IL/LA SOTTOSCRITTO/A" family="da_">
+        <Wrapper title="Dati del tutore">
           <Input name="Nome" />
           <Input name="Cognome" />
         </Wrapper>
         <div className="flex flex-col sm:flex-row gap-6">
           <Wrapper half={true} title="Nato a">
-            <Input name="Città" />
-            <Input name="Provincia" />
+            <Input name="Città di nascita" />
+            <Input name="Provincia di nascita" />
           </Wrapper>
           <Wrapper half={true} title="Nato il">
             <Date name={"datadinascitadeltutore"} />
@@ -45,15 +45,15 @@ export default function DatiAnagrafici() {
           />
         </Wrapper>
       </Section>
-      <Section title="IN QUALITA' DI ESERCENTE LA RESPONSABILITA' GENITORIALE CHIEDE CHE IL SEGUENTE MINORE" family="DA_">
+      <Section title="IN QUALITA' DI ESERCENTE LA RESPONSABILITA' GENITORIALE CHIEDE CHE IL SEGUENTE MINORE" family="da_">
         <Wrapper title="Dati del minore">
           <Input minore={true} name="Nome" />
           <Input minore={true} name="Cognome" />
         </Wrapper>
         <div className="flex flex-col sm:flex-row gap-6">
           <Wrapper half={true} title="Nato a">
-            <Input minore={true} name="Città" />
-            <Input minore={true} name="Provincia" />
+            <Input minore={true} name="Città di nascita" />
+            <Input minore={true} name="Provincia di nascita" />
           </Wrapper>
           <Wrapper half={true} title="Nato il">
             <Date name={"datadinascitadelminore"} />

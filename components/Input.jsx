@@ -7,7 +7,9 @@ export default function Input({ minore, name, ...props }) {
 
     const f = useFamily()
 
-    const registername = minore ? f + name + "_minore" : "DA_" + name
+    const temp = minore ? f + name + "_minore" : f + name
+
+    const registername = temp.toLowerCase().replaceAll(" ","_")
 
     return (
         <div className="flex flex-grow flex-col gap-1">

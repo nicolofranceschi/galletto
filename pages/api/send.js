@@ -9,7 +9,36 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function sendEmail(req, res) {
 
-  const { DA_Email } = req.body;
+  const { 
+    da_cognome 
+   ,da_cap
+   ,da_cap_minore
+   ,da_città
+   ,da_città_di_nascita
+   ,da_città_di_nascita_minore
+   ,da_città_minore
+   ,da_codice_fiscale
+   ,da_codice_fiscale_minore
+   ,da_cognome_minore
+   ,da_email
+   ,da_nome
+   ,da_nome_minore
+   ,da_numero_civico
+   ,da_numero_civico_minore
+   ,da_provincia
+   ,da_provincia_minore
+   ,da_provincia_di_nascita
+   ,da_provincia_di_nascita_minore
+   ,da_via
+   ,da_via_minore
+   ,da_cellulare
+   ,da_anno_datadinascitadelminore
+   ,da_anno_datadinascitadeltutore
+   ,da_giorno_datadinascitadelminore
+   ,da_giorno_datadinascitadeltutore
+   ,da_mese_datadinascitadelminore
+   ,da_mese_datadinascitadeltutore
+ } = req.body;
 
   const doc = new PDFDocument({ size: "A4" });
   doc.fontSize(12);
@@ -24,25 +53,25 @@ export default async function sendEmail(req, res) {
   doc.fontSize(20);
   doc.font('Helvetica-Bold')
   doc.moveDown(1);
-  doc.text("MODULO A - Domanda di tesseramento");
+  doc.text("MODULO B - Domanda di iscrizione");
   doc.fontSize(12);
   doc.moveDown(1);
   doc.text("IL/LA SOTTOSCRITTO/A");
   doc.moveDown(0.2);
   doc.fontSize(10);
-  doc.text("Franceschi Nicolò nato a Imola (BO) il 09/06/2001 ");
-  doc.text("Residente in Via Ponte Alidosi 15 B , Castel del Rio (BO) , 40022");
-  doc.text("Codice Fiscale: 03812341208");
-  doc.text("Cellulare: 03812341208");
-  doc.text("E-mail: franceschinicolo@gmail.com");
+  doc.text(`${da_cognome} ${da_nome} nato a ${da_città_di_nascita} (${da_provincia_di_nascita}) il ${da_giorno_datadinascitadeltutore} ${da_mese_datadinascitadeltutore} ${da_anno_datadinascitadeltutore} `);
+  doc.text(`Residente in ${da_via} ${da_numero_civico}, ${da_città} (${da_provincia}), ${da_cap}`);
+  doc.text(`Codice Fiscale: ${da_codice_fiscale}`);
+  doc.text(`Cellulare: ${da_cellulare}`);
+  doc.text(`E-mail: ${da_email}`);
   doc.fontSize(12);
   doc.moveDown(1);
   doc.text("IN QUALITA' DI ESERCENTE LA RESPONSABILITA' GENITORIALE CHIEDE CHE IL SEGUENTE MINORE");
   doc.moveDown(0.2);
   doc.fontSize(10);
-  doc.text("Franceschi Nicolò nato a Imola (BO) il 09/06/2001 ");
-  doc.text("Residente in Via Ponte Alidosi 15 B , Castel del Rio (BO) , 40022");
-  doc.text("Codice Fiscale: 03812341208");
+  doc.text(`${da_cognome_minore} ${da_nome_minore} nato a ${da_città_di_nascita_minore} (${da_provincia_di_nascita_minore}) il ${da_giorno_datadinascitadelminore} ${da_mese_datadinascitadelminore} ${da_anno_datadinascitadelminore} `);
+  doc.text(`Residente in ${da_via_minore} ${da_numero_civico_minore}, ${da_città_minore} (${da_provincia_minore}), ${da_cap_minore}`);
+  doc.text(`Codice Fiscale: ${da_codice_fiscale_minore}`);
   doc.moveDown(1);
   doc.fontSize(12);
   doc.text("SIA ISCRITTO ALLA GALLETTO SPORT ACCADEMY SSD a RL");
@@ -108,14 +137,14 @@ export default async function sendEmail(req, res) {
       const array = await toArray(doc);
       var buffer = Buffer.concat(array).toString('base64')
       await sendgrid.send({
-        to: DA_Email,
+        to: "franceschinicolo@gmail.com",
         from: `Galletto Sport Accademy <info@pineappsrl.com>`,
         text: "Hello world!",
-        subject: "Pineapp's - Your password",
+        subject: `Modulo A - ${da_cognome_minore} ${da_nome_minore}`,
         attachments: [
           {
             content: buffer, // base 64
-            filename: "attachment.pdf",
+            filename: `Modulo A - ${da_cognome_minore} ${da_nome_minore}.pdf`,
             type: "application/pdf",
             disposition: "attachment",
           },

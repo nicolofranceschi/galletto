@@ -11,9 +11,10 @@ import { useMutation } from "react-query";
 import Number from "../components/Number";
 import Wrapper from "../components/Wrapper";
 import Input from "../components/Input";
+import DatePicker from "../components/Date";
 
 export default function A() {
-  const [storedValues, setStoredValue] = useLocalStorage("DA", {});
+  const [storedValues, setStoredValue] = useLocalStorage("da", {});
 
   const methods = useForm({ mode: "onChange", defaultValues: storedValues });
 
@@ -21,8 +22,10 @@ export default function A() {
 
   const [percent, setPercent] = useState(0);
 
+  const [camp,setCamp] = useState([])
+
   const sendMail = useMutation(({ data }) => {
-    return fetch("api/send", {
+    return fetch("api/sendB", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -30,12 +33,16 @@ export default function A() {
   });
 
   const onSubmit = async (data) => {
+    const API = {...data,files,camp}
     const valuetostore = Object.entries(data).reduce((acc, [key, val]) => {
-      return key.startsWith("DA") ? { ...acc, [key]: val } : acc;
+      return key.startsWith("") ? { ...acc, [key]: val } : acc;
     }, {});
+    if (percent !== 0 ){toast.error("Attendere il caricamento dei file");return}
+    if (files.length === 0 ){toast.error("Il certificato medico è obbligatorio");return}
+    if (camp.length === 0 && data.Settimanepersonalizzate === "" ){toast.error("Devi Selezionare almeno un camp o una settimana personalazzita");return}
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
-    toast.promise(sendMail.mutateAsync({ data }), {
+    toast.promise(sendMail.mutateAsync({data:API}), {
       loading: "Caricamento..",
       success: <b>Form inviata</b>,
       error: <b>Ci dispiace qualcosa è andato storto</b>,
@@ -50,9 +57,9 @@ export default function A() {
         <div className="bg-slate-50">
           <div className="fixed top-0 sm:w-2/5 h-screen w-screen">
             <div className="relative p-4 h-full">
-              <div className="bg-[#DBBDC4] relative overflow-hidden rounded-xl  h-full">
-                <p className="text-[115vh] absolute top-[50%] right-[-20%] font-bold text-[#693A44]">
-                  A
+              <div className="bg-[#9E95EE] relative overflow-hidden rounded-xl  h-full">
+                <p className="text-[115vh] absolute top-[50%] right-[-20%] font-bold text-[#1E137C]">
+                  B
                 </p>
               </div>
             </div>
@@ -74,8 +81,8 @@ export default function A() {
                   </a>
                 </Link>
                 <div className="flex flex-grow gap-2 flex-col bg-white p-4 rounded-xl drop-shadow-lg  ">
-                  <h3>DOMANDA DI TESSERAMENTO ALLA GSA SSD RL</h3>
-                  <p>Mod.A</p>
+                  <h3>DOMANDA DI ISCRIZIONE CAMP SUMMER 2022</h3>
+                  <p>Mod.B</p>
                 </div>
               </div>
               <button
@@ -100,23 +107,136 @@ export default function A() {
                 </div>
               </button>
               <DatiAnagrafici />
-              <Section title="CONTATTI URGENTI (ALMENO UNO DEI DUE NUMERI DEVE ESSERE SEMPRE ATTIVO DURANTE IL CAMP) (QUESTO TELEFONO SARÀ UTILIZZATO PER LE COMUNICAZIONI BROADCAST)">
+              <Section family="EM_" title="CONTATTI URGENTI (ALMENO UNO DEI DUE NUMERI DEVE ESSERE SEMPRE ATTIVO DURANTE IL CAMP) (QUESTO TELEFONO SARÀ UTILIZZATO PER LE COMUNICAZIONI BROADCAST)">
                 <Wrapper title="Numeri di emergenza">
-                  <Number name="emergenza1" />
-                  <Number name="emergenza2" />
-                </Wrapper>
-                <Wrapper title="ALLERGIE, INTOLLERANZE ALIMENTARI">
-                  <Number name="emergenza2" />
+                  <Number name="Emergenza1" />
+                  <Number name="Emergenza2" />
                 </Wrapper>
               </Section>
-              <Section title="ALLERGIE, INTOLLERANZE ALIMENTARI">
+              <Section family="AL_" title="ALLERGIE, INTOLLERANZE ALIMENTARI">
                 <Wrapper title="Allergie (se non presenti indicare nulla)">
-                 <Input name="allergie" />
+                  <Input name="Allergie" />
                 </Wrapper>
               </Section>
               <Section title="SIA ISCRITTO AL CAMP SUMMER 2022">
-                <Wrapper title="Attività">
-                 <Input name="allergie" />
+              <div className="flex flex-col gap-3">
+                  <div onClick={() => setCamp(e => e.some(a => a === "Galletto Residence") ? e.filter(a=> a !== "Galletto Residence") : [...e,"Galletto Residence"])} className={camp.some(a => a === "Galletto Residence") ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-cyan-900 rounded-lg cursor-pointer border-4 border-cyan-500" : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-cyan-700 bg-cyan-700 hover:bg-cyan-800 rounded-lg cursor-pointer"}>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="fill-cyan-500" width="50px" viewBox="0 0 576 512">
+                    <path className="opacity-40" d="M565.1 231.9C578.4 243.6 579.7 263.8 568.1 277.1C556.4 290.4 536.2 291.7 522.9 280.1L288 74.52L53.07 280.1C39.77 291.7 19.56 290.4 7.917 277.1C-3.72 263.8-2.372 243.6 10.93 231.9L266.9 7.918C278.1-2.639 297-2.639 309.1 7.918L565.1 231.9zM276.7 428.7L184 336C161.9 313.9 161.9 278.1 184 256C206.1 233.9 241.9 233.9 264 256L288 280L312 256C334.1 233.9 369.9 233.9 392 256C414.1 278.1 414.1 313.9 392 336L299.3 428.7C293.1 434.9 282.9 434.9 276.7 428.7H276.7z"/>
+                    <path className="opacity" d="M64.07 448L64.02 270.5L288 74.52L512.1 270.6L512.5 447.9C512.6 483.3 483.9 512 448.5 512H128.1C92.74 512 64.09 483.4 64.07 448L64.07 448zM299.3 428.7L392 336C414.1 313.9 414.1 278.1 392 256C369.9 233.9 334.1 233.9 312 256L288 280L264 256C241.9 233.9 206.1 233.9 184 256C161.9 278.1 161.9 313.9 184 336L276.7 428.7C282.9 434.9 293.1 434.9 299.3 428.7H299.3z"/>
+                  </svg>
+                    <h3 className="text-white">Galletto Residence</h3>
+                    <h5 className="text-cyan-500 font-bold">12/06 - 19/06</h5>
+                    <p className="text-cyan-500">400€</p>
+                  </div>
+                <div className="flex flex-wrap gap-3">
+                  <div onClick={() => setCamp(e => e.some(a => a === "Galletto Sport 1 Turno") ? e.filter( a=> a !== "Galletto Sport 1 Turno") : [...e,"Galletto Sport 1 Turno"])} className={camp.some(a => a === "Galletto Sport 1 Turno") ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500" : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-700 bg-orange-700 hover:bg-orange-800 rounded-lg cursor-pointer"}>
+                  <svg xmlns="http://www.w3.org/2000/svg"className="fill-orange-500" width="50px" viewBox="0 0 512 512">
+                    <path className="opacity-40" d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"/>
+                    <path className="opacity" d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"/>
+                  </svg>
+                    <h3 className="text-white">Galletto Sport 1° Turno</h3>
+                    <h5 className="text-orange-500 font-bold">da lunedì 06/06 a venerdì 17/06</h5>
+                    <p className="text-orange-500">280€</p>
+                  </div>
+                  <div onClick={() => setCamp(e => e.some(a => a === "Galletto Sport 2 Turno") ? e.filter( a=> a !== "Galletto Sport 2 Turno") : [...e,"Galletto Sport 2 Turno"])} className={camp.some(a => a === "Galletto Sport 2 Turno") ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500" : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-700 bg-orange-700 hover:bg-orange-800 rounded-lg cursor-pointer"}>
+                  <svg xmlns="http://www.w3.org/2000/svg"className="fill-orange-500" width="50px" viewBox="0 0 512 512">
+                    <path className="opacity-40" d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"/>
+                    <path className="opacity" d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"/>
+                  </svg>
+                    <h3 className="text-white">Galletto Sport 2° Turno</h3>
+                    <h5 className="text-orange-500 font-bold">da lunedì 20/06 a venerdì 01/07</h5>
+                    <p className="text-orange-500">280€</p>
+                  </div>
+                  <div onClick={() => setCamp(e => e.some(a => a === "Galletto Sport 3 Turno") ? e.filter( a=> a !== "Galletto Sport 3 Turno") : [...e,"Galletto Sport 3 Turno"])} className={camp.some(a => a === "Galletto Sport 3 Turno") ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500" : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-700 bg-orange-700 hover:bg-orange-800 rounded-lg cursor-pointer"}>
+                  <svg xmlns="http://www.w3.org/2000/svg"className="fill-orange-500" width="50px" viewBox="0 0 512 512">
+                    <path className="opacity-40" d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"/>
+                    <path className="opacity" d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"/>
+                  </svg>
+                    <h3 className="text-white">Galletto Sport 3° Turno</h3>
+                    <h5 className="text-orange-500 font-bold">da lunedì 04/07 a venerdì 15/07</h5>
+                    <p className="text-orange-500">280€</p>
+                  </div>
+                  <div onClick={() => setCamp(e => e.some(a => a === "Galletto Sport 4 Turno") ? e.filter( a=> a !== "Galletto Sport 4 Turno") : [...e,"Galletto Sport 4 Turno"])} className={camp.some(a => a === "Galletto Sport 4 Turno") ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500" : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-700 bg-orange-700 hover:bg-orange-800 rounded-lg cursor-pointer"}>
+                  <svg xmlns="http://www.w3.org/2000/svg"className="fill-orange-500" width="50px" viewBox="0 0 512 512">
+                    <path className="opacity-40" d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"/>
+                    <path className="opacity" d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"/>
+                  </svg>
+                    <h3 className="text-white">Galletto Sport 4° Turno</h3>
+                    <h5 className="text-orange-500 font-bold">da lunedì 18/07 a venerdì 29/07</h5>
+                    <p className="text-orange-500">280€</p>
+                  </div>
+                </div>
+                <div className="flex flex-col flex-grow gap-2 justify-center p-4 border-4 border-slate-700 bg-slate-700 rounded-lg cursor-pointer" >
+                    <h3 className="text-white">oppure scegli una range di date peronalizzato</h3>
+                    <div className="flex flex-grow flex-col gap-1">
+                        <input type="text" className="w-full p-2 rounded-md bg-slate-400 text-white" {...methods.register("Settimanepersonalizzate")} />
+                        <span className="text-slate-500 text-sm font-bold">Inserisci le date che preferiresti</span>  
+                    </div>
+                  </div>
+                </div>
+              </Section>
+              <Section title="Con servizio di trasporto">
+                <Wrapper title="Indicare la fermata del Galletto Bus">
+                  <select {...methods.register("fermata")} >
+                    <option value="Nessun Servizio di Trasporto">Nessun Servizio di Trasporto</option>
+                    <option value="Imola S.Zennaro">Imola S.Zennaro</option>
+                    <option value="Imola Centro Sociale Tozzona">Imola Centro Sociale Tozzona</option>
+                    <option value="Ponticelli">Ponticelli</option>
+                    <option value="Fabbrica">Fabbrica</option>
+                    <option value="Casalfiumanese SS Montanara">Casalfiumanese SS Montanara</option>
+                    <option value="Borgo Riviera">Borgo Riviera</option>
+                    <option value="Borgo Mescola">Borgo Mescola</option>
+                    <option value="Borgo Centro">Borgo Centro</option>
+                    <option value="Fontanelice S.Giovanni">Fontanelice S.Giovanni</option>
+                    <option value="Fontanelice Centro">Fontanelice Centro</option>
+                    <option value="Fontanelice 2D">Fontanelice 2D</option>
+                    <option value="Fontanelice Campomoro">Fontanelice Campomoro</option>
+                  </select>
+                </Wrapper>
+                <Wrapper title="Fermata supplementare (da concordare preventivamente con la direzione)">
+                <div className="flex flex-grow flex-col gap-1">
+                  <input type="text" className="w-full p-2 rounded-md" {...methods.register("fermatacustom")} />
+                   <span>Fermata Supplementare</span>
+                </div>
+                </Wrapper>
+                <Wrapper title="Note Varie">
+                <div className="flex flex-grow flex-col gap-1">
+                  <textarea type="text" className="w-full p-2 rounded-md" {...methods.register("note")} />
+                   <span>Note</span>
+                </div>
+                </Wrapper>
+              </Section>
+              <Section title="Manifestazione del consenso e presa visione (Privacy, Regolamento UE n. 2016/679 - Regolamento SSD e Campi estivi)"> 
+              <CheckBox
+                  text="DICHIARO di aver provveduto al tesseramento del partecipante. 2. DICHIARO di aver preso visione del regolamento del camp, del regolamento interno e dello statuto della GSA ssd a rl condividendone le finalità istituzionali e i valori. 3. CONFERMO che in caso di rinuncia la quota ora saldata sarà restituita decurtata di 30.00 euro nel caso in cui la disdetta pervenga alla direzione in forma scritta almeno 15gg prima dell’inizio del camp oppure nel caso in cui disposizioni anticovid impediscano la realizzazione del camp. In tutti gli atri casi non sono previsti rimborsi parziali o totali o recuperi per giorni di assenza. 4. AUTORIZZO ad inviare comunicazioni tramite Email / SMS / WhatsApp in merito allo svolgimento delle attività SPORTIVE al telefono indicato sopra alla voce telefono principale utilizzato per comunicazioni broadcast. A tale scopo si richiede di salvare tra i propri contatti il numero 324 0957228, diversamente non sarà possibile ricevere i messaggi WhatsApp inviati tramite liste broadcast. 5. ACCETTO i termini e le condizioni della Privacy Policy"
+                  label="Presa visione e accettazione dei"
+                  registername="accetto"
+                >
+                 <a href="http://www.gallettovacanze.it/privacy-policy/">
+                  termini e condizioni della Privacy Policy
+                </a>
+                </CheckBox>
+                <div className="flex flex-col gap-2">
+                  <span>Assicurazione: rimborso dei giorni di assenza per malattia al costo di 10€ a settimana. La copertura prevede il rimborso di 20€ per ogni giorno di assenza causa malattia attestata da certificato medico</span>
+                <div className="flex gap-2 items-center">
+                  <input type="checkbox" id="assicurazione" name={"assicurazione"} {...methods.register("assicurazione")} />
+                  <label htmlFor="assicurazione" className="flex flex-wrap gap-1">Attiva</label>
+                </div>
+                </div>
+              </Section>
+              <Section title="Carica copia del certificato medico-sportivo del partecipante al Camp (esonerati i bimbi sotto i 6 anni). Se il partecipante è residente in Emilia Romagna, vale COPIA DEL LIBRETTO DELLO SPORTIVO in corso di validità alla fine del camp. Tali documenti hanno scadenza 365gg dopo la visita medica.">
+                <FileUploader {...{files,setFiles, percent, setPercent}} />
+              </Section>
+              <Section family="BC_" title="Dati relativi al pagamento effettuato a mezzo bonifico">
+                <Wrapper title="BONIFICO BANCARIO ORDINANTE (Cognome e Nome)">
+                  <Input name="Intestatario" />
+                </Wrapper>
+                <Wrapper title="BONIFICO BANCARIO (Data Valuta ovvero Data di accredito nel c/c della SSD) ">
+                  <DatePicker name="data" />
+                </Wrapper>
+                <Wrapper title="BONIFICO BANCARIO (Importo Pagato)">
+                  <Input name="euro" />
                 </Wrapper>
               </Section>
 
@@ -143,20 +263,18 @@ export default function A() {
                       </svg>
                     </div>
                   </div>
-                  <button className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-[#1E137C] ">
-                    <p className="text-[#c8c5e6] font-bold ">
+                  <Link href="/a">
+                  <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-[#693A44] ">
+                    <p className="text-[#DBBDC4] font-bold ">
                       Compila il modulo A
                     </p>
-                    <div className="p-3 w-10 h-10 flex items-center bg-[#9E95EE] rounded-md ">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="fill-[#1E137C]"
-                        viewBox="0 0 320 512"
-                      >
-                        <path d="M257.1 242.4C276.1 220.1 288 191.6 288 160c0-70.58-57.42-128-128-128H32c-17.67 0-32 14.33-32 32v384c0 17.67 14.33 32 32 32l160-.0049c70.58 0 128-57.42 128-128C320 305.3 294.6 264.8 257.1 242.4zM64 96.01h96c35.3 0 64 28.7 64 64s-28.7 64-64 64H64V96.01zM192 416H64v-128h128c35.3 0 64 28.7 64 64S227.3 416 192 416z" />
-                      </svg>
+                    <div className="p-3 w-10 h-10 flex items-center bg-[#DBBDC4] rounded-md ">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-[#693A44]" viewBox="0 0 384 512">
+                        <path d="M381.5 435.7l-160-384C216.6 39.78 204.9 32.01 192 32.01S167.4 39.78 162.5 51.7l-160 384c-6.797 16.31 .9062 35.05 17.22 41.84c16.38 6.828 35.08-.9219 41.84-17.22l31.8-76.31h197.3l31.8 76.31c5.109 12.28 17.02 19.7 29.55 19.7c4.094 0 8.266-.7969 12.3-2.484C380.6 470.7 388.3 452 381.5 435.7zM119.1 320L192 147.2l72 172.8H119.1z"/>
+                    </svg>
                     </div>
-                  </button>
+                  </a>
+                  </Link>
                   <Link href="/">
                     <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-white ">
                       <div className="p-3 flex items-center w-10 h-10 bg-slate-200 rounded-md">
@@ -175,6 +293,8 @@ export default function A() {
                   </Link>
                 </>
               ) : (
+                <></>
+              )}
                 <button
                   className={
                     "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"
@@ -183,7 +303,7 @@ export default function A() {
                 >
                   INVIA
                 </button>
-              )}
+                <a href="https://firebasestorage.googleapis.com/v0/b/galletto-23c1b.appspot.com/o/images%2FSchermata%202022-05-19%20alle%2012.21.43.png?alt=media&token=38c6c197-f101-44e1-81ac-9548d143e820 " download="w3logo">ciao</a>
             </div>
           </div>
         </div>

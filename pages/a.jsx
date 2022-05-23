@@ -8,6 +8,7 @@ import { useState } from "react";
 import FileUploader from "../components/FileUploader";
 import Link from "next/link";
 import { useMutation } from "react-query";
+import { createDocument } from "../firebase/db";
 
 export default function A() {
   const [storedValues, setStoredValue] = useLocalStorage("da", {});
@@ -26,17 +27,23 @@ export default function A() {
     });
   });
 
-  const onSubmit = async (data) => {
-    const valuetostore = Object.entries(data).reduce((acc, [key, val]) => {
+  const saveSubmit = useMutation((data) => createDocument("a",data));
+
+  const onSubmit = async (sub) => {
+    const valuetostore = Object.entries(sub).reduce((acc, [key, val]) => {
       return key.startsWith("da") ? { ...acc, [key]: val } : acc;
     }, {});
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
-    toast.promise(sendMail.mutateAsync({ data }), {
-      loading: "Caricamento..",
-      success: <b>Form inviata</b>,
-      error: <b>Ci dispiace qualcosa è andato storto</b>,
-    });
+    saveSubmit.mutate(sub,{
+        onSuccess:(res) => {
+        toast.success("Dati salvati sul server")
+        toast.promise(sendMail.mutateAsync({ data: {...sub,key:res.id}}), {
+          loading: "Caricamento..",
+          success: <b>Form inviata</b>,
+          error: <b>Ci dispiace qualcosa è andato storto</b>,
+        });
+      }})
   };
 
   console.log(sendMail.isLoading, sendMail.isSuccess);

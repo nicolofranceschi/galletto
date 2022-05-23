@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { upload } from "../firebase/storage";
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 import Compressor from "compressorjs";
 import { useDropzone } from "react-dropzone";
 

@@ -12,6 +12,7 @@ import Number from "../components/Number";
 import Wrapper from "../components/Wrapper";
 import Input from "../components/Input";
 import DatePicker from "../components/Date";
+import { createDocument } from "../firebase/db";
 
 export default function A() {
   const [storedValues, setStoredValue] = useLocalStorage("da", {});
@@ -32,21 +33,27 @@ export default function A() {
     });
   });
 
+  const saveSubmit = useMutation(({ data }) => createDocument("b",data));
+
   const onSubmit = async (data) => {
     const API = {...data,files,camp}
     const valuetostore = Object.entries(data).reduce((acc, [key, val]) => {
-      return key.startsWith("") ? { ...acc, [key]: val } : acc;
+      return key.startsWith("da") ? { ...acc, [key]: val } : acc;
     }, {});
     if (percent !== 0 ){toast.error("Attendere il caricamento dei file");return}
     if (files.length === 0 ){toast.error("Il certificato medico è obbligatorio");return}
     if (camp.length === 0 && data.Settimanepersonalizzate === "" ){toast.error("Devi Selezionare almeno un camp o una settimana personalazzita");return}
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
-    toast.promise(sendMail.mutateAsync({data:API}), {
-      loading: "Caricamento..",
-      success: <b>Form inviata</b>,
-      error: <b>Ci dispiace qualcosa è andato storto</b>,
-    });
+    saveSubmit.mutate({ data:API },{
+      onSuccess:(res) => {
+      toast.success("Dati salvati sul server")
+      toast.promise(sendMail.mutateAsync({data:{...API,key:res.id}}), {
+        loading: "Caricamento..",
+        success: <b>Form inviata</b>,
+        error: <b>Ci dispiace qualcosa è andato storto</b>,
+      });
+    }})
   };
 
   console.log(sendMail.isLoading, sendMail.isSuccess);
@@ -293,9 +300,9 @@ export default function A() {
                   </Link>
                 </>
               ) : (
-                <></>
+               <div/>
               )}
-                <button
+               <button
                   className={
                     "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"
                   }
@@ -303,7 +310,6 @@ export default function A() {
                 >
                   INVIA
                 </button>
-                <a href="https://firebasestorage.googleapis.com/v0/b/galletto-23c1b.appspot.com/o/images%2FSchermata%202022-05-19%20alle%2012.21.43.png?alt=media&token=38c6c197-f101-44e1-81ac-9548d143e820 " download="w3logo">ciao</a>
             </div>
           </div>
         </div>
@@ -311,3 +317,5 @@ export default function A() {
     </FormProvider>
   );
 }
+
+

@@ -1,9 +1,12 @@
 import sendgrid from "@sendgrid/mail";
 import { toArray } from 'streamtoarray';
+const { google } = require("googleapis");
 
 const PDFDocument = require("pdfkit");
 
 if (!process.env.SENDGRID_API_KEY) throw new Error("Sendgrid API key not found.");
+
+var months = {"Gennaio":1,"Febbraio":2,"Marzo":3,"Aprile":4,"Maggio":5,"Giugno":6,"Luglio":7,"Agosto":8,"Settembre":9,"Ottobre":10,"Novembre":11,"Dicembre":12};
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -37,8 +40,65 @@ export default async function sendEmail(req, res) {
    ,da_giorno_datadinascitadelminore
    ,da_giorno_datadinascitadeltutore
    ,da_mese_datadinascitadelminore
-   ,da_mese_datadinascitadeltutore
+   ,da_mese_datadinascitadeltutore,
+   key
  } = req.body;
+
+ const auth = new google.auth.GoogleAuth({
+  keyFile: "key.json", //the key file
+  //url to spreadsheets API
+  scopes: "https://www.googleapis.com/auth/spreadsheets",
+});
+const authClientObject = await auth.getClient();
+const googleSheetsInstance = google.sheets({
+  version: "v4",
+  auth: authClientObject,
+});
+
+const spreadsheetId = "1gsSQ5pMJUjkBjr9eYkSbQ5nqpZ0ZVIwJg81qKujm5Nc";
+
+googleSheetsInstance.spreadsheets.values.append({
+  auth, //auth object
+  spreadsheetId, //spreadsheet id
+  range: "a!A:B", //sheet name and range of cells
+  valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
+  resource: {
+    values: [[
+      new Date,
+      da_cognome,
+      da_nome,
+      da_città_di_nascita,
+      da_provincia_di_nascita,
+      `0${da_giorno_datadinascitadeltutore}-0${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
+      da_codice_fiscale,
+      da_via,
+      da_numero_civico,
+      da_città,
+      da_cap,
+      da_provincia,
+      da_cellulare,
+      da_email,
+      da_cognome_minore,
+      da_nome_minore,
+      da_città_di_nascita_minore,
+      da_provincia_di_nascita_minore,
+      `0${da_giorno_datadinascitadelminore}-0${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
+      da_codice_fiscale_minore,
+      da_via_minore,
+      da_numero_civico_minore,
+      da_città_minore,
+      da_cap_minore,
+      da_provincia_minore,
+      "Accettata",
+      "Accettato",
+      "Accettato",
+      "Accettato",
+      "Accettato",
+      key
+    ]],
+  },
+});
+
 
   const doc = new PDFDocument({ size: "A4" });
   doc.fontSize(12);
@@ -130,7 +190,8 @@ export default async function sendEmail(req, res) {
   doc.text('Accetto')
   doc.moveDown(1);
   doc.font('Helvetica')
-  doc.text('Sab 21 Maggio 2020 14:35', 430, 750)
+  doc.moveDown(1);
+  doc.text(`${new Date()}`);
   doc.end(); 
  
     try {
@@ -139,7 +200,8 @@ export default async function sendEmail(req, res) {
       await sendgrid.send({
         to: "franceschinicolo@gmail.com",
         from: `Galletto Sport Accademy <info@pineappsrl.com>`,
-        text: "Hello world!",
+        text: "Modulo A",
+        replyTo: `${da_email}`,
         subject: `Modulo A - ${da_cognome_minore} ${da_nome_minore}`,
         attachments: [
           {

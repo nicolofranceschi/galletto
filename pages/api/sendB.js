@@ -1,11 +1,13 @@
 import sendgrid from "@sendgrid/mail";
-import { file } from "pdfkit";
+const { google } = require("googleapis");
 import { toArray } from "streamtoarray";
 
 const PDFDocument = require("pdfkit");
 
 if (!process.env.SENDGRID_API_KEY)
   throw new Error("Sendgrid API key not found.");
+
+var months = {"Gennaio":1,"Febbraio":2,"Marzo":3,"Aprile":4,"Maggio":5,"Giugno":6,"Luglio":7,"Agosto":8,"Settembre":9,"Ottobre":10,"Novembre":11,"Dicembre":12};
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -50,13 +52,76 @@ export default async function sendEmail(req, res) {
     al_allergie,
     camp,
     note,
-    files,
     assicurazione,
+    files,
     bc_euro,
     bc_intestatario,
+    key,
   } = req.body;
 
-  console.log(req.body);
+  const auth = new google.auth.GoogleAuth({
+    keyFile: "key.json", //the key file
+    //url to spreadsheets API
+    scopes: "https://www.googleapis.com/auth/spreadsheets",
+  });
+  const authClientObject = await auth.getClient();
+  const googleSheetsInstance = google.sheets({
+    version: "v4",
+    auth: authClientObject,
+  });
+
+  const spreadsheetId = "1K71GqEErwxoS_t276AiuoSQtypxu_lCyv1jITSVSaxo";
+
+  googleSheetsInstance.spreadsheets.values.append({
+    auth, //auth object
+    spreadsheetId, //spreadsheet id
+    range: "b!A:B", //sheet name and range of cells
+    valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
+    resource: {
+      values: [[
+        new Date,
+        da_cognome,
+        da_nome,
+        da_città_di_nascita,
+        da_provincia_di_nascita,
+        `0${da_giorno_datadinascitadeltutore}-0${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
+        da_codice_fiscale,
+        da_via,
+        da_numero_civico,
+        da_città,
+        da_cap,
+        da_provincia,
+        da_cellulare,
+        da_email,
+        da_cognome_minore,
+        da_nome_minore,
+        da_città_di_nascita_minore,
+        da_provincia_di_nascita_minore,
+        `0${da_giorno_datadinascitadelminore}-0${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
+        da_codice_fiscale_minore,
+        da_via_minore,
+        da_numero_civico_minore,
+        da_città_minore,
+        da_cap_minore,
+        da_provincia_minore,
+        EM_emergenza1,
+        EM_emergenza2,
+        al_allergie,
+        note,
+        "Accettata",
+        files.map(({url}) => url).toString(","),
+        bc_intestatario,
+        `0${BC_giorno_data}_0${months[BC_mese_data]}_${BC_anno_data}`,
+        bc_euro,
+        camp.toString(),
+        Settimanepersonalizzate,
+        fermata,
+        fermatacustom,
+        assicurazione ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
+        key
+      ]],
+    },
+  });
 
   const doc = new PDFDocument({ size: "A4" });
   doc.fontSize(12);
@@ -177,14 +242,10 @@ export default async function sendEmail(req, res) {
     var buffer = Buffer.concat(array).toString("base64");
     await sendgrid.send({
       to: "franceschinicolo@gmail.com",
-      from: `Galletto Sport Accademy <info@pineappsrl.com>`,
-      text: "Hello world!",
+      from: `Galletto Sport Accademy iscrizioni <info@pineappsrl.com>`,
       subject: `Modulo B - ${da_cognome_minore} ${da_nome_minore}`,
-      html: `
-      <a href=${files[0].url} download>
-      ${files[0].url}
-      </a>
-        `,
+      replyTo: `${da_email}`,
+      html: `<a style={{padding: "1rem" , borderRadius: "1rem" , backgroundColor: "blue" , color: "white"}} href="http://localhost:3000/${key}">Scarica i certificati</a>`,
       attachments: [
         {
           content: buffer,

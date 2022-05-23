@@ -245,7 +245,7 @@ export default async function sendEmail(req, res) {
       from: `Galletto Sport Accademy iscrizioni <info@pineappsrl.com>`,
       subject: `Modulo B - ${da_cognome_minore} ${da_nome_minore}`,
       replyTo: `${da_email}`,
-      html: `<a style={{padding: "1rem" , borderRadius: "1rem" , backgroundColor: "blue" , color: "white"}} href="http://localhost:3000/${key}">Scarica i certificati</a>`,
+      html: `<a style={{padding: "1rem" , borderRadius: "1rem" , backgroundColor: "blue" , color: "white"}} href="https://galletto.vercel.app/${key}">Scarica i certificati</a>`,
       attachments: [
         {
           content: buffer,

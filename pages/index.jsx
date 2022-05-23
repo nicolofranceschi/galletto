@@ -49,7 +49,7 @@ export default function Home() {
           Dati di <strong>Galletto Sport Academy:</strong>
         </p>
         <p>
-          IBAN: <strong>IT22D 08542 36700 0540 00310763</strong>
+          IBAN: <strong>IT79Q 08542 36700 0000 0031 0763</strong>
         </p>
         <p> Galletto Sport Academy ssd a rl</p>
         <p> Via Ambrogini, 5 -40022 Castel del Rio BO</p>

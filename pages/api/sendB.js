@@ -242,7 +242,8 @@ export default async function sendEmail(req, res) {
     const array = await toArray(doc);
     var buffer = Buffer.concat(array).toString("base64");
     await sendgrid.send({
-      to: "franceschinicolo@gmail.com",
+      to: "info@gallettosport.it",
+      cc:"franceschinicolo@gmail.com",
       from: `Galletto Sport Accademy iscrizioni <info@pineappsrl.com>`,
       subject: `Modulo B - ${da_cognome_minore} ${da_nome_minore}`,
       replyTo: `${da_email}`,

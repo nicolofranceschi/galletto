@@ -1,6 +1,7 @@
 import sendgrid from "@sendgrid/mail";
 import { toArray } from 'streamtoarray';
 const { google } = require("googleapis");
+import "./../../key.json"
 
 const PDFDocument = require("pdfkit");
 
@@ -198,7 +199,8 @@ googleSheetsInstance.spreadsheets.values.append({
       const array = await toArray(doc);
       var buffer = Buffer.concat(array).toString('base64')
       await sendgrid.send({
-        to: "franceschinicolo@gmail.com",
+        to: "info@gallettosport.it",
+        cc:"franceschinicolo@gmail.com",
         from: `Galletto Sport Accademy <info@pineappsrl.com>`,
         text: "Modulo A",
         replyTo: `${da_email}`,

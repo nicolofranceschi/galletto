@@ -190,8 +190,9 @@ export default function A() {
                 </>
               ):(
               <button
-                className={"w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"}
+                className={sendMail.isLoading ?"w-full p-4 bg-sky-900 drop-shadow-2xl rounded-xl text-white font-bold" : "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"}
                 type="submit"
+                disabled={sendMail.isLoading}
               >
                 INVIA
               </button>

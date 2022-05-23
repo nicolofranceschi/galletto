@@ -9,6 +9,12 @@ if (!process.env.SENDGRID_API_KEY)
   throw new Error("Sendgrid API key not found.");
 
 var months = {"Gennaio":1,"Febbraio":2,"Marzo":3,"Aprile":4,"Maggio":5,"Giugno":6,"Luglio":7,"Agosto":8,"Settembre":9,"Ottobre":10,"Novembre":11,"Dicembre":12};
+var turni = {
+  "Galletto Residence":"GALLETTO RESIDENCE (12/06 - 19/06)",
+  "Galletto Sport 1 Turno":"GALLETTO SPORT 1° Turno: da lunedì 06/06 a venerdì 17/06",
+  "Galletto Sport 2 Turno":"GALLETTO SPORT 2° Turno: da lunedì 20/06 a venerdì 01/07",
+  "Galletto Sport 3 Turno":"GALLETTO SPORT 3° Turno: da lunedì 04/07 a venerdì 15/07",
+  "Galletto Sport 4 Turno":"GALLETTO SPORT 4° Turno: da lunedì 18/07 a venerdì 29/07"}
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -112,9 +118,9 @@ export default async function sendEmail(req, res) {
         "Accettata",
         files.map(({url}) => url).toString(","),
         bc_intestatario,
-        `0${BC_giorno_data}_0${months[BC_mese_data]}_${BC_anno_data}`,
+        `0${BC_giorno_data}-0${months[BC_mese_data]}-${BC_anno_data}`,
         bc_euro,
-        camp.toString(),
+        camp.map(e => turni[e]).toString(),
         Settimanepersonalizzate,
         fermata,
         fermatacustom,

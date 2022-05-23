@@ -1,0 +1,10 @@
+{
+    "functions": {
+      "api/send.js": {
+        "includeFiles": "key.json"
+      },
+      "api/sendB.js": {
+        "includeFiles": "key.json"
+      }
+    }
+  }

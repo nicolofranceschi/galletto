@@ -300,16 +300,16 @@ export default function A() {
                   </Link>
                 </>
               ) : (
-               <div/>
+                <button
+                className={
+                  "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"
+                }
+                type="submit"
+              >
+                INVIA
+              </button>
               )}
-               <button
-                  className={
-                    "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"
-                  }
-                  type="submit"
-                >
-                  INVIA
-                </button>
+               
             </div>
           </div>
         </div>

@@ -120,7 +120,7 @@ export default async function sendEmail(req, res) {
         bc_intestatario,
         `0${BC_giorno_data}-0${months[BC_mese_data]}-${BC_anno_data}`,
         bc_euro,
-        camp.map(e => turni[e]).toString(),
+        Settimanepersonalizzate === "" ? "" + camp.map(e => turni[e]).toString() : "Settimana personalizzata " + camp.map(e => turni[e]).toString(),
         "GALLETTO SPORT SETTIMANE PERSONALIZZATE : " + Settimanepersonalizzate,
         fermata,
         fermatacustom,

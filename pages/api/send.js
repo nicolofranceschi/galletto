@@ -114,7 +114,7 @@ googleSheetsInstance.spreadsheets.values.append({
   doc.fontSize(20);
   doc.font('Helvetica-Bold')
   doc.moveDown(1);
-  doc.text("MODULO B - Domanda di iscrizione");
+  doc.text("MODULO A - DOMANDA DI TESSERAMENTO ALLA SSD");
   doc.fontSize(12);
   doc.moveDown(1);
   doc.text("IL/LA SOTTOSCRITTO/A");

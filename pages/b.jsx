@@ -33,6 +33,8 @@ export default function A() {
     });
   });
 
+  const fermata = methods.watch("fermata");
+
   const saveSubmit = useMutation(({ data }) => createDocument("b",data));
 
   const onSubmit = async (data) => {
@@ -119,6 +121,7 @@ export default function A() {
                   <Number name="Emergenza1" />
                   <Number name="Emergenza2" />
                 </Wrapper>
+                  <p>il primo numero sarà utilizzato come principale, il secondo solo in caso di emergenza</p>
               </Section>
               <Section family="AL_" title="ALLERGIE, INTOLLERANZE ALIMENTARI">
                 <Wrapper title="Allergie (se non presenti indicare nulla)">
@@ -175,7 +178,7 @@ export default function A() {
                   </div>
                 </div>
                 <div className="flex flex-col flex-grow gap-2 justify-center p-4 border-4 border-slate-700 bg-slate-700 rounded-lg cursor-pointer" >
-                    <h3 className="text-white">oppure scegli una range di date peronalizzato</h3>
+                    <h3 className="text-white">oppure GALLETTO SPORT SETTIMANE PERSONALIZZATE</h3>
                     <div className="flex flex-grow flex-col gap-1">
                         <input type="text" className="w-full p-2 rounded-md bg-slate-400 text-white" {...methods.register("Settimanepersonalizzate")} />
                         <span className="text-slate-500 text-sm font-bold">Inserisci le date che preferiresti</span>  
@@ -199,14 +202,17 @@ export default function A() {
                     <option value="Fontanelice Centro">Fontanelice Centro</option>
                     <option value="Fontanelice 2D">Fontanelice 2D</option>
                     <option value="Fontanelice Campomoro">Fontanelice Campomoro</option>
+                    <option value="Fermata Supplementare">Fermata Supplementare</option>
                   </select>
                 </Wrapper>
+                {fermata === "Fermata Supplementare" && (
                 <Wrapper title="Fermata supplementare (da concordare preventivamente con la direzione)">
                 <div className="flex flex-grow flex-col gap-1">
                   <input type="text" className="w-full p-2 rounded-md" {...methods.register("fermatacustom")} />
                    <span>Fermata Supplementare</span>
                 </div>
                 </Wrapper>
+                )}
                 <Wrapper title="Note Varie">
                 <div className="flex flex-grow flex-col gap-1">
                   <textarea type="text" className="w-full p-2 rounded-md" {...methods.register("note")} />

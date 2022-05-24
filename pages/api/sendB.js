@@ -199,10 +199,10 @@ export default async function sendEmail(req, res) {
   doc.fontSize(10);
   doc.text(`Fermata: ${fermata} `);
   doc.moveDown(0.3);
-  fermatacustom !== "" && doc.text(`Fermata personalizzata: ${fermatacustom}`);
+  fermatacustom && fermatacustom !== "" && doc.text(`Fermata personalizzata: ${fermatacustom}`);
   doc.text(` `);
   doc.moveDown(0.2);
-  fermatacustom !== "" && doc.text(`Note varie : ${note} `);
+  note !== "" && doc.text(`Note varie : ${note} `);
   doc.font("Helvetica-Bold");
   doc.fontSize(12);
   doc.moveDown(1);

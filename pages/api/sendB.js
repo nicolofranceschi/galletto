@@ -121,7 +121,7 @@ export default async function sendEmail(req, res) {
         `0${BC_giorno_data}-0${months[BC_mese_data]}-${BC_anno_data}`,
         bc_euro,
         camp.map(e => turni[e]).toString(),
-        Settimanepersonalizzate,
+        "GALLETTO SPORT SETTIMANE PERSONALIZZATE : " + Settimanepersonalizzate,
         fermata,
         fermatacustom,
         assicurazione ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",

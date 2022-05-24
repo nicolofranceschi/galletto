@@ -9,7 +9,7 @@ export default function DatiAnagrafici() {
   return (
     <div className="flex flex-col gap-4">
       <Section title="IL/LA SOTTOSCRITTO/A" family="da_">
-        <Wrapper title="Dati del tutore">
+        <Wrapper title="Dati del tutore/genitore">
           <Input name="Nome" />
           <Input name="Cognome" />
         </Wrapper>

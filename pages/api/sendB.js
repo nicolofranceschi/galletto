@@ -8,7 +8,7 @@ const PDFDocument = require("pdfkit");
 if (!process.env.SENDGRID_API_KEY)
   throw new Error("Sendgrid API key not found.");
 
-var months = {"Gennaio":1,"Febbraio":2,"Marzo":3,"Aprile":4,"Maggio":5,"Giugno":6,"Luglio":7,"Agosto":8,"Settembre":9,"Ottobre":10,"Novembre":11,"Dicembre":12};
+var months = {"Gennaio": "01","Febbraio": "02","Marzo": "03","Aprile": "04","Maggio":"05","Giugno":"06","Luglio":"07","Agosto":"08","Settembre":"09","Ottobre":"10","Novembre":"11","Dicembre":"12"};
 var turni = {
   "Galletto Residence":"GALLETTO RESIDENCE (12/06 - 19/06)",
   "Galletto Sport 1 Turno":"GALLETTO SPORT 1° Turno: da lunedì 06/06 a venerdì 17/06",
@@ -91,7 +91,7 @@ export default async function sendEmail(req, res) {
         da_nome,
         da_città_di_nascita,
         da_provincia_di_nascita,
-        `0${da_giorno_datadinascitadeltutore}-0${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
+        `${da_giorno_datadinascitadeltutore}-${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
         da_codice_fiscale,
         da_via,
         da_numero_civico,
@@ -104,7 +104,7 @@ export default async function sendEmail(req, res) {
         da_nome_minore,
         da_città_di_nascita_minore,
         da_provincia_di_nascita_minore,
-        `0${da_giorno_datadinascitadelminore}-0${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
+        `${da_giorno_datadinascitadelminore}-${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
         da_codice_fiscale_minore,
         da_via_minore,
         da_numero_civico_minore,

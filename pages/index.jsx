@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="p-4 bg-slate-100 flex flex-col gap-4">
       <div className="drop-shadow-lg  p-4 rounded-xl text-white bg-indigo-700">
-        <h2>Benvenuto nelle iscrizoni per Galleto Summer 2022</h2>
+        <h2>Benvenuto alle iscrizioni per Galleto Summer 2022</h2>
       </div>
       <div className="flex flex-wrap gap-4">
         <Link href="/a">

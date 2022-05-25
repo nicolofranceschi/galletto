@@ -4,8 +4,6 @@ import Section from "../components/Section";
 import CheckBox from "../components/CheckBox";
 import toast from "react-hot-toast";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
-import FileUploader from "../components/FileUploader";
 import Link from "next/link";
 import { useMutation } from "react-query";
 import { createDocument } from "../firebase/db";
@@ -15,24 +13,16 @@ export default function A() {
 
   const methods = useForm({ mode: "onChange", defaultValues: storedValues });
 
-  //const [files, setFiles] = useState([]);
-
-  //const [percent, setPercent] = useState(0);
-
-  const sendMail = useMutation(({ data }) => {
-    return fetch("api/send", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-  });
+  const sendMail = useMutation(({ data }) => fetch("api/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  }));
 
   const saveSubmit = useMutation((data) => createDocument("a",data));
 
   const onSubmit = async (sub) => {
-    const valuetostore = Object.entries(sub).reduce((acc, [key, val]) => {
-      return key.startsWith("da") ? { ...acc, [key]: val } : acc;
-    }, {});
+    const valuetostore = Object.entries(sub).reduce((acc, [key, val]) => key.startsWith("da") ? { ...acc, [key]: val } : acc, {});
     setStoredValue(valuetostore);
     toast.success("Dati salvati sul tuo dispositivo");
     saveSubmit.mutate(sub,{
@@ -146,7 +136,7 @@ export default function A() {
                 <>
                   <div className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-green-600 ">
                     <p className="text-green-100 font-bold ">
-                      Hai compilato con sucesso il modulo A !!!
+                      Hai compilato con successo il modulo A !!!
                     </p>
                     <div className="p-2 w-10 h-10 flex items-center bg-green-300 rounded-md">
                      <svg xmlns="http://www.w3.org/2000/svg" className="fill-green-600" viewBox="0 0 640 512">

@@ -44,9 +44,17 @@ export default async function sendA(req, res) {
    ,da_mese_datadinascitadeltutore,
    key
  } = req.body;
- createKeyFile();
+//  createKeyFile();
  const auth = new google.auth.GoogleAuth({
-  keyFile: "key.json", //the key file
+   projectId: process.env.PROJECT_ID,
+   credentials: {
+      client_email: process.env.CLIENT_EMAIL,
+      private_key: process.env.PRIVATE_KEY
+   },
+   clientOptions: {
+     clientId: process.env.CLIENT_ID,
+     keyId: process.env.PRIVATE_KEY_ID,
+   },
   //url to spreadsheets API
   scopes: "https://www.googleapis.com/auth/spreadsheets",
 });

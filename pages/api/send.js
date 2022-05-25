@@ -2,7 +2,6 @@ import sendgrid from "@sendgrid/mail";
 import { toArray } from 'streamtoarray';
 import createKeyFile from "../../utils/createKeyFile";
 const { google } = require("googleapis");
-import "./../../key.json"
 
 const PDFDocument = require("pdfkit");
 

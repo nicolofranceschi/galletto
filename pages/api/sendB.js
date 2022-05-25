@@ -187,11 +187,9 @@ export default async function sendEmail(req, res) {
   doc.fontSize(10);
   camp &&
     camp.map((e) => {
-      doc.text(`- ${e}`);
+      doc.text(`- ${turni[e].toString()}`);
     });
-  doc.moveDown(0.3);
-  Settimanepersonalizzate !== "" &&
-    doc.text(`Settimane personalizzate: ${Settimanepersonalizzate}`);
+  Settimanepersonalizzate !== "" && doc.text(`- GALLETTO SPORT SETTIMANE PERSONALIZZATE: ${Settimanepersonalizzate}`);
   doc.moveDown(0.5);
   doc.fontSize(11);
   doc.text("Trasporti");

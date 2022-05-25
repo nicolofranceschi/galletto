@@ -1,5 +1,6 @@
 import sendgrid from "@sendgrid/mail";
 import { toArray } from 'streamtoarray';
+import createKeyFile from "../../utils/createKeyFile";
 const { google } = require("googleapis");
 import "./../../key.json"
 
@@ -11,7 +12,7 @@ var months = {"Gennaio": "01","Febbraio": "02","Marzo": "03","Aprile": "04","Mag
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-export default async function sendEmail(req, res) {
+export default async function sendA(req, res) {
 
   const { 
     da_cognome 
@@ -44,7 +45,7 @@ export default async function sendEmail(req, res) {
    ,da_mese_datadinascitadeltutore,
    key
  } = req.body;
-
+ createKeyFile();
  const auth = new google.auth.GoogleAuth({
   keyFile: "key.json", //the key file
   //url to spreadsheets API

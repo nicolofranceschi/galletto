@@ -1,6 +1,7 @@
 import sendgrid from "@sendgrid/mail";
 const { google } = require("googleapis");
 import { toArray } from "streamtoarray";
+import createKeyFile from "../../utils/createKeyFile";
 import "./../../key.json"
 
 const PDFDocument = require("pdfkit");
@@ -18,7 +19,7 @@ var turni = {
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-export default async function sendEmail(req, res) {
+export default async function sendB(req, res) {
   const {
     da_cognome,
     da_cap,
@@ -65,7 +66,7 @@ export default async function sendEmail(req, res) {
     bc_intestatario,
     key,
   } = req.body;
-
+  createKeyFile();
   const auth = new google.auth.GoogleAuth({
     keyFile: "key.json", //the key file
     //url to spreadsheets API

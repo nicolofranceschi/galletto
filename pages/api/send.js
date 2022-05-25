@@ -1,6 +1,6 @@
 import sendgrid from "@sendgrid/mail";
 import { toArray } from 'streamtoarray';
-import createKeyFile from "../../utils/createKeyFile";
+import googleAuthConfig from "../../utils/google-auth-config";
 const { google } = require("googleapis");
 
 const PDFDocument = require("pdfkit");
@@ -44,18 +44,8 @@ export default async function sendA(req, res) {
    ,da_mese_datadinascitadeltutore,
    key
  } = req.body;
-//  createKeyFile();
  const auth = new google.auth.GoogleAuth({
-   projectId: process.env.PROJECT_ID,
-   credentials: {
-      client_email: process.env.CLIENT_EMAIL,
-      private_key: process.env.PRIVATE_KEY
-   },
-   clientOptions: {
-     clientId: process.env.CLIENT_ID,
-     keyId: process.env.PRIVATE_KEY_ID,
-   },
-  //url to spreadsheets API
+   ...googleAuthConfig,
   scopes: "https://www.googleapis.com/auth/spreadsheets",
 });
 const authClientObject = await auth.getClient();

@@ -1,7 +1,7 @@
 import sendgrid from "@sendgrid/mail";
 const { google } = require("googleapis");
 import { toArray } from "streamtoarray";
-import createKeyFile from "../../utils/createKeyFile";
+import googleAuthConfig from "../../utils/google-auth-config";
 
 const PDFDocument = require("pdfkit");
 
@@ -65,10 +65,8 @@ export default async function sendB(req, res) {
     bc_intestatario,
     key,
   } = req.body;
-  createKeyFile();
   const auth = new google.auth.GoogleAuth({
-    keyFile: "key.json", //the key file
-    //url to spreadsheets API
+    ...googleAuthConfig,
     scopes: "https://www.googleapis.com/auth/spreadsheets",
   });
   const authClientObject = await auth.getClient();

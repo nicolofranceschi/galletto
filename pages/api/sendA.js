@@ -1,7 +1,7 @@
 import sendgrid from "@sendgrid/mail";
 import { toArray } from 'streamtoarray';
 const { google } = require("googleapis");
-import "./../../key.json"
+import "../../key.json"
 
 const PDFDocument = require("pdfkit");
 
@@ -11,7 +11,7 @@ var months = {"Gennaio":1,"Febbraio":2,"Marzo":3,"Aprile":4,"Maggio":5,"Giugno":
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-export default async function sendEmail(req, res) {
+export default async function sendA(req, res) {
 
   const { 
     da_cognome 

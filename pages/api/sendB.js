@@ -18,7 +18,7 @@ var turni = {
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-export default async function sendEmail(req, res) {
+export default async function sendB(req, res) {
   const {
     da_cognome,
     da_cap,

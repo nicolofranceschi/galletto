@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "../components/Logo";
 
 export default function Home() {
   return (
@@ -54,6 +55,16 @@ export default function Home() {
         <p> Galletto Sport Academy ssd a rl</p>
         <p> Via Ambrogini, 5 -40022 Castel del Rio BO</p>
         <p> P.Iva/CF: 03812341208</p>
+      </div>
+      <div className="p-4 rounded-xl drop-shadow-lg bg-white flex justify-between items-center">
+        <p>Powerd by</p>
+        <div className="flex gap-4 items-center">
+          <Link href="https://www.pineappsrl.com/">
+            <a target="_blank">
+             <Logo />
+            </a>
+          </Link>
+        </div>
       </div>
     </div>
   );

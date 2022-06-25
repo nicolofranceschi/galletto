@@ -293,19 +293,7 @@ export default function A() {
                       </h5>
                       <p className="text-orange-600">280€</p>
                     </div>
-                    <div
-                      onClick={() =>
-                        setCamp((e) =>
-                          e.some((a) => a === "Galletto Sport 4 Turno")
-                            ? e.filter((a) => a !== "Galletto Sport 4 Turno")
-                            : [...e, "Galletto Sport 4 Turno"]
-                        )
-                      }
-                      className={
-                        camp.some((a) => a === "Galletto Sport 4 Turno")
-                          ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500"
-                          : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-400 bg-orange-400 hover:bg-orange-800 rounded-lg cursor-pointer"
-                      }
+                    <div className={ "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-200 rounded-lg cursor-pointer border-4 border-orange-200" }
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -323,10 +311,10 @@ export default function A() {
                         />
                       </svg>
                       <h3 className="text-white">Galletto Sport 4° Turno</h3>
-                      <h5 className="text-orange-600 font-bold">
-                        da lunedì 18/07 a venerdì 29/07
-                      </h5>
-                      <p className="text-orange-600">280€</p>
+                      <h3 className="text-orange-600 font-bold">
+                        SOLD OUT
+                      </h3>
+                      <p className="text-orange-600"></p>
                     </div>
                   </div>
                   <p>

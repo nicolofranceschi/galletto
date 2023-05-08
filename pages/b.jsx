@@ -361,13 +361,8 @@ export default function A() {
                   }
                 </div>
               </Section>
-              <Section title="SCONTISTICHE APPLICABILI">
-                <div className="flex gap-1 items-start">
-                  <input className="rounded-md" type="checkbox" {...methods.register("sconto1")} />
-                  <p className="text-xs">L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE?</p>
-                </div>
-                <Wrapper title="RIMBORSO ASSENZA MALATTIA">
-                  <p className="text-xs">INDICA IL NUMERO DELLE SETT.SU CUI CALCOLARE IL RIMBORSO</p>
+              <Section family="AL_" title="RIMBORSO ASSENZA MALATTIA">
+                <Wrapper title="INDICA IL NUMERO DELLE SETT.SU CUI CALCOLARE IL RIMBORSO">
                   <select {...methods.register("assicurazione")}>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -383,6 +378,12 @@ export default function A() {
                     <option value="12">12</option>
                   </select>
                 </Wrapper>
+              </Section>
+              <Section title="SCONTISTICHE APPLICABILI">
+                <div className="flex gap-1 items-start">
+                  <input className="rounded-md" type="checkbox" {...methods.register("sconto1")} />
+                  <p className="text-xs">L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE?</p>
+                </div>
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>

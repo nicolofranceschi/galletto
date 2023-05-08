@@ -14,7 +14,8 @@ var turni = {
   "Galletto Sport 1 Turno":"GALLETTO SPORT 1° Turno: da lunedì 06/06 a venerdì 17/06",
   "Galletto Sport 2 Turno":"GALLETTO SPORT 2° Turno: da lunedì 20/06 a venerdì 01/07",
   "Galletto Sport 3 Turno":"GALLETTO SPORT 3° Turno: da lunedì 04/07 a venerdì 15/07",
-  "Galletto Sport 4 Turno":"GALLETTO SPORT 4° Turno: da lunedì 18/07 a venerdì 29/07"}
+  "Galletto Sport 4 Turno":"GALLETTO SPORT 4° Turno: da lunedì 18/07 a venerdì 29/07"
+}
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -69,6 +70,7 @@ export default async function sendB(req, res) {
     ...googleAuthConfig,
     scopes: "https://www.googleapis.com/auth/spreadsheets",
   });
+  
   const authClientObject = await auth.getClient();
   const googleSheetsInstance = google.sheets({
     version: "v4",

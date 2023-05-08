@@ -15,6 +15,7 @@ import DatePicker from "../components/Date";
 import { createDocument } from "../firebase/db";
 
 export default function A() {
+
   const [storedValues, setStoredValue] = useLocalStorage("da", {});
 
   const methods = useForm({ mode: "onChange", defaultValues: storedValues });
@@ -24,6 +25,8 @@ export default function A() {
   const [percent, setPercent] = useState(0);
 
   const [camp, setCamp] = useState([]);
+
+  const [age, setAge] = useState(0)
 
   const sendMail = useMutation(({ data }) => {
     return fetch("api/sendB", {
@@ -152,190 +155,253 @@ export default function A() {
                   <Input name="Allergie" />
                 </Wrapper>
               </Section>
-              <Section title="SIA ISCRITTO AL CAMP SUMMER 2022">
-                <div className="flex flex-col gap-3">
-                  <div
-                    onClick={() =>
-                      setCamp((e) =>
-                        e.some((a) => a === "Galletto Residence")
-                          ? e.filter((a) => a !== "Galletto Residence")
-                          : [...e, "Galletto Residence"]
-                      )
-                    }
-                    className={
-                      camp.some((a) => a === "Galletto Residence")
-                        ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-cyan-900 rounded-lg cursor-pointer border-4 border-cyan-500"
-                        : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-cyan-400 bg-cyan-400 hover:bg-cyan-800 rounded-lg cursor-pointer"
-                    }
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="fill-cyan-600"
-                      width="50px"
-                      viewBox="0 0 576 512"
-                    >
-                      <path
-                        className="opacity-40"
-                        d="M565.1 231.9C578.4 243.6 579.7 263.8 568.1 277.1C556.4 290.4 536.2 291.7 522.9 280.1L288 74.52L53.07 280.1C39.77 291.7 19.56 290.4 7.917 277.1C-3.72 263.8-2.372 243.6 10.93 231.9L266.9 7.918C278.1-2.639 297-2.639 309.1 7.918L565.1 231.9zM276.7 428.7L184 336C161.9 313.9 161.9 278.1 184 256C206.1 233.9 241.9 233.9 264 256L288 280L312 256C334.1 233.9 369.9 233.9 392 256C414.1 278.1 414.1 313.9 392 336L299.3 428.7C293.1 434.9 282.9 434.9 276.7 428.7H276.7z"
-                      />
-                      <path
-                        className="opacity"
-                        d="M64.07 448L64.02 270.5L288 74.52L512.1 270.6L512.5 447.9C512.6 483.3 483.9 512 448.5 512H128.1C92.74 512 64.09 483.4 64.07 448L64.07 448zM299.3 428.7L392 336C414.1 313.9 414.1 278.1 392 256C369.9 233.9 334.1 233.9 312 256L288 280L264 256C241.9 233.9 206.1 233.9 184 256C161.9 278.1 161.9 313.9 184 336L276.7 428.7C282.9 434.9 293.1 434.9 299.3 428.7H299.3z"
-                      />
-                    </svg>
-                    <h3 className="text-white">Galletto Residence</h3>
-                    <h5 className="text-cyan-600 font-bold">12/06 - 19/06</h5>
-                    <p className="text-cyan-600">400€</p>
-                  </div>
-                  <div className="flex flex-wrap gap-3">
-                    <div
-                      onClick={() =>
-                        setCamp((e) =>
-                          e.some((a) => a === "Galletto Sport 1 Turno")
-                            ? e.filter((a) => a !== "Galletto Sport 1 Turno")
-                            : [...e, "Galletto Sport 1 Turno"]
-                        )
-                      }
-                      className={
-                        camp.some((a) => a === "Galletto Sport 1 Turno")
-                          ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500"
-                          : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-400 bg-orange-400 hover:bg-orange-800 rounded-lg cursor-pointer"
-                      }
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="fill-orange-600"
-                        width="50px"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          className="opacity-40"
-                          d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"
-                        />
-                        <path
-                          className="opacity"
-                          d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"
-                        />
-                      </svg>
-                      <h3 className="text-white">Galletto Sport 1° Turno</h3>
-                      <h5 className="text-orange-600 font-bold">
-                        da lunedì 06/06 a venerdì 17/06
-                      </h5>
-                      <p className="text-orange-600">280€</p>
-                    </div>
-                    <div
-                      onClick={() =>
-                        setCamp((e) =>
-                          e.some((a) => a === "Galletto Sport 2 Turno")
-                            ? e.filter((a) => a !== "Galletto Sport 2 Turno")
-                            : [...e, "Galletto Sport 2 Turno"]
-                        )
-                      }
-                      className={
-                        camp.some((a) => a === "Galletto Sport 2 Turno")
-                          ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500"
-                          : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-400 bg-orange-400 hover:bg-orange-800 rounded-lg cursor-pointer"
-                      }
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="fill-orange-600"
-                        width="50px"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          className="opacity-40"
-                          d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"
-                        />
-                        <path
-                          className="opacity"
-                          d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"
-                        />
-                      </svg>
-                      <h3 className="text-white">Galletto Sport 2° Turno</h3>
-                      <h5 className="text-orange-600 font-bold">
-                        da lunedì 20/06 a venerdì 01/07
-                      </h5>
-                      <p className="text-orange-600">280€</p>
-                    </div>
-                    <div
-                      onClick={() =>
-                        setCamp((e) =>
-                          e.some((a) => a === "Galletto Sport 3 Turno")
-                            ? e.filter((a) => a !== "Galletto Sport 3 Turno")
-                            : [...e, "Galletto Sport 3 Turno"]
-                        )
-                      }
-                      className={
-                        camp.some((a) => a === "Galletto Sport 3 Turno")
-                          ? "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-900 rounded-lg cursor-pointer border-4 border-orange-500"
-                          : "flex flex-col flex-grow gap-2 justify-center items-center p-4 border-4 border-orange-400 bg-orange-400 hover:bg-orange-800 rounded-lg cursor-pointer"
-                      }
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="fill-orange-600"
-                        width="50px"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          className="opacity-40"
-                          d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"
-                        />
-                        <path
-                          className="opacity"
-                          d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"
-                        />
-                      </svg>
-                      <h3 className="text-white">Galletto Sport 3° Turno</h3>
-                      <h5 className="text-orange-600 font-bold">
-                        da lunedì 04/07 a venerdì 15/07
-                      </h5>
-                      <p className="text-orange-600">280€</p>
-                    </div>
-                    <div className={ "flex flex-col flex-grow gap-2 justify-center items-center p-4 bg-orange-200 rounded-lg cursor-pointer border-4 border-orange-200" }
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="fill-orange-600"
-                        width="50px"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          className="opacity-40"
-                          d="M355.5 45.53L342.4 14.98c-27.95-9.983-57.18-14.98-86.42-14.98c-29.25 0-58.51 4.992-86.46 14.97L156.5 45.53l99.5 55.13L355.5 45.53zM86.78 96.15L53.67 99.09c-34.79 44.75-53.67 99.8-53.67 156.5L.0001 256c0 2.694 .0519 5.379 .1352 8.063l24.95 21.76l83.2-77.67L86.78 96.15zM318.8 336L357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336zM512 255.6c0-56.7-18.9-111.8-53.72-156.5L425.6 96.16L403.7 208.2l83.21 77.67l24.92-21.79C511.1 260.1 512 258.1 512 255.6zM51.77 367.7l-7.39 32.46c33.48 49.11 82.96 85.07 140 101.7l28.6-16.99l-48.19-103.3L51.77 367.7zM347.2 381.5l-48.19 103.3l28.57 17c57.05-16.66 106.5-52.62 140-101.7l-7.38-32.46L347.2 381.5z"
-                        />
-                        <path
-                          className="opacity"
-                          d="M458.3 99.08L458.3 99.08L458.3 99.08zM511.8 264c-1.442 48.66-16.82 95.87-44.28 136.1l-7.38-32.46l-113 13.86l-48.19 103.3l28.22 16.84c-23.48 6.78-47.67 10.2-71.85 10.2c-23.76 0-47.51-3.302-70.58-9.962l28.23-17.06l-48.19-103.3l-113-13.88l-7.39 32.46c-27.45-40.19-42.8-87.41-44.25-136.1l24.95 21.76l83.2-77.67L86.78 96.15L53.67 99.09c29.72-38.29 69.67-67.37 115.2-83.88l.3613 .2684L156.5 45.53l99.5 55.13l99.5-55.13L342.4 14.98c45.82 16.48 86 45.64 115.9 84.11L425.6 96.16L403.7 208.2l83.21 77.67L511.8 264zM357.3 217.4L255.1 144L154.7 217.4l38.82 118.6L318.8 336L357.3 217.4z"
-                        />
-                      </svg>
-                      <h3 className="text-white">Galletto Sport 4° Turno</h3>
-                      <h3 className="text-orange-600 font-bold">
-                        SOLD OUT
-                      </h3>
-                      <p className="text-orange-600"></p>
+              <Section title="SIA ISCRITTO AL CAMP SUMMER 2023">
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-col items-start gap-2">
+                    <div className={`flex gap-2  ${age === 0 ? "bg-pink-300 border-pink-700" : age === 1 ? "bg-orange-300 border-orange-700" : "bg-green-300 border-green-700"} text-white border-2  p-2 rounded-full`}>
+                      <button type="button" onClick={() => setAge(0)} className={`px-4 ${age === 0 ? "bg-pink-700" : ""} rounded-full`}>
+                        3-6 anni
+                      </button>
+                      <button type="button" onClick={() => setAge(1)} className={`px-4 ${age === 1 ? "bg-orange-700" : ""} rounded-full`}>
+                        7-13 anni
+                      </button>
+                      <button type="button" onClick={() => setAge(2)} className={`px-4 ${age === 2 ? "bg-green-700" : ""} rounded-full`}>
+                        13+ anni
+                      </button>
                     </div>
                   </div>
-                  <p>
-                    <strong>Camp selezionati</strong>: {camp.toString()}
-                  </p>
-                  <div className="flex flex-col flex-grow gap-2 justify-center p-4 border-4 border-slate-700 bg-slate-700 rounded-lg cursor-pointer">
-                    <h3 className="text-white">
-                      oppure GALLETTO SPORT SETTIMANE PERSONALIZZATE
-                    </h3>
-                    <div className="flex flex-grow flex-col gap-1">
-                      <input
-                        type="text"
-                        className="w-full p-2 rounded-md bg-slate-400 text-white"
-                        {...methods.register("Settimanepersonalizzate")}
-                      />
-                      <span className="text-slate-500 text-sm font-bold">
-                        Inserisci le date che preferiresti
+                  {age === 0 && <div>
+                    <div className="flex gap-2 items-center">
+                      <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-10 fill-pink-500">
+                          <path d="M152 88a72 72 0 1 1 144 0A72 72 0 1 1 152 88zM39.7 144.5c13-17.9 38-21.8 55.9-8.8L131.8 162c26.8 19.5 59.1 30 92.2 30s65.4-10.5 92.2-30l36.2-26.4c17.9-13 42.9-9 55.9 8.8s9 42.9-8.8 55.9l-36.2 26.4c-13.6 9.9-28.1 18.2-43.3 25V288H128V251.7c-15.2-6.7-29.7-15.1-43.3-25L48.5 200.3c-17.9-13-21.8-38-8.8-55.9zm89.8 184.8l60.6 53-26 37.2 24.3 24.3c15.6 15.6 15.6 40.9 0 56.6s-40.9 15.6-56.6 0l-48-48C70 438.6 68.1 417 79.2 401.1l50.2-71.8zm128.5 53l60.6-53 50.2 71.8c11.1 15.9 9.2 37.5-4.5 51.2l-48 48c-15.6 15.6-40.9 15.6-56.6 0s-15.6-40.9 0-56.6L284 419.4l-26-37.2z" />
+                        </svg>
                       </span>
+                      <div className="flex flex-col">
+                        <h1 className="text-xl text-pink-500">GALLETTO BABY MAGIC</h1>
+                        <p className="text-[8px]">
+                          GALLETTO BABY MAGIC SUMMER 3-6 ANNI
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                    <div className="pt-4 flex flex-wrap text-left">
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">1 TURNO</p>
+                        <p className="text-xs">NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">2 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">3 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">4 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">5 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">6 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                    </div>
+                    <p className="pt-4">oppure settimane personalizzate</p>
+                    <div className="flex flex-wrap">
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%]  flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
+                      </button>
+                    </div>
+                  </div>}
+                  {age === 1 && <div>
+                    <div className="flex gap-2 items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-10 w-14 fill-orange-500 ">
+                        <path d="M371.5 429c-71.4 7-145.1-8.2-210-47.1c-8.8 14.8-16.2 30.3-22.3 46.3C172.5 450.8 212.7 464 256 464c42.7 0 82.5-12.9 115.5-35zm60.1-61.5c9.2-14.4 16.6-30.1 22.1-46.7c-65.9 7.3-134.5-4.3-197.1-37.1c-25.9 16.5-48.4 36.5-67.2 58.9c75.2 43.8 163.6 51 242.3 24.9zm31.8-96.4c.4-5 .5-10 .5-15.1c0-77.9-42.8-145.8-106.3-181.5c35.6 58.4 54.2 127.7 49.6 200.3c18.8 .5 37.6-.7 56.1-3.8zM101 394.7C127.6 334 172 280.5 231.7 242.7c-1.3-30-7.1-58.9-16.8-85.9C140.2 189.5 85.7 249.6 58.1 320.3c9 27.9 23.8 53.1 42.9 74.5zm-52-159.9C84.1 182.9 133.8 140 195.2 113c-8.7-15.7-18.7-30.4-29.9-44.2C101.9 99.6 56.5 161.6 49.1 234.8zM213.3 52.4c39.3 53.4 63.5 118.6 66.4 189.2c25.7 13.4 52.6 22.6 79.9 27.9c4.6-84.1-26.8-163-81.5-220.4c-7.2-.8-14.6-1.2-22.1-1.2c-14.6 0-28.9 1.5-42.7 4.4zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 0l0 0h0l0 0z" />
+                      </svg>
+                      <div className="flex flex-col">
+                        <h1 className="text-xl text-orange-500">GALLETTO SPORT </h1>
+                        <p className="text-[8px]">
+                          GALLETTO SPORT AVVENTURA 7-13 ANNI
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 flex flex-wrap text-left">
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">1 TURNO</p>
+                        <p className="text-xs">NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">2 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">3 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">4 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">5 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="font-bold">6 TURNO</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                      </button>
+                    </div>
+                    <button type="button" className="flex w-full grow items-start bg-orange-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
+                      <div className="font-bold flex gap-1 text-orange-600 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-orange-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
+                        <p></p>GALETTO RESIDENT
+                      </div>
+                      <p className="text-xs">contattaci per più infomrazioni al 3240957228</p>
+                    </button>
+                    <p className="pt-4">oppure settimane personalizzate</p>
+                    <div className="flex flex-wrap mt-2">
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
+                      </button>
+                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
+                      </button>
+                    </div>
+                  </div>}
+                  {
+                    age === 2 &&
+                    <div>
+                      <div className="flex gap-2 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-10 w-14 fill-green-500 ">
+                          <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z" />
+                        </svg>
+                        <div className="flex flex-col">
+                          <h1 className="text-xl text-green-500">GALLETTO CRESCI </h1>
+                          <p className="text-[8px]">
+                            GALLETTO CRESCI CON NOI 13 +
+                          </p>
+                        </div>
+                      </div>
+                      <button type="button" className="flex w-full grow items-start bg-green-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
+                        <div className="font-bold flex gap-1 text-green-600 items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-green-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
+                          <p></p>GALLETTO CRESCI CON NOI
+                        </div>
+                        <p className="text-xs">contattaci per più infomrazioni al 3240957228</p>
+                      </button>
+                    </div>
+                  }
                 </div>
+              </Section>
+              <Section title="SCONTISTICHE APPLICABILI">
+                <div className="flex gap-1 items-start">
+                  <input className="rounded-md" type="checkbox" {...methods.register("sconto1")} />
+                  <p className="text-xs">L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE?</p>
+                </div>
+                <Wrapper title="RIMBORSO ASSENZA MALATTIA">
+                  <p className="text-xs">INDICA IL NUMERO DELLE SETT.SU CUI CALCOLARE IL RIMBORSO</p>
+                  <select {...methods.register("assicurazione")}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                </Wrapper>
+                <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
+                  <select {...methods.register("convenzione")}>
+                    <option value="none">No</option>
+                    <option value="FLORIM">FLORIM</option>
+                  </select>
+                </Wrapper>
+                <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
+                  <select {...methods.register("conciliazione")}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                  </select>
+                </Wrapper>
+                <Wrapper title="HAI UN FRATELLO/SORELLA ISCRITTO ?">
+                  <select {...methods.register("fratelli")}>
+                    <option value="No">No</option>
+                    <option value="Si">Si</option>
+                  </select>
+                </Wrapper>
               </Section>
               <Section title="Con servizio di trasporto">
                 <Wrapper title="Indicare la fermata del Galletto Bus">
@@ -441,10 +507,10 @@ export default function A() {
                 </Wrapper>
                 <Wrapper title="BONIFICO BANCARIO (Importo Pagato)">
                   <div className="flex flex-grow flex-col gap-1">
-                  <span>In base alle tue selezioni preventiamo una spesa di {camp.reduce((acc,val) => val === "Galletto Residence" ? acc+400 : acc+280,0)} euro, escluse le settimane personalinazzate. Se la nostra stima non corrisponde a quello che pensavi controlla di aver selezionato correttamente i camp {"(quelli più scuri sono selezionati)"}</span>
-                  <p>
-                    <strong>Camp selezionati</strong>: {camp.toString()}
-                  </p>
+                    <span>In base alle tue selezioni preventiamo una spesa di {camp.reduce((acc, val) => val === "Galletto Residence" ? acc + 400 : acc + 280, 0)} euro, escluse le settimane personalinazzate. Se la nostra stima non corrisponde a quello che pensavi controlla di aver selezionato correttamente i camp {"(quelli più scuri sono selezionati)"}</span>
+                    <p>
+                      <strong>Camp selezionati</strong>: {camp.toString()}
+                    </p>
                     <input
                       type="text"
                       className="w-full p-2 rounded-md"

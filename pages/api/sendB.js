@@ -70,7 +70,7 @@ export default async function sendB(req, res) {
     ...googleAuthConfig,
     scopes: "https://www.googleapis.com/auth/spreadsheets",
   });
-  
+
   const authClientObject = await auth.getClient();
   const googleSheetsInstance = google.sheets({
     version: "v4",
@@ -179,7 +179,7 @@ export default async function sendB(req, res) {
   doc.text(`Allergie: ${al_allergie}`);
   doc.moveDown(1);
   doc.fontSize(12);
-  doc.text("SIA ISCRITTO AL CAMP SUMMER 2022");
+  doc.text("SIA ISCRITTO AL CAMP SUMMER 2023");
   doc.moveDown(0.2);
   doc.fontSize(11);
   doc.text("Turni");

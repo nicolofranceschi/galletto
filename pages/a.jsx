@@ -110,7 +110,7 @@ export default function A() {
                   label="Accettazione di presa visione del"
                   registername="regolamento"
                 >
-                  <a href="http://www.gallettovacanze.it/wp-content/uploads/2022/05/REGOLAMENTO.GSA_.SSD_.2022.pdf">
+                  <a href="http://www.gallettovacanze.it/wp-content/uploads/2023/05/REGOLAMENTO.GSA_.SSD_.2023.pdf">
                     Regolamento ssd
                   </a>
                 </CheckBox>

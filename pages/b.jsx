@@ -111,7 +111,7 @@ export default function A() {
                   </a>
                 </Link>
                 <div className="flex flex-grow gap-2 flex-col bg-white p-4 rounded-xl drop-shadow-lg  ">
-                  <h3>DOMANDA DI ISCRIZIONE CAMP SUMMER 2022</h3>
+                  <h3>DOMANDA DI ISCRIZIONE CAMP SUMMER 2023</h3>
                   <p>Mod.B</p>
                 </div>
               </div>
@@ -191,23 +191,23 @@ export default function A() {
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">2 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">3 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">4 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">5 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">6 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                     </div>
                     <p className="pt-4">oppure settimane personalizzate</p>
@@ -270,23 +270,23 @@ export default function A() {
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">2 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">3 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">4 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">5 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                       <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md hover:bg-slate-200">
                         <p className="font-bold">6 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2022</p>
+                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
                       </button>
                     </div>
                     <button type="button" className="flex w-full grow items-start bg-orange-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">

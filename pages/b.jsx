@@ -149,9 +149,9 @@ export default function B() {
   const turni = data.filter(e => e.startsWith("T"))
   const g1 = week.slice(0, week.length - week.length % 2 )
   const g2 = week.slice(week.length - week.length % 2)
-  const virtualTurni = turni.length + Math.trunc(week.length / 2)
+  const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
 
-  console.log(g1, g2, virtualTurni)
+  console.log(virtualTurni)
 
   return (
     <FormProvider {...methods}>
@@ -360,7 +360,7 @@ export default function B() {
                   <select {...methods.register("assicurazione")}>
                     <option value="0">0</option>
                     {camp.map((item,number) => (
-                      <option key={item} value={number}>{number + 1 }</option>
+                      <option key={item} value={number + 1}>{number + 1 }</option>
                     ))}
                   </select>
                 </Wrapper>
@@ -498,10 +498,10 @@ export default function B() {
                         <td className="py-2">{10 * assicurazione} €</td>
                       </tr>
                     )}
-                    {(tesserato === "Si" || data.length > 1) && (
+                    {(tesserato === "Si" || virtualTurni > 1) && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto tesseramento</td>
-                        <td className="py-2 "> - { 30 * (virtualTurni - (tesserato === "Si" ? 0 : 1) ) } €</td>
+                        <td className="py-2 "> - { 30 * (virtualTurni + (tesserato === "Si" && virtualTurni === 1 ? 1 : 0 ) -1 )} €</td>
                       </tr>
                     )}
                     {fratelli === "Si" && (
@@ -524,7 +524,7 @@ export default function B() {
                     )}
                     <tr className="text-left">
                       <th className="py-2 text-xl font-black">TOTALE</th>
-                      <th className="py-2">{(turni.length * 290) + (g1.length * 145 ) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? ( 30 * (virtualTurni - (tesserato === "Si" ? 0 : 1) )) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)} €</th>
+                      <th className="py-2">{(turni.length * 290) + (g1.length * 145 ) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" && virtualTurni === 1 ? 1 : 0 ) -1 )) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)} €</th>
                     </tr>
                     </tbody>
                   </table>

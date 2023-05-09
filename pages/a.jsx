@@ -4,8 +4,6 @@ import Section from "../components/Section";
 import CheckBox from "../components/CheckBox";
 import toast from "react-hot-toast";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
-import FileUploader from "../components/FileUploader";
 import Link from "next/link";
 import { useMutation } from "react-query";
 import { createDocument } from "../firebase/db";
@@ -14,10 +12,6 @@ export default function A() {
   const [storedValues, setStoredValue] = useLocalStorage("da", {});
 
   const methods = useForm({ mode: "onChange", defaultValues: storedValues });
-
-  //const [files, setFiles] = useState([]);
-
-  //const [percent, setPercent] = useState(0);
 
   const sendMail = useMutation(({ data }) => {
     return fetch("api/send", {

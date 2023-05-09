@@ -144,8 +144,14 @@ export default function B() {
     );
   };
 
-  console.log((data.filter(e => !e.startsWith("T")).slice(0, data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 145 ) + (data.filter(e => !e.startsWith("T")).slice(data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 170));
-  console.log(sendMail.isLoading, sendMail.isSuccess);
+  
+  const week = data.filter(e => !e.startsWith("T"))
+  const turni = data.filter(e => e.startsWith("T"))
+  const g1 = week.slice(0, week.length - week.length % 2 )
+  const g2 = week.slice(week.length - week.length % 2)
+  const virtualTurni = turni.length + Math.trunc(week.length / 2)
+
+  console.log(g1, g2, virtualTurni)
 
   return (
     <FormProvider {...methods}>
@@ -225,26 +231,26 @@ export default function B() {
                 <div className="flex flex-col gap-4">
                   <p>Scegli la fascia di età</p>
                   <div className="flex flex-col items-start gap-2">
-                    <div className={`flex gap-2  ${age === 0 ? "bg-pink-300 border-pink-700" : age === 1 ? "bg-orange-300 border-orange-700" : "bg-green-300 border-green-700"} text-white border-2  p-2 rounded-full`}>
-                      <button type="button" onClick={() => {setAge(0);setCamp([]);setData([])}} className={`px-4 ${age === 0 ? "bg-pink-700" : ""} rounded-full`}>
+                    <div className={`flex gap-2  ${age === 0 ? "bg-pink-300 border-pink-700" : age === 1 ? "bg-orange-300 border-orange-700" : "bg-green-300 border-green-700"} text-white border-2  p-2 rounded-md`}>
+                      <button type="button" onClick={() => {setAge(0);setCamp([]);setData([])}} className={`px-4 p-1 ${age === 0 ? "bg-pink-700" : ""} rounded-md`}>
                         3-6 anni
                       </button>
-                      <button type="button" onClick={() => {setAge(1);setCamp([]);setData([])}} className={`px-4 ${age === 1 ? "bg-orange-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(1);setCamp([]);setData([])}} className={`px-4 p-1 ${age === 1 ? "bg-orange-700" : ""} rounded-md`}>
                         7-13 anni
                       </button>
-                      <button type="button" onClick={() => {setAge(2);setCamp([]);setData([])}} className={`px-4 ${age === 2 ? "bg-green-700" : ""} rounded-full`}>
-                        13+ anni
+                      <button type="button" onClick={() => {setAge(2);setCamp([]);setData([])}} className={`px-4 p-1 ${age === 2 ? "bg-green-700" : ""} rounded-md`}>
+                        14-15 anni
                       </button>
                     </div>
                   </div>
                   {age === 0 && <div>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-start">
                       <span>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-10 fill-pink-500">
                           <path d="M152 88a72 72 0 1 1 144 0A72 72 0 1 1 152 88zM39.7 144.5c13-17.9 38-21.8 55.9-8.8L131.8 162c26.8 19.5 59.1 30 92.2 30s65.4-10.5 92.2-30l36.2-26.4c17.9-13 42.9-9 55.9 8.8s9 42.9-8.8 55.9l-36.2 26.4c-13.6 9.9-28.1 18.2-43.3 25V288H128V251.7c-15.2-6.7-29.7-15.1-43.3-25L48.5 200.3c-17.9-13-21.8-38-8.8-55.9zm89.8 184.8l60.6 53-26 37.2 24.3 24.3c15.6 15.6 15.6 40.9 0 56.6s-40.9 15.6-56.6 0l-48-48C70 438.6 68.1 417 79.2 401.1l50.2-71.8zm128.5 53l60.6-53 50.2 71.8c11.1 15.9 9.2 37.5-4.5 51.2l-48 48c-15.6 15.6-40.9 15.6-56.6 0s-15.6-40.9 0-56.6L284 419.4l-26-37.2z" />
                         </svg>
                       </span>
-                      <div className="flex flex-col">
+                      <div className="flex flex-col ">
                         <h1 className="text-xl text-pink-500">GALLETTO BABY MAGIC SUMMER</h1>
                         <p className="text-[8px]">
                         torna il camp dai 3-6 anni che porta i bambini a scoprire gli sport e stare a contatto con la natura
@@ -276,7 +282,7 @@ export default function B() {
                     </div>
                   </div>}
                   {age === 1 && <div>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 items-start">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-10 w-14 fill-orange-500 ">
                         <path d="M371.5 429c-71.4 7-145.1-8.2-210-47.1c-8.8 14.8-16.2 30.3-22.3 46.3C172.5 450.8 212.7 464 256 464c42.7 0 82.5-12.9 115.5-35zm60.1-61.5c9.2-14.4 16.6-30.1 22.1-46.7c-65.9 7.3-134.5-4.3-197.1-37.1c-25.9 16.5-48.4 36.5-67.2 58.9c75.2 43.8 163.6 51 242.3 24.9zm31.8-96.4c.4-5 .5-10 .5-15.1c0-77.9-42.8-145.8-106.3-181.5c35.6 58.4 54.2 127.7 49.6 200.3c18.8 .5 37.6-.7 56.1-3.8zM101 394.7C127.6 334 172 280.5 231.7 242.7c-1.3-30-7.1-58.9-16.8-85.9C140.2 189.5 85.7 249.6 58.1 320.3c9 27.9 23.8 53.1 42.9 74.5zm-52-159.9C84.1 182.9 133.8 140 195.2 113c-8.7-15.7-18.7-30.4-29.9-44.2C101.9 99.6 56.5 161.6 49.1 234.8zM213.3 52.4c39.3 53.4 63.5 118.6 66.4 189.2c25.7 13.4 52.6 22.6 79.9 27.9c4.6-84.1-26.8-163-81.5-220.4c-7.2-.8-14.6-1.2-22.1-1.2c-14.6 0-28.9 1.5-42.7 4.4zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 0l0 0h0l0 0z" />
                       </svg>
@@ -311,25 +317,28 @@ export default function B() {
                       <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["S11"])} condi={camp.some(e => e === "S11")} color={"bg-orange-200"} />
                       <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["S12"])} condi={camp.some(e => e === "S12")} color={"bg-orange-200"} />
                     </div>
-                    <button type="button" className="flex w-full grow items-start bg-orange-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
+                    <button type="button" className="flex  w-full grow items-start bg-orange-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
                       <div className="font-bold flex gap-1 text-orange-600 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-orange-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
                         <p></p>GALETTO RESIDENT
                       </div>
-                      <p className="text-xs">per informazioni e iscrizioni contattaci al 3240957228</p>
+                      <p className="text-xs text-left">per informazioni e iscrizioni contattaci al 3240957228</p>
+                      <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/zqPPpJhicd9y8qDz7" >
+                      <p className="font-bold bg-orange-700 text-white p-2 rounded-lg mt-2">Iscriviti</p>
+                      </a>
                     </button>
                   </div>}
                   {
                     age === 2 &&
                     <div>
-                      <div className="flex gap-2 items-center">
+                      <div className="flex gap-2 items-start">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="h-10 w-14 fill-green-500 ">
                           <path d="M184 48H328c4.4 0 8 3.6 8 8V96H176V56c0-4.4 3.6-8 8-8zm-56 8V96H64C28.7 96 0 124.7 0 160v96H192 320 512V160c0-35.3-28.7-64-64-64H384V56c0-30.9-25.1-56-56-56H184c-30.9 0-56 25.1-56 56zM512 288H320v32c0 17.7-14.3 32-32 32H224c-17.7 0-32-14.3-32-32V288H0V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V288z" />
                         </svg>
                         <div className="flex flex-col">
-                          <h1 className="text-xl text-green-500">GALLETTO CRESCI </h1>
+                          <h1 className="text-xl text-green-500">GALLETTO CRESCI CON NOI</h1>
                           <p className="text-[8px]">
-                            GALLETTO CRESCI CON NOI 13 +
+                            GALLETTO CRESCI CON NOI PER RAGAZZI DAI 14 AI 15 ANNI
                           </p>
                         </div>
                       </div>
@@ -465,19 +474,19 @@ export default function B() {
                     </tr>
                     </thead>
                     <tbody>
-                    {data.filter(e => e.startsWith("T")).map((val, i) => (
+                    {turni.map((val, i) => (
                       <tr key={i} className="border-b-2 text-left">
                         <td className="py-2">{dataset[val].desc}</td>
                         <td className="py-2">{dataset[val].price} €</td>
                       </tr>
                     ))}
-                    {data.filter(e => !e.startsWith("T")).slice(0, data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).map((val, i) => (
+                    {g1.map((val, i) => (
                       <tr key={i} className="border-b-2 text-left">
                         <td className="py-2">{dataset[val].desc}</td>
                         <td className="py-2">145 €</td>
                       </tr>
                     ))}
-                    {data.filter(e => !e.startsWith("T")).slice(data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).map((val, i) => (
+                    {g2.map((val, i) => (
                       <tr key={i} className="border-b-2 text-left">
                         <td className="py-2">{dataset[val].desc}</td>
                         <td className="py-2">{dataset[val].price} €</td>
@@ -492,16 +501,16 @@ export default function B() {
                     {(tesserato === "Si" || data.length > 1) && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto tesseramento</td>
-                        <td className="py-2 "> - { 30 * (data.length - (tesserato === "Si" ? 0 : 1) ) } €</td>
+                        <td className="py-2 "> - { 30 * (virtualTurni - (tesserato === "Si" ? 0 : 1) ) } €</td>
                       </tr>
                     )}
                     {fratelli === "Si" && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto Fratelli</td>
-                        <td className="py-2"> - {data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 } € </td>
+                        <td className="py-2"> - {turni.length * 10 + week.length * 5 } € </td>
                       </tr>
                     )}
-                     {convenzione === "Florim" && (
+                     {convenzione === "FLORIM" && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto Dipendenti Florim</td>
                         <td className="py-2">- 290 €</td>
@@ -515,7 +524,7 @@ export default function B() {
                     )}
                     <tr className="text-left">
                       <th className="py-2 text-xl font-black">TOTALE</th>
-                      <th className="py-2">{(data.filter(e => !e.startsWith("T")).slice(0, data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 145 ) + (data.filter(e => !e.startsWith("T")).slice(data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 170)  + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (data.length - (tesserato === "Si" ? 0 : 1) )) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "Florim" ? 290 : 0)} €</th>
+                      <th className="py-2">{(turni.length * 290) + (g1.length * 145 ) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? ( 30 * (virtualTurni - (tesserato === "Si" ? 0 : 1) )) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)} €</th>
                     </tr>
                     </tbody>
                   </table>

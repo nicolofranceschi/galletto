@@ -54,8 +54,11 @@ export default async function sendB(req, res) {
     bc_euro,
     bc_intestatario,
     key,
+    fratelli,
+    conciliazione,
+    convenzione,
+    tesserato,
   } = req.body;
-
 
   const auth = new google.auth.GoogleAuth({
     ...googleAuthConfig,
@@ -113,6 +116,10 @@ export default async function sendB(req, res) {
         fermata,
         fermatacustom,
         Number(assicurazione) > 0  ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
+        fratelli,
+        conciliazione,
+        convenzione,
+        tesserato,
         key
       ]],
     },
@@ -204,7 +211,7 @@ export default async function sendB(req, res) {
   );
   doc.moveDown(1);
   doc.fontSize(11);
-  doc.text("Assicurazione");
+  doc.text("Rimborso assenza per malattia");
   doc.fontSize(7);
   doc.moveDown(0.2);
   doc.font("Helvetica");

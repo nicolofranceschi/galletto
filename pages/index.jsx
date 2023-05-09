@@ -13,6 +13,7 @@ export default function Home() {
             <p className="p-1 font-bold">
               DOMANDA DI TESSERAMENTO ALLA GSA SSD RL - MODULO A
             </p>
+            <p className="py-1 font-thin">compilare solo se NON siete già tesserati nell'anno 2023.</p>
             <div className="bg-[#DBBDC4] relative overflow-hidden rounded-xl h-[70vh]">
               <p className="text-[115vh] absolute top-[-60%] right-[-10%] font-bold text-[#693A44]">
                 A

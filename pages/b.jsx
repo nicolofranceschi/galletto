@@ -144,6 +144,7 @@ export default function B() {
     );
   };
 
+  console.log((data.filter(e => !e.startsWith("T")).slice(0, data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 145 ) + (data.filter(e => !e.startsWith("T")).slice(data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 170));
   console.log(sendMail.isLoading, sendMail.isSuccess);
 
   return (
@@ -348,19 +349,10 @@ export default function B() {
                     rimborso di 20€ per ogni giorno di assenza causa malattia
                     attestata da certificato medico">
                   <select {...methods.register("assicurazione")}>
-                    <option value="1">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
+                    <option value="0">0</option>
+                    {camp.map((item,number) => (
+                      <option key={item} value={number}>{number + 1 }</option>
+                    ))}
                   </select>
                 </Wrapper>
               </Section>
@@ -379,7 +371,7 @@ export default function B() {
                 </Wrapper>
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select {...methods.register("conciliazione")}>
-                    <option value="1">0</option>
+                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -473,13 +465,25 @@ export default function B() {
                     </tr>
                     </thead>
                     <tbody>
-                    {data.map((val, i) => (
+                    {data.filter(e => e.startsWith("T")).map((val, i) => (
                       <tr key={i} className="border-b-2 text-left">
                         <td className="py-2">{dataset[val].desc}</td>
                         <td className="py-2">{dataset[val].price} €</td>
                       </tr>
                     ))}
-                    {assicurazione > 1 && (
+                    {data.filter(e => !e.startsWith("T")).slice(0, data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).map((val, i) => (
+                      <tr key={i} className="border-b-2 text-left">
+                        <td className="py-2">{dataset[val].desc}</td>
+                        <td className="py-2">145 €</td>
+                      </tr>
+                    ))}
+                    {data.filter(e => !e.startsWith("T")).slice(data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).map((val, i) => (
+                      <tr key={i} className="border-b-2 text-left">
+                        <td className="py-2">{dataset[val].desc}</td>
+                        <td className="py-2">{dataset[val].price} €</td>
+                      </tr>
+                    ))}
+                    {assicurazione >= 1 && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Rimborso per malattia</td>
                         <td className="py-2">{10 * assicurazione} €</td>
@@ -488,7 +492,7 @@ export default function B() {
                     {(tesserato === "Si" || data.length > 1) && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto tesseramento</td>
-                        <td className="py-2 "> - 30 €</td>
+                        <td className="py-2 "> - { 30 * (data.length - (tesserato === "Si" ? 0 : 1) ) } €</td>
                       </tr>
                     )}
                     {fratelli === "Si" && (
@@ -503,7 +507,7 @@ export default function B() {
                         <td className="py-2">- 290 €</td>
                       </tr>
                     )}
-                    {conciliazione > 1 && (
+                    {conciliazione >= 1 && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto Progetto Conciliazione</td>
                         <td className="py-2"> - {100 * conciliazione} €</td>
@@ -511,7 +515,7 @@ export default function B() {
                     )}
                     <tr className="text-left">
                       <th className="py-2 text-xl font-black">TOTALE</th>
-                      <th className="py-2">{data.reduce((acc, val) => acc + dataset[val].price, 0) + (assicurazione > 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? 30 : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione > 1 ? 100 * conciliazione : 0) - (convenzione === "Florim" ? 290 : 0)} €</th>
+                      <th className="py-2">{(data.filter(e => !e.startsWith("T")).slice(0, data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 145 ) + (data.filter(e => !e.startsWith("T")).slice(data.filter(e => !e.startsWith("T")).length - data.filter(e => !e.startsWith("T")).length % 2).length * 170)  + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (data.length - (tesserato === "Si" ? 0 : 1) )) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "Florim" ? 290 : 0)} €</th>
                     </tr>
                     </tbody>
                   </table>

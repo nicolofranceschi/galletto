@@ -466,10 +466,13 @@ export default function B() {
               <Section title="Carrello della spesa">
                 <div className="flex flex-col gap-2">
                   <table className="border-collapse">
+                    <thead>
                     <tr className="border-b-2 text-left">
                       <th className="py-2">Descrizione</th>
                       <th className="py-2">Prezzo</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     {data.map((val, i) => (
                       <tr key={i} className="border-b-2 text-left">
                         <td className="py-2">{dataset[val].desc}</td>
@@ -482,7 +485,7 @@ export default function B() {
                         <td className="py-2">{10 * assicurazione} €</td>
                       </tr>
                     )}
-                    {tesserato === "Si" || data.filter(e => e.startsWith("T")).length > 1 && (
+                    {(tesserato === "Si" || data.length > 1) && (
                       <tr className="border-b-2 text-left">
                         <td className="py-2">Sconto tesseramento</td>
                         <td className="py-2 "> - 30 €</td>
@@ -508,8 +511,9 @@ export default function B() {
                     )}
                     <tr className="text-left">
                       <th className="py-2 text-xl font-black">TOTALE</th>
-                      <th className="py-2">{data.reduce((acc, val) => acc + dataset[val].price, 0) + (assicurazione > 1 ? 10 * assicurazione : 0) - (tesserato === "Si" || data.filter(e => e.startsWith("T")).length > 1 ? 30 : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione > 1 ? 100 * conciliazione : 0) - (convenzione === "Florim" ? 290 : 0)} €</th>
+                      <th className="py-2">{data.reduce((acc, val) => acc + dataset[val].price, 0) + (assicurazione > 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? 30 : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione > 1 ? 100 * conciliazione : 0) - (convenzione === "Florim" ? 290 : 0)} €</th>
                     </tr>
+                    </tbody>
                   </table>
                 </div>
               </Section>

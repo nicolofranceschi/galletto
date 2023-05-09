@@ -152,6 +152,10 @@ export default function B() {
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
   const tot = (turni.length * 290) + (g1.length * 145) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
 
+
+
+  console.log(turni.length , week.length , Math.round(conciliazione/2+1) ,(conciliazione*1+2),)
+
   return (
     <FormProvider {...methods}>
       <form className="text-sm" onSubmit={methods.handleSubmit(onSubmit)}>
@@ -374,7 +378,7 @@ export default function B() {
               </Section>
               <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
-                  <select {...methods.register("conciliazione")}>
+                  <select defaultValue="0" {...methods.register("conciliazione")}>
                     <option value="0">0</option>
                     {fratelli === "No" &&
                       <>
@@ -396,7 +400,7 @@ export default function B() {
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
-                    <option value="FLORIM">FLORIM</option>
+                    {(turni.length >= Math.round(conciliazione/2+1) || week.length >= (conciliazione*1+2)) && <option value="FLORIM">FLORIM</option>}
                   </select>
                 </Wrapper>
               </Section>
@@ -514,7 +518,7 @@ export default function B() {
                       {fratelli === "Si" && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Fratelli</td>
-                          <td className="py-2"> - {turni.length * 10 + week.length * 5} € </td>
+                          <td className="py-2"> - {turni.length * 10 + Math.trunc(week.length / 2) * 10} € </td>
                         </tr>
                       )}
                       {convenzione === "FLORIM" && (

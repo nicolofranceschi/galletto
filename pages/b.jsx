@@ -577,7 +577,7 @@ export default function B() {
                   </div>
                 </Wrapper>
               </Section>
-              {sendMail.isSuccess ? (
+              {!sendMail.isSuccess ? (
                 <>
                   <div className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-green-600 ">
                     <p className="text-green-100 font-bold ">

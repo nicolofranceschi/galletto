@@ -143,7 +143,7 @@ export default async function sendB(req, res) {
   doc.moveDown(1);
   doc.text("IL/LA SOTTOSCRITTO/A");
   doc.moveDown(0.2);
-  doc.fontSize(10);
+  doc.fontSize(7);
   doc.text(
     `${da_cognome} ${da_nome} nato a ${da_città_di_nascita} (${da_provincia_di_nascita}) il ${da_giorno_datadinascitadeltutore} ${da_mese_datadinascitadeltutore} ${da_anno_datadinascitadeltutore} `
   );
@@ -159,7 +159,7 @@ export default async function sendB(req, res) {
     "IN QUALITA' DI ESERCENTE LA RESPONSABILITA' GENITORIALE CHIEDE CHE IL SEGUENTE MINORE"
   );
   doc.moveDown(0.2);
-  doc.fontSize(10);
+  doc.fontSize(7);
   doc.text(
     `${da_cognome_minore} ${da_nome_minore} nato a ${da_città_di_nascita_minore} (${da_provincia_di_nascita_minore}) il ${da_giorno_datadinascitadelminore} ${da_mese_datadinascitadelminore} ${da_anno_datadinascitadelminore} `
   );
@@ -179,7 +179,7 @@ export default async function sendB(req, res) {
   doc.fontSize(11);
   doc.text("Turni");
   doc.moveDown(0.1);
-  doc.fontSize(10);
+  doc.fontSize(7);
   camp && camp.map((e) => {
     doc.text(`- ${dataset[e].desc}`);
   });
@@ -187,7 +187,7 @@ export default async function sendB(req, res) {
   doc.fontSize(11);
   doc.text("Trasporti");
   doc.moveDown(0.1);
-  doc.fontSize(10);
+  doc.fontSize(7);
   doc.text(`Fermata: ${fermata} `);
   doc.moveDown(0.3);
   fermatacustom && fermatacustom !== "" && doc.text(`Fermata personalizzata: ${fermatacustom}`);
@@ -239,7 +239,7 @@ export default async function sendB(req, res) {
   doc.font("Helvetica-Bold");
   Number(assicurazione) > 0 ? doc.text("Attiva") : doc.text("Non Attiva");
   doc.moveDown(1);
-  doc.fontSize(10);
+  doc.fontSize(7);
   doc.text(
     `Effettutato bonifico a nome di ${bc_intestatario} il ${BC_giorno_data} ${BC_mese_data} ${BC_anno_data} per un valore di ${bc_euro}`
   );

@@ -103,12 +103,10 @@ export default function B() {
   const conciliazione = methods.watch("conciliazione");
   const convenzione = methods.watch("convenzione");
 
-  console.log(fermata, assicurazione)
-
   const saveSubmit = useMutation(({ data }) => createDocument("b", data));
 
-  const onSubmit = async (data) => {
-    const API = { ...data, files, camp };
+  const onSubmit = async (datas) => {
+    const API = { ...datas, files, camp: data };
     const valuetostore = Object.entries(data).reduce((acc, [key, val]) => {
       return key.startsWith("da") ? { ...acc, [key]: val } : acc;
     }, {});
@@ -120,7 +118,7 @@ export default function B() {
       toast.error("Il certificato medico è obbligatorio");
       return;
     }
-    if (camp.length === 0 && data.Settimanepersonalizzate === "") {
+    if (data.length === 0) {
       toast.error(
         "Devi Selezionare almeno un camp o una settimana personalazzita"
       );

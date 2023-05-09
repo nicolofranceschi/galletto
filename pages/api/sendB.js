@@ -2,6 +2,7 @@ import sendgrid from "@sendgrid/mail";
 const { google } = require("googleapis");
 import { toArray } from "streamtoarray";
 import googleAuthConfig from "../../utils/google-auth-config";
+import { dataset } from "../../components/dataset";
 
 const PDFDocument = require("pdfkit");
 
@@ -9,13 +10,6 @@ if (!process.env.SENDGRID_API_KEY)
   throw new Error("Sendgrid API key not found.");
 
 var months = {"Gennaio": "01","Febbraio": "02","Marzo": "03","Aprile": "04","Maggio":"05","Giugno":"06","Luglio":"07","Agosto":"08","Settembre":"09","Ottobre":"10","Novembre":"11","Dicembre":"12"};
-var turni = {
-  "Galletto Residence":"GALLETTO RESIDENCE (12/06 - 19/06)",
-  "Galletto Sport 1 Turno":"GALLETTO SPORT 1° Turno: da lunedì 06/06 a venerdì 17/06",
-  "Galletto Sport 2 Turno":"GALLETTO SPORT 2° Turno: da lunedì 20/06 a venerdì 01/07",
-  "Galletto Sport 3 Turno":"GALLETTO SPORT 3° Turno: da lunedì 04/07 a venerdì 15/07",
-  "Galletto Sport 4 Turno":"GALLETTO SPORT 4° Turno: da lunedì 18/07 a venerdì 29/07"
-}
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -120,8 +114,7 @@ export default async function sendB(req, res) {
         bc_intestatario,
         `0${BC_giorno_data}-0${months[BC_mese_data]}-${BC_anno_data}`,
         bc_euro,
-        Settimanepersonalizzate === "" ? "" + camp.map(e => turni[e]).toString() : "Settimana personalizzata " + camp.map(e => turni[e]).toString(),
-        "GALLETTO SPORT SETTIMANE PERSONALIZZATE : " + Settimanepersonalizzate,
+        camp.map(e => dataset[e]).toString(),
         fermata,
         fermatacustom,
         assicurazione ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
@@ -185,11 +178,9 @@ export default async function sendB(req, res) {
   doc.text("Turni");
   doc.moveDown(0.1);
   doc.fontSize(10);
-  camp &&
-    camp.map((e) => {
-      doc.text(`- ${turni[e].toString()}`);
+  camp && camp.map((e) => {
+      doc.text(`- ${dataset[e].toString()}`);
     });
-  Settimanepersonalizzate !== "" && doc.text(`- GALLETTO SPORT SETTIMANE PERSONALIZZATE: ${Settimanepersonalizzate}`);
   doc.moveDown(0.5);
   doc.fontSize(11);
   doc.text("Trasporti");

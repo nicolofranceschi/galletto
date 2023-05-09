@@ -210,6 +210,20 @@ export default async function sendB(req, res) {
     }
   );
   doc.moveDown(1);
+  doc.moveDown(1);
+  doc.text(
+    "Manifestazione del consenso e presa visione termini del Progetto Conciliazione"
+  );
+  doc.fontSize(7);
+  doc.moveDown(1);
+  doc.font("Helvetica");
+  doc.text(
+    "DICHIARO che Nel caso non si disponga dei diritti per aderire al progetto conciliazione, il genitore accetta a provvedere per la parte mancante del pagamento riguardante l'iscrizione entro l'inizio del camp.",
+    {
+      align: "justify",
+    }
+  );
+  doc.moveDown(1);
   doc.fontSize(11);
   doc.text("Rimborso assenza per malattia");
   doc.fontSize(7);

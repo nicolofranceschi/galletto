@@ -144,13 +144,13 @@ export default function B() {
     );
   };
 
-  
+
   const week = data.filter(e => !e.startsWith("T"))
   const turni = data.filter(e => e.startsWith("T"))
-  const g1 = week.slice(0, week.length - week.length % 2 )
+  const g1 = week.slice(0, week.length - week.length % 2)
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
-  const tot = (turni.length * 290) + (g1.length * 145 ) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0 ) -1 )) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const tot = (turni.length * 290) + (g1.length * 145) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
 
   return (
     <FormProvider {...methods}>
@@ -231,13 +231,13 @@ export default function B() {
                   <p>Scegli la fascia di età</p>
                   <div className="flex flex-col items-start gap-2">
                     <div className={`flex gap-2  ${age === 0 ? "bg-pink-300 border-pink-700" : age === 1 ? "bg-orange-300 border-orange-700" : "bg-green-300 border-green-700"} text-white border-2  p-2 rounded-md`}>
-                      <button type="button" onClick={() => {setAge(0);setCamp([]);setData([])}} className={`px-4 p-1 ${age === 0 ? "bg-pink-700" : ""} rounded-md`}>
+                      <button type="button" onClick={() => { setAge(0); setCamp([]); setData([]) }} className={`px-4 p-1 ${age === 0 ? "bg-pink-700" : ""} rounded-md`}>
                         3-6 anni
                       </button>
-                      <button type="button" onClick={() => {setAge(1);setCamp([]);setData([])}} className={`px-4 p-1 ${age === 1 ? "bg-orange-700" : ""} rounded-md`}>
+                      <button type="button" onClick={() => { setAge(1); setCamp([]); setData([]) }} className={`px-4 p-1 ${age === 1 ? "bg-orange-700" : ""} rounded-md`}>
                         7-13 anni
                       </button>
-                      <button type="button" onClick={() => {setAge(2);setCamp([]);setData([])}} className={`px-4 p-1 ${age === 2 ? "bg-green-700" : ""} rounded-md`}>
+                      <button type="button" onClick={() => { setAge(2); setCamp([]); setData([]) }} className={`px-4 p-1 ${age === 2 ? "bg-green-700" : ""} rounded-md`}>
                         14-15 anni
                       </button>
                     </div>
@@ -252,7 +252,7 @@ export default function B() {
                       <div className="flex flex-col ">
                         <h1 className="text-xl text-pink-500">GALLETTO BABY MAGIC SUMMER</h1>
                         <p className="text-[8px]">
-                        torna il camp dai 3-6 anni che porta i bambini a scoprire gli sport e stare a contatto con la natura
+                          torna il camp dai 3-6 anni che porta i bambini a scoprire gli sport e stare a contatto con la natura
                         </p>
                       </div>
                     </div>
@@ -288,7 +288,7 @@ export default function B() {
                       <div className="flex flex-col">
                         <h1 className="text-xl text-orange-500">GALLETTO SPORT AVVENTURA</h1>
                         <p className="text-[8px]">
-                        appassionati all'avventura, vivi in esperienza sportiva unica a contatto col verde
+                          appassionati all'avventura, vivi in esperienza sportiva unica a contatto col verde
                         </p>
                       </div>
                     </div>
@@ -323,7 +323,7 @@ export default function B() {
                       </div>
                       <p className="text-xs text-left">per informazioni e iscrizioni contattaci al 3240957228</p>
                       <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/zqPPpJhicd9y8qDz7" >
-                      <p className="font-bold bg-orange-700 text-white p-2 rounded-lg mt-2">Iscriviti</p>
+                        <p className="font-bold bg-orange-700 text-white p-2 rounded-lg mt-2">Iscriviti</p>
                       </a>
                     </button>
                   </div>}
@@ -358,37 +358,45 @@ export default function B() {
                     attestata da certificato medico">
                   <select {...methods.register("assicurazione")}>
                     <option value="0">0</option>
-                    {camp.map((item,number) => (
-                      <option key={item} value={number + 1}>{number + 1 }</option>
+                    {camp.map((item, number) => (
+                      <option key={item} value={number + 1}>{number + 1}</option>
                     ))}
                   </select>
                 </Wrapper>
               </Section>
-              <Section title="SCONTISTICHE APPLICABILI">
+              <Section title="UTENTE GIA' TESSERATO">
                 <Wrapper title="L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE ?">
                   <select {...methods.register("tesserato")}>
                     <option value="No">No</option>
                     <option value="Si">Si</option>
                   </select>
                 </Wrapper>
-                <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
-                  <select {...methods.register("convenzione")}>
-                    <option value="none">No</option>
-                    <option value="FLORIM">FLORIM</option>
-                  </select>
-                </Wrapper>
+              </Section>
+              <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select {...methods.register("conciliazione")}>
                     <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    {fratelli === "No" &&
+                      <>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                      </>
+                    }
                   </select>
                 </Wrapper>
                 <Wrapper title="HAI UN FRATELLO/SORELLA ISCRITTO ?">
                   <select {...methods.register("fratelli")}>
                     <option value="No">No</option>
-                    <option value="Si">Si</option>
+                    {conciliazione === "0" && <option value="Si">Si</option>}
+                  </select>
+                </Wrapper>
+              </Section>
+              <Section title="CONVENZIONI AZIENDALI">
+                <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
+                  <select {...methods.register("convenzione")}>
+                    <option value="none">No</option>
+                    <option value="FLORIM">FLORIM</option>
                   </select>
                 </Wrapper>
               </Section>
@@ -467,68 +475,75 @@ export default function B() {
                 <div className="flex flex-col gap-2">
                   <table className="border-collapse">
                     <thead>
-                    <tr className="border-b-2 text-left">
-                      <th className="py-2">Descrizione</th>
-                      <th className="py-2">Prezzo</th>
-                    </tr>
+                      <tr className="border-b-2 text-left">
+                        <th className="py-2">Descrizione</th>
+                        <th className="py-2">Prezzo</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    {turni.map((val, i) => (
-                      <tr key={i} className="border-b-2 text-left">
-                        <td className="py-2">{dataset[val].desc}</td>
-                        <td className="py-2">{dataset[val].price} €</td>
+                      {turni.map((val, i) => (
+                        <tr key={i} className="border-b-2 text-left">
+                          <td className="py-2">{dataset[val].desc}</td>
+                          <td className="py-2">{dataset[val].price} €</td>
+                        </tr>
+                      ))}
+                      {g1.map((val, i) => (
+                        <tr key={i} className="border-b-2 text-left">
+                          <td className="py-2">{dataset[val].desc}</td>
+                          <td className="py-2">145 €</td>
+                        </tr>
+                      ))}
+                      {g2.map((val, i) => (
+                        <tr key={i} className="border-b-2 text-left">
+                          <td className="py-2">{dataset[val].desc}</td>
+                          <td className="py-2">{dataset[val].price} €</td>
+                        </tr>
+                      ))}
+                      {assicurazione >= 1 && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Rimborso per malattia</td>
+                          <td className="py-2">{10 * assicurazione} €</td>
+                        </tr>
+                      )}
+                      {(tesserato === "Si" || virtualTurni > 1) && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto tesseramento</td>
+                          <td className="py-2 "> - {30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)} €</td>
+                        </tr>
+                      )}
+                      {fratelli === "Si" && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto Fratelli</td>
+                          <td className="py-2"> - {turni.length * 10 + week.length * 5} € </td>
+                        </tr>
+                      )}
+                      {convenzione === "FLORIM" && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto Dipendenti Florim</td>
+                          <td className="py-2">- 290 €</td>
+                        </tr>
+                      )}
+                      {conciliazione >= 1 && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto Progetto Conciliazione</td>
+                          <td className="py-2"> - {100 * conciliazione} €</td>
+                        </tr>
+                      )}
+                      <tr className="text-left">
+                        <th className="py-2 text-xl font-black">TOTALE</th>
+                        <th className="py-2">{tot < 0 ? 0 : tot} €</th>
                       </tr>
-                    ))}
-                    {g1.map((val, i) => (
-                      <tr key={i} className="border-b-2 text-left">
-                        <td className="py-2">{dataset[val].desc}</td>
-                        <td className="py-2">145 €</td>
-                      </tr>
-                    ))}
-                    {g2.map((val, i) => (
-                      <tr key={i} className="border-b-2 text-left">
-                        <td className="py-2">{dataset[val].desc}</td>
-                        <td className="py-2">{dataset[val].price} €</td>
-                      </tr>
-                    ))}
-                    {assicurazione >= 1 && (
-                      <tr className="border-b-2 text-left">
-                        <td className="py-2">Rimborso per malattia</td>
-                        <td className="py-2">{10 * assicurazione} €</td>
-                      </tr>
-                    )}
-                    {(tesserato === "Si" || virtualTurni > 1) && (
-                      <tr className="border-b-2 text-left">
-                        <td className="py-2">Sconto tesseramento</td>
-                        <td className="py-2 "> - { 30 * (virtualTurni + (tesserato === "Si"  ? 1 : 0 ) -1 )} €</td>
-                      </tr>
-                    )}
-                    {fratelli === "Si" && (
-                      <tr className="border-b-2 text-left">
-                        <td className="py-2">Sconto Fratelli</td>
-                        <td className="py-2"> - {turni.length * 10 + week.length * 5 } € </td>
-                      </tr>
-                    )}
-                     {convenzione === "FLORIM" && (
-                      <tr className="border-b-2 text-left">
-                        <td className="py-2">Sconto Dipendenti Florim</td>
-                        <td className="py-2">- 290 €</td>
-                      </tr>
-                    )}
-                    {conciliazione >= 1 && (
-                      <tr className="border-b-2 text-left">
-                        <td className="py-2">Sconto Progetto Conciliazione</td>
-                        <td className="py-2"> - {100 * conciliazione} €</td>
-                      </tr>
-                    )}
-                    <tr className="text-left">
-                      <th className="py-2 text-xl font-black">TOTALE</th>
-                      <th className="py-2">{tot < 0 ? 0 : tot} €</th>
-                    </tr>
                     </tbody>
                   </table>
                 </div>
               </Section>
+              <Section title="Manifestazione del consenso e presa visione termini del Progetto Conciliazione">
+                <CheckBox
+                  text="Nel caso non si disponga dei diritti per aderire al progetto conciliazione, il genitore accetta a provvedere per la parte mancante del pagamento riguardante l'iscrizione entro l'inizio del camp"
+                  label="Accetto"
+                  registername="conciliazione"
+                />
+                </Section>
               <Section
                 family="BC_"
                 title="Dati relativi al pagamento effettuato a mezzo bonifico"
@@ -652,14 +667,14 @@ export default function B() {
 
 
 
-const Turno = ({ color, condi, title, desc, addCamp , disabled }) => (
+const Turno = ({ color, condi, title, desc, addCamp, disabled }) => (
   <button disabled={disabled} onClick={addCamp} type="button" className={` ${condi ? `${color}` : disabled ? "" : "hover:bg-slate-200"}  p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md`}>
     <p className="font-bold">{title}</p>
     <p className="text-xs">{desc}</p>
   </button>
 )
 
-const Week = ({ color, condi, title, addCamp , disabled }) => (
+const Week = ({ color, condi, title, addCamp, disabled }) => (
   <button disabled={disabled} onClick={addCamp} type="button" className={` ${condi ? `${color}` : disabled ? "" : "hover:bg-slate-200"}  p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md `}>
     <p className="font-xs">{title}</p>
   </button>

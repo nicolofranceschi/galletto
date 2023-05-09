@@ -225,13 +225,13 @@ export default function B() {
                   <p>Scegli la fascia di età</p>
                   <div className="flex flex-col items-start gap-2">
                     <div className={`flex gap-2  ${age === 0 ? "bg-pink-300 border-pink-700" : age === 1 ? "bg-orange-300 border-orange-700" : "bg-green-300 border-green-700"} text-white border-2  p-2 rounded-full`}>
-                      <button type="button" onClick={() => {setAge(0);setCamp([])}} className={`px-4 ${age === 0 ? "bg-pink-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(0);setCamp([]);setData([])}} className={`px-4 ${age === 0 ? "bg-pink-700" : ""} rounded-full`}>
                         3-6 anni
                       </button>
-                      <button type="button" onClick={() => {setAge(1);setCamp([])}} className={`px-4 ${age === 1 ? "bg-orange-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(1);setCamp([]);setData([])}} className={`px-4 ${age === 1 ? "bg-orange-700" : ""} rounded-full`}>
                         7-13 anni
                       </button>
-                      <button type="button" onClick={() => {setAge(2);setCamp([])}} className={`px-4 ${age === 2 ? "bg-green-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(2);setCamp([]);setData([])}} className={`px-4 ${age === 2 ? "bg-green-700" : ""} rounded-full`}>
                         13+ anni
                       </button>
                     </div>

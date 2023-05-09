@@ -13,8 +13,9 @@ import Wrapper from "../components/Wrapper";
 import Input from "../components/Input";
 import DatePicker from "../components/Date";
 import { createDocument } from "../firebase/db";
+import { dataset } from "../components/dataset";
 
-export default function A() {
+export default function B() {
 
   const [storedValues, setStoredValue] = useLocalStorage("da", {});
 
@@ -26,6 +27,8 @@ export default function A() {
 
   const [camp, setCamp] = useState([]);
 
+  const [data, setData] = useState([]);
+
   const [age, setAge] = useState(0)
 
   const sendMail = useMutation(({ data }) => {
@@ -36,7 +39,71 @@ export default function A() {
     });
   });
 
+  const addCamp = (camps) => {
+    const tempCamp = [...camp]
+    const newCamp = tempCamp.some(e => camps.some(el => el === e)) ? tempCamp.filter(e => !camps.some(el => el === e)) : [...camps, ...camp]
+    setCamp(newCamp)
+    const data = []
+    if (newCamp.some(e => e === "B1") && newCamp.some(e => e === "B2")) {
+      data = [...data, "TB1"]
+      newCamp = newCamp.filter(e => e !== "B1" && e !== "B2")
+    }
+    if (newCamp.some(e => e === "B3") && newCamp.some(e => e === "B4")) {
+      data = [...data, "TB2"]
+      newCamp = newCamp.filter(e => e !== "B3" && e !== "B4")
+    }
+    if (newCamp.some(e => e === "B5") && newCamp.some(e => e === "B6")) {
+      data = [...data, "TB3"]
+      newCamp = newCamp.filter(e => e !== "B5" && e !== "B6")
+    }
+    if (newCamp.some(e => e === "B7") && newCamp.some(e => e === "B8")) {
+      data = [...data, "TB4"]
+      newCamp = newCamp.filter(e => e !== "B7" && e !== "B8")
+    }
+    if (newCamp.some(e => e === "B9") && newCamp.some(e => e === "B10")) {
+      data = [...data, "TB5"]
+      newCamp = newCamp.filter(e => e !== "B9" && e !== "B10")
+    }
+    if (newCamp.some(e => e === "B11") && newCamp.some(e => e === "B12")) {
+      data = [...data, "TB6"]
+      newCamp = newCamp.filter(e => e !== "B11" && e !== "B12")
+    }
+    if (newCamp.some(e => e === "S1") && newCamp.some(e => e === "S2")) {
+      data = [...data, "TS1"]
+      newCamp = newCamp.filter(e => e !== "S1" && e !== "S2")
+    }
+    if (newCamp.some(e => e === "S3") && newCamp.some(e => e === "S4")) {
+      data = [...data, "TS2"]
+      newCamp = newCamp.filter(e => e !== "S3" && e !== "S4")
+    }
+    if (newCamp.some(e => e === "S5") && newCamp.some(e => e === "S6")) {
+      data = [...data, "TS3"]
+      newCamp = newCamp.filter(e => e !== "S5" && e !== "S6")
+    }
+    if (newCamp.some(e => e === "S7") && newCamp.some(e => e === "S8")) {
+      data = [...data, "TS4"]
+      newCamp = newCamp.filter(e => e !== "S7" && e !== "S8")
+    }
+    if (newCamp.some(e => e === "S9") && newCamp.some(e => e === "S10")) {
+      data = [...data, "TS5"]
+      newCamp = newCamp.filter(e => e !== "S9" && e !== "S10")
+    }
+    if (newCamp.some(e => e === "S11") && newCamp.some(e => e === "S12")) {
+      data = [...data, "TS6"]
+      newCamp = newCamp.filter(e => e !== "S11" && e !== "S12")
+    }
+    data = [...data, ...newCamp]
+    setData(data)
+  }
+
   const fermata = methods.watch("fermata");
+  const assicurazione = methods.watch("assicurazione");
+  const fratelli = methods.watch("fratelli");
+  const tesserato = methods.watch("tesserato");
+  const conciliazione = methods.watch("conciliazione");
+  const convenzione = methods.watch("convenzione");
+
+  console.log(fermata, assicurazione)
 
   const saveSubmit = useMutation(({ data }) => createDocument("b", data));
 
@@ -157,15 +224,16 @@ export default function A() {
               </Section>
               <Section title="SIA ISCRITTO AL CAMP SUMMER 2023">
                 <div className="flex flex-col gap-4">
+                  <p>Scegli la fascia di età</p>
                   <div className="flex flex-col items-start gap-2">
                     <div className={`flex gap-2  ${age === 0 ? "bg-pink-300 border-pink-700" : age === 1 ? "bg-orange-300 border-orange-700" : "bg-green-300 border-green-700"} text-white border-2  p-2 rounded-full`}>
-                      <button type="button" onClick={() => setAge(0)} className={`px-4 ${age === 0 ? "bg-pink-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(0);setCamp([])}} className={`px-4 ${age === 0 ? "bg-pink-700" : ""} rounded-full`}>
                         3-6 anni
                       </button>
-                      <button type="button" onClick={() => setAge(1)} className={`px-4 ${age === 1 ? "bg-orange-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(1);setCamp([])}} className={`px-4 ${age === 1 ? "bg-orange-700" : ""} rounded-full`}>
                         7-13 anni
                       </button>
-                      <button type="button" onClick={() => setAge(2)} className={`px-4 ${age === 2 ? "bg-green-700" : ""} rounded-full`}>
+                      <button type="button" onClick={() => {setAge(2);setCamp([])}} className={`px-4 ${age === 2 ? "bg-green-700" : ""} rounded-full`}>
                         13+ anni
                       </button>
                     </div>
@@ -178,76 +246,34 @@ export default function A() {
                         </svg>
                       </span>
                       <div className="flex flex-col">
-                        <h1 className="text-xl text-pink-500">GALLETTO BABY MAGIC</h1>
+                        <h1 className="text-xl text-pink-500">GALLETTO BABY MAGIC SUMMER</h1>
                         <p className="text-[8px]">
-                          GALLETTO BABY MAGIC SUMMER 3-6 ANNI
+                        torna il camp dai 3-6 anni che porta i bambini a scoprire gli sport e stare a contatto con la natura
                         </p>
                       </div>
                     </div>
-                    <div className="pt-4 flex flex-wrap text-left">
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">1 TURNO</p>
-                        <p className="text-xs">NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">2 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">3 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">4 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">5 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">6 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
+                    <div className="pt-4 flex flex-wrap text-left gap-2">
+                      <Turno title={"1 TURNO"} desc={"NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1", "B2"])} condi={camp.some(e => e === "B1") && camp.some(e => e === "B2")} color={"bg-pink-200"} />
+                      <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["B3", "B4"])} condi={camp.some(e => e === "B3") && camp.some(e => e === "B4")} color={"bg-pink-200"} />
+                      <Turno title={"3 TURNO"} desc={"da Lunedì 10/07a Venerdì 21/07"} addCamp={() => addCamp(["B5", "B6"])} condi={camp.some(e => e === "B5") && camp.some(e => e === "B6")} color={"bg-pink-200"} />
+                      <Turno title={"4 TURNO"} desc={"da Lunedì 24/07 a Venerdì 04/08"} addCamp={() => addCamp(["B7", "B8"])} condi={camp.some(e => e === "B7") && camp.some(e => e === "B8")} color={"bg-pink-200"} />
+                      <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["B9", "B10"])} condi={camp.some(e => e === "B9") && camp.some(e => e === "B10")} color={"bg-pink-200"} />
+                      <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["B11", "B12"])} condi={camp.some(e => e === "B11") && camp.some(e => e === "B12")} color={"bg-pink-200"} />
                     </div>
                     <p className="pt-4">oppure settimane personalizzate</p>
-                    <div className="flex flex-wrap">
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%]  flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
-                      </button>
+                    <div className="flex flex-wrap mt-2 gap-2">
+                      <Week title={"1 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1"])} condi={camp.some(e => e === "B1")} color={"bg-pink-200"} />
+                      <Week title={"2 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B2"])} condi={camp.some(e => e === "B2")} color={"bg-pink-200"} />
+                      <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["B3"])} condi={camp.some(e => e === "B3")} color={"bg-pink-200"} />
+                      <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["B4"])} condi={camp.some(e => e === "B4")} color={"bg-pink-200"} />
+                      <Week title={"5 SETTIMANA: 10/07 - 14/07"} addCamp={() => addCamp(["B5"])} condi={camp.some(e => e === "B5")} color={"bg-pink-200"} />
+                      <Week title={"6 SETTIMANA: 17/07 - 21/07"} addCamp={() => addCamp(["B6"])} condi={camp.some(e => e === "B6")} color={"bg-pink-200"} />
+                      <Week title={"7 SETTIMANA: 24/07 - 28/07"} addCamp={() => addCamp(["B7"])} condi={camp.some(e => e === "B7")} color={"bg-pink-200"} />
+                      <Week title={"8 SETTIMANA: 31/07 - 04/08"} addCamp={() => addCamp(["B8"])} condi={camp.some(e => e === "B8")} color={"bg-pink-200"} />
+                      <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["B9"])} condi={camp.some(e => e === "B9")} color={"bg-pink-200"} />
+                      <Week title={"10 SETTIMANA: 21/08 - 25/08"} addCamp={() => addCamp(["B10"])} condi={camp.some(e => e === "B10")} color={"bg-pink-200"} />
+                      <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["B11"])} condi={camp.some(e => e === "B11")} color={"bg-pink-200"} />
+                      <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["B12"])} condi={camp.some(e => e === "B12")} color={"bg-pink-200"} />
                     </div>
                   </div>}
                   {age === 1 && <div>
@@ -256,85 +282,43 @@ export default function A() {
                         <path d="M371.5 429c-71.4 7-145.1-8.2-210-47.1c-8.8 14.8-16.2 30.3-22.3 46.3C172.5 450.8 212.7 464 256 464c42.7 0 82.5-12.9 115.5-35zm60.1-61.5c9.2-14.4 16.6-30.1 22.1-46.7c-65.9 7.3-134.5-4.3-197.1-37.1c-25.9 16.5-48.4 36.5-67.2 58.9c75.2 43.8 163.6 51 242.3 24.9zm31.8-96.4c.4-5 .5-10 .5-15.1c0-77.9-42.8-145.8-106.3-181.5c35.6 58.4 54.2 127.7 49.6 200.3c18.8 .5 37.6-.7 56.1-3.8zM101 394.7C127.6 334 172 280.5 231.7 242.7c-1.3-30-7.1-58.9-16.8-85.9C140.2 189.5 85.7 249.6 58.1 320.3c9 27.9 23.8 53.1 42.9 74.5zm-52-159.9C84.1 182.9 133.8 140 195.2 113c-8.7-15.7-18.7-30.4-29.9-44.2C101.9 99.6 56.5 161.6 49.1 234.8zM213.3 52.4c39.3 53.4 63.5 118.6 66.4 189.2c25.7 13.4 52.6 22.6 79.9 27.9c4.6-84.1-26.8-163-81.5-220.4c-7.2-.8-14.6-1.2-22.1-1.2c-14.6 0-28.9 1.5-42.7 4.4zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 0l0 0h0l0 0z" />
                       </svg>
                       <div className="flex flex-col">
-                        <h1 className="text-xl text-orange-500">GALLETTO SPORT </h1>
+                        <h1 className="text-xl text-orange-500">GALLETTO SPORT AVVENTURA</h1>
                         <p className="text-[8px]">
-                          GALLETTO SPORT AVVENTURA 7-13 ANNI
+                        appassionati all'avventura, vivi in esperienza sportiva unica a contatto col verde
                         </p>
                       </div>
                     </div>
 
-                    <div className="pt-4 flex flex-wrap text-left">
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">1 TURNO</p>
-                        <p className="text-xs">NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">2 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">3 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">4 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">5 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="font-bold">6 TURNO</p>
-                        <p className="text-xs">27 GIUGNO - 3 LUGLIO 2023</p>
-                      </button>
+                    <div className="pt-4 flex flex-wrap text-left gap-2">
+                      <Turno title={"1 TURNO"} desc={"da Lunedì 12/06 a Venerdì 23/06"} addCamp={() => addCamp(["S1", "S2"])} condi={camp.some(e => e === "S1") && camp.some(e => e === "S2")} color={"bg-orange-200"} />
+                      <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["S3", "S4"])} condi={camp.some(e => e === "S3") && camp.some(e => e === "S4")} color={"bg-orange-200"} />
+                      <Turno title={"3 TURNO"} desc={"da Lunedì 10/07 a Venerdì 21/07"} addCamp={() => addCamp(["S5", "S6"])} condi={camp.some(e => e === "S5") && camp.some(e => e === "S6")} color={"bg-orange-200"} />
+                      <Turno title={"4 TURNO"} desc={"da Lunedì 24/07 a Venerdì 04/08"} addCamp={() => addCamp(["S7", "S8"])} condi={camp.some(e => e === "S7") && camp.some(e => e === "S8")} color={"bg-orange-200"} />
+                      <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["S9", "S10"])} condi={camp.some(e => e === "S9") && camp.some(e => e === "S10")} color={"bg-orange-200"} />
+                      <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["S11", "S12"])} condi={camp.some(e => e === "S11") && camp.some(e => e === "S12")} color={"bg-orange-200"} />
+                    </div>
+                    <p className="pt-4">oppure settimane personalizzate</p>
+                    <div className="flex flex-wrap mt-2 gap-2">
+                      <Week title={"1 SETTIMANA: 12/06 - 16/06"} addCamp={() => addCamp(["S1"])} condi={camp.some(e => e === "S1")} color={"bg-orange-200"} />
+                      <Week title={"2 SETTIMANA: 19/06 - 23/06"} addCamp={() => addCamp(["S2"])} condi={camp.some(e => e === "S2")} color={"bg-orange-200"} />
+                      <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["S3"])} condi={camp.some(e => e === "S3")} color={"bg-orange-200"} />
+                      <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["S4"])} condi={camp.some(e => e === "S4")} color={"bg-orange-200"} />
+                      <Week title={"5 SETTIMANA: 10/07 - 14/07"} addCamp={() => addCamp(["S5"])} condi={camp.some(e => e === "S5")} color={"bg-orange-200"} />
+                      <Week title={"6 SETTIMANA: 17/07 - 21/07"} addCamp={() => addCamp(["S6"])} condi={camp.some(e => e === "S6")} color={"bg-orange-200"} />
+                      <Week title={"7 SETTIMANA: 24/07 - 28/07"} addCamp={() => addCamp(["S7"])} condi={camp.some(e => e === "S7")} color={"bg-orange-200"} />
+                      <Week title={"8 SETTIMANA: 31/07 - 04/08"} addCamp={() => addCamp(["S8"])} condi={camp.some(e => e === "S8")} color={"bg-orange-200"} />
+                      <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["S9"])} condi={camp.some(e => e === "S9")} color={"bg-orange-200"} />
+                      <Week title={"10 SETTIMANA: 21/08 - 25/08"} addCamp={() => addCamp(["S10"])} condi={camp.some(e => e === "S10")} color={"bg-orange-200"} />
+                      <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["S11"])} condi={camp.some(e => e === "S11")} color={"bg-orange-200"} />
+                      <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["S12"])} condi={camp.some(e => e === "S12")} color={"bg-orange-200"} />
                     </div>
                     <button type="button" className="flex w-full grow items-start bg-orange-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
                       <div className="font-bold flex gap-1 text-orange-600 items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-orange-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
                         <p></p>GALETTO RESIDENT
                       </div>
-                      <p className="text-xs">contattaci per più infomrazioni al 3240957228</p>
+                      <p className="text-xs">per informazioni e iscrizioni contattaci al 3240957228</p>
                     </button>
-                    <p className="pt-4">oppure settimane personalizzate</p>
-                    <div className="flex flex-wrap mt-2">
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">1 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">2 SETTIMANA: NON DISPONIBILE</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">3 SETTIMANA: 26/06 - 30/06</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">4 SETTIMANA: 03/07 - 07/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">5 SETTIMANA: 10/07 - 14/07</p>
-                      </button>
-                      <button type="button" className="p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <p className="text-xs">6 SETTIMANA: 17/07 - 21/07</p>
-                      </button>
-                    </div>
                   </div>}
                   {
                     age === 2 &&
@@ -355,15 +339,18 @@ export default function A() {
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-green-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
                           <p></p>GALLETTO CRESCI CON NOI
                         </div>
-                        <p className="text-xs">contattaci per più infomrazioni al 3240957228</p>
+                        <p className="text-xs">per informazioni e iscrizioni contattaci al 3240957228</p>
                       </button>
                     </div>
                   }
                 </div>
               </Section>
               <Section family="AL_" title="RIMBORSO ASSENZA MALATTIA">
-                <Wrapper title="INDICA IL NUMERO DELLE SETT.SU CUI CALCOLARE IL RIMBORSO">
+                <Wrapper title="INDICA IL NUMERO DELLE SETT.SU CUI CALCOLARE IL RIMBORSO. La copertura prevede il
+                    rimborso di 20€ per ogni giorno di assenza causa malattia
+                    attestata da certificato medico">
                   <select {...methods.register("assicurazione")}>
+                    <option value="1">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -380,10 +367,12 @@ export default function A() {
                 </Wrapper>
               </Section>
               <Section title="SCONTISTICHE APPLICABILI">
-                <div className="flex gap-1 items-start">
-                  <input className="rounded-md" type="checkbox" {...methods.register("sconto1")} />
-                  <p className="text-xs">L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE?</p>
-                </div>
+                <Wrapper title="L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE ?">
+                  <select {...methods.register("tesserato")}>
+                    <option value="No">No</option>
+                    <option value="Si">Si</option>
+                  </select>
+                </Wrapper>
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
@@ -392,6 +381,7 @@ export default function A() {
                 </Wrapper>
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select {...methods.register("conciliazione")}>
+                    <option value="1">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -460,6 +450,7 @@ export default function A() {
                   </div>
                 </Wrapper>
               </Section>
+
               <Section title="Manifestazione del consenso e presa visione (Privacy, Regolamento UE n. 2016/679 - Regolamento SSD e Campi estivi)">
                 <CheckBox
                   text="DICHIARO di aver provveduto al tesseramento del partecipante. 2. DICHIARO di aver preso visione del regolamento del camp, del regolamento interno e dello statuto della GSA ssd a rl condividendone le finalità istituzionali e i valori. 3. CONFERMO che in caso di rinuncia la quota ora saldata sarà restituita decurtata di 30.00 euro nel caso in cui la disdetta pervenga alla direzione in forma scritta almeno 15gg prima dell’inizio del camp oppure nel caso in cui disposizioni anticovid impediscano la realizzazione del camp. In tutti gli altri casi non sono previsti rimborsi parziali o totali o recuperi per giorni di assenza. 4. AUTORIZZO ad inviare comunicazioni tramite Email / SMS / WhatsApp in merito allo svolgimento delle attività SPORTIVE al telefono indicato sopra alla voce telefono principale utilizzato per comunicazioni broadcast. A tale scopo si richiede di salvare tra i propri contatti il numero 324 0957228, diversamente non sarà possibile ricevere i messaggi WhatsApp inviati tramite liste broadcast. 5. ACCETTO i termini e le condizioni della Privacy Policy"
@@ -470,31 +461,59 @@ export default function A() {
                     termini e condizioni della Privacy Policy
                   </a>
                 </CheckBox>
-                <div className="flex flex-col gap-2">
-                  <span>
-                    Assicurazione: rimborso dei giorni di assenza per malattia
-                    al costo di 10€ a settimana. La copertura prevede il
-                    rimborso di 20€ per ogni giorno di assenza causa malattia
-                    attestata da certificato medico
-                  </span>
-                  <div className="flex gap-2 items-center">
-                    <input
-                      type="checkbox"
-                      id="assicurazione"
-                      name={"assicurazione"}
-                      {...methods.register("assicurazione")}
-                    />
-                    <label
-                      htmlFor="assicurazione"
-                      className="flex flex-wrap gap-1"
-                    >
-                      Attiva
-                    </label>
-                  </div>
-                </div>
               </Section>
               <Section title="Carica copia del certificato medico-sportivo del partecipante al Camp (esonerati i bimbi sotto i 6 anni). Se il partecipante è residente in Emilia Romagna, vale COPIA DEL LIBRETTO DELLO SPORTIVO in corso di validità alla fine del camp. Tali documenti hanno scadenza 365gg dopo la visita medica.">
                 <FileUploader {...{ files, setFiles, percent, setPercent }} />
+              </Section>
+              <Section title="Carrello della spesa">
+                <div className="flex flex-col gap-2">
+                  <table className="border-collapse">
+                    <tr className="border-b-2 text-left">
+                      <th className="py-2">Descrizione</th>
+                      <th className="py-2">Prezzo</th>
+                    </tr>
+                    {data.map((val, i) => (
+                      <tr key={i} className="border-b-2 text-left">
+                        <td className="py-2">{dataset[val].desc}</td>
+                        <td className="py-2">{dataset[val].price} €</td>
+                      </tr>
+                    ))}
+                    {assicurazione > 1 && (
+                      <tr className="border-b-2 text-left">
+                        <td className="py-2">Rimborso per malattia</td>
+                        <td className="py-2">{10 * assicurazione} €</td>
+                      </tr>
+                    )}
+                    {tesserato === "Si" || data.filter(e => e.startsWith("T")).length > 1 && (
+                      <tr className="border-b-2 text-left">
+                        <td className="py-2">Sconto tesseramento</td>
+                        <td className="py-2 "> - 30 €</td>
+                      </tr>
+                    )}
+                    {fratelli === "Si" && (
+                      <tr className="border-b-2 text-left">
+                        <td className="py-2">Sconto Fratelli</td>
+                        <td className="py-2"> - {data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 } € </td>
+                      </tr>
+                    )}
+                     {convenzione === "Florim" && (
+                      <tr className="border-b-2 text-left">
+                        <td className="py-2">Sconto Dipendenti Florim</td>
+                        <td className="py-2">- 290 €</td>
+                      </tr>
+                    )}
+                    {conciliazione > 1 && (
+                      <tr className="border-b-2 text-left">
+                        <td className="py-2">Sconto Progetto Conciliazione</td>
+                        <td className="py-2"> - {100 * conciliazione} €</td>
+                      </tr>
+                    )}
+                    <tr className="text-left">
+                      <th className="py-2 text-xl font-black">TOTALE</th>
+                      <th className="py-2">{data.reduce((acc, val) => acc + dataset[val].price, 0) + (assicurazione > 1 ? 10 * assicurazione : 0) - (tesserato === "Si" || data.filter(e => e.startsWith("T")).length > 1 ? 30 : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione > 1 ? 100 * conciliazione : 0) - (convenzione === "Florim" ? 290 : 0)} €</th>
+                    </tr>
+                  </table>
+                </div>
               </Section>
               <Section
                 family="BC_"
@@ -621,3 +640,18 @@ export default function A() {
     </FormProvider>
   );
 }
+
+
+
+const Turno = ({ color, condi, title, desc, addCamp , disabled }) => (
+  <button disabled={disabled} onClick={addCamp} type="button" className={` ${condi ? `${color}` : disabled ? "" : "hover:bg-slate-200"}  p-2 flex grow items-start w-[50%] sm:w-[30%] text-left  flex-col gap-1 rounded-md`}>
+    <p className="font-bold">{title}</p>
+    <p className="text-xs">{desc}</p>
+  </button>
+)
+
+const Week = ({ color, condi, title, addCamp , disabled }) => (
+  <button disabled={disabled} onClick={addCamp} type="button" className={` ${condi ? `${color}` : disabled ? "" : "hover:bg-slate-200"}  p-2 flex grow items-start sm:w-[30%] flex-col gap-1 rounded-md `}>
+    <p className="font-xs">{title}</p>
+  </button>
+)

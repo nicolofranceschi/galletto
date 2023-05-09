@@ -1,17 +1,13 @@
-import sendgrid from "@sendgrid/mail";
 const { google } = require("googleapis");
 import { toArray } from "streamtoarray";
 import googleAuthConfig from "../../utils/google-auth-config";
 import { dataset } from "../../components/dataset";
+import * as  postmark from "postmark";
 
 const PDFDocument = require("pdfkit");
 
-if (!process.env.SENDGRID_API_KEY)
-  throw new Error("Sendgrid API key not found.");
 
 var months = {"Gennaio": "01","Febbraio": "02","Marzo": "03","Aprile": "04","Maggio":"05","Giugno":"06","Luglio":"07","Agosto":"08","Settembre":"09","Ottobre":"10","Novembre":"11","Dicembre":"12"};
-
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function sendB(req, res) {
   const {
@@ -50,7 +46,6 @@ export default async function sendB(req, res) {
     da_mese_datadinascitadeltutore,
     EM_emergenza1,
     EM_emergenza2,
-    Settimanepersonalizzate,
     al_allergie,
     camp,
     note,
@@ -60,68 +55,70 @@ export default async function sendB(req, res) {
     bc_intestatario,
     key,
   } = req.body;
-  const auth = new google.auth.GoogleAuth({
-    ...googleAuthConfig,
-    scopes: "https://www.googleapis.com/auth/spreadsheets",
-  });
 
-  const authClientObject = await auth.getClient();
-  const googleSheetsInstance = google.sheets({
-    version: "v4",
-    auth: authClientObject,
-  });
 
-  const spreadsheetId = "1K71GqEErwxoS_t276AiuoSQtypxu_lCyv1jITSVSaxo";
+ //const auth = new google.auth.GoogleAuth({
+ //  ...googleAuthConfig,
+ //  scopes: "https://www.googleapis.com/auth/spreadsheets",
+ //});
 
-  googleSheetsInstance.spreadsheets.values.append({
-    auth, //auth object
-    spreadsheetId, //spreadsheet id
-    range: "b!A:B", //sheet name and range of cells
-    valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
-    resource: {
-      values: [[
-        new Date,
-        da_cognome,
-        da_nome,
-        da_città_di_nascita,
-        da_provincia_di_nascita,
-        `${da_giorno_datadinascitadeltutore}-${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
-        da_codice_fiscale,
-        da_via,
-        da_numero_civico,
-        da_città,
-        da_cap,
-        da_provincia,
-        da_cellulare,
-        da_email,
-        da_cognome_minore,
-        da_nome_minore,
-        da_città_di_nascita_minore,
-        da_provincia_di_nascita_minore,
-        `${da_giorno_datadinascitadelminore}-${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
-        da_codice_fiscale_minore,
-        da_via_minore,
-        da_numero_civico_minore,
-        da_città_minore,
-        da_cap_minore,
-        da_provincia_minore,
-        EM_emergenza1,
-        EM_emergenza2,
-        al_allergie,
-        note,
-        "Accettata",
-        files.map(({url}) => url).toString(","),
-        bc_intestatario,
-        `0${BC_giorno_data}-0${months[BC_mese_data]}-${BC_anno_data}`,
-        bc_euro,
-        camp.map(e => dataset[e]).toString(),
-        fermata,
-        fermatacustom,
-        assicurazione ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
-        key
-      ]],
-    },
-  });
+ //const authClientObject = await auth.getClient();
+ //const googleSheetsInstance = google.sheets({
+ //  version: "v4",
+ //  auth: authClientObject,
+ //});
+
+ //const spreadsheetId = "1K71GqEErwxoS_t276AiuoSQtypxu_lCyv1jITSVSaxo";
+
+ //googleSheetsInstance.spreadsheets.values.append({
+ //  auth, //auth object
+ //  spreadsheetId, //spreadsheet id
+ //  range: "b!A:B", //sheet name and range of cells
+ //  valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
+ //  resource: {
+ //    values: [[
+ //      new Date,
+ //      da_cognome,
+ //      da_nome,
+ //      da_città_di_nascita,
+ //      da_provincia_di_nascita,
+ //      `${da_giorno_datadinascitadeltutore}-${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
+ //      da_codice_fiscale,
+ //      da_via,
+ //      da_numero_civico,
+ //      da_città,
+ //      da_cap,
+ //      da_provincia,
+ //      da_cellulare,
+ //      da_email,
+ //      da_cognome_minore,
+ //      da_nome_minore,
+ //      da_città_di_nascita_minore,
+ //      da_provincia_di_nascita_minore,
+ //      `${da_giorno_datadinascitadelminore}-${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
+ //      da_codice_fiscale_minore,
+ //      da_via_minore,
+ //      da_numero_civico_minore,
+ //      da_città_minore,
+ //      da_cap_minore,
+ //      da_provincia_minore,
+ //      EM_emergenza1,
+ //      EM_emergenza2,
+ //      al_allergie,
+ //      note,
+ //      "Accettata",
+ //      files.map(({url}) => url).toString(","),
+ //      bc_intestatario,
+ //      `0${BC_giorno_data}-0${months[BC_mese_data]}-${BC_anno_data}`,
+ //      bc_euro,
+ //      camp.map(e => dataset[e]).toString(),
+ //      fermata,
+ //      fermatacustom,
+ //      assicurazione ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
+ //      key
+ //    ]],
+ //  },
+ //});
 
   const doc = new PDFDocument({ size: "A4" });
   doc.fontSize(12);
@@ -179,7 +176,7 @@ export default async function sendB(req, res) {
   doc.moveDown(0.1);
   doc.fontSize(10);
   camp && camp.map((e) => {
-      doc.text(`- ${dataset[e].toString()}`);
+      doc.text(`- ${dataset[e].desc}`);
     });
   doc.moveDown(0.5);
   doc.fontSize(11);
@@ -233,22 +230,24 @@ export default async function sendB(req, res) {
   doc.text(`${new Date()}`);
   doc.end();
 
+
+  var client = new postmark.ServerClient("a271a58b-ea4a-407b-8c8a-ee43f15d5ecc");
+
   try {
     const array = await toArray(doc);
     var buffer = Buffer.concat(array).toString("base64");
-    await sendgrid.send({
-      to: "info@gallettosport.it",
-      cc:"franceschinicolo@gmail.com",
-      from: `Galletto Sport Accademy iscrizioni <info@pineappsrl.com>`,
-      subject: `Modulo B - ${da_cognome_minore} ${da_nome_minore}`,
-      replyTo: `${da_email}`,
-      html: `<a style={{padding: "1rem" , borderRadius: "1rem" , backgroundColor: "blue" , color: "white"}} href="https://galletto.vercel.app/${key}">Scarica i certificati</a>`,
-      attachments: [
+    await client.sendEmail({
+      To: "info@gallettosport.it",
+      Cc: "franceschinicolo@gmail.com",
+      From: `Galletto Sport Accademy iscrizioni <info@pineappsrl.com>`,
+      Subject: `Modulo B - ${da_cognome_minore} ${da_nome_minore}`,
+      ReplyTo: `${da_email}`,
+      HtmlBody: `<a style={{padding: "1rem" , borderRadius: "1rem" , backgroundColor: "blue" , color: "white"}} href="https://galletto.vercel.app/${key}">Scarica i certificati</a>`,
+      Attachments: [
         {
-          content: buffer,
-          filename: `Modulo B - ${da_cognome_minore} ${da_nome_minore}.pdf`,
-          type: "application/pdf",
-          disposition: "attachment",
+          Content: buffer,
+          Name: `Modulo B - ${da_cognome_minore} ${da_nome_minore}.pdf`,
+          ContentType: "application/pdf",
         },
       ],
     });

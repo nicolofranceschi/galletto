@@ -542,10 +542,6 @@ export default function B() {
                 </Wrapper>
                 <Wrapper title="BONIFICO BANCARIO (Importo Pagato)">
                   <div className="flex flex-grow flex-col gap-1">
-                    <span>In base alle tue selezioni preventiamo una spesa di {camp.reduce((acc, val) => val === "Galletto Residence" ? acc + 400 : acc + 280, 0)} euro, escluse le settimane personalinazzate. Se la nostra stima non corrisponde a quello che pensavi controlla di aver selezionato correttamente i camp {"(quelli più scuri sono selezionati)"}</span>
-                    <p>
-                      <strong>Camp selezionati</strong>: {camp.toString()}
-                    </p>
                     <input
                       type="text"
                       className="w-full p-2 rounded-md"
@@ -560,7 +556,6 @@ export default function B() {
                   </div>
                 </Wrapper>
               </Section>
-
               {sendMail.isSuccess ? (
                 <>
                   <div className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-green-600 ">

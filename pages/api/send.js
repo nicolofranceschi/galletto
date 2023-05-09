@@ -1,4 +1,4 @@
-import sendgrid from "@sendgrid/mail";
+import * as  postmark from "postmark";
 import { toArray } from 'streamtoarray';
 import googleAuthConfig from "../../utils/google-auth-config";
 const { google } = require("googleapis");
@@ -8,8 +8,6 @@ const PDFDocument = require("pdfkit");
 if (!process.env.SENDGRID_API_KEY) throw new Error("Sendgrid API key not found.");
 
 var months = {"Gennaio": "01","Febbraio": "02","Marzo": "03","Aprile": "04","Maggio":"05","Giugno":"06","Luglio":"07","Agosto":"08","Settembre":"09","Ottobre":"10","Novembre":"11","Dicembre":"12"};
-
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export default async function sendA(req, res) {
 
@@ -44,60 +42,61 @@ export default async function sendA(req, res) {
    ,da_mese_datadinascitadeltutore,
    key
  } = req.body;
- const auth = new google.auth.GoogleAuth({
-   ...googleAuthConfig,
-  scopes: "https://www.googleapis.com/auth/spreadsheets",
-});
-const authClientObject = await auth.getClient();
-const googleSheetsInstance = google.sheets({
-  version: "v4",
-  auth: authClientObject,
-});
 
-const spreadsheetId = "1gsSQ5pMJUjkBjr9eYkSbQ5nqpZ0ZVIwJg81qKujm5Nc";
 
-googleSheetsInstance.spreadsheets.values.append({
-  auth, //auth object
-  spreadsheetId, //spreadsheet id
-  range: "a!A:B", //sheet name and range of cells
-  valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
-  resource: {
-    values: [[
-      new Date,
-      da_cognome,
-      da_nome,
-      da_città_di_nascita,
-      da_provincia_di_nascita,
-      `0${da_giorno_datadinascitadeltutore}-0${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
-      da_codice_fiscale,
-      da_via,
-      da_numero_civico,
-      da_città,
-      da_cap,
-      da_provincia,
-      da_cellulare,
-      da_email,
-      da_cognome_minore,
-      da_nome_minore,
-      da_città_di_nascita_minore,
-      da_provincia_di_nascita_minore,
-      `0${da_giorno_datadinascitadelminore}-0${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
-      da_codice_fiscale_minore,
-      da_via_minore,
-      da_numero_civico_minore,
-      da_città_minore,
-      da_cap_minore,
-      da_provincia_minore,
-      "Accettata",
-      "Accettato",
-      "Accettato",
-      "Accettato",
-      "Accettato",
-      key
-    ]],
-  },
-});
-
+//const auth = new google.auth.GoogleAuth({
+//  ...googleAuthConfig,
+// scopes: "https://www.googleapis.com/auth/spreadsheets",
+//);
+//onst authClientObject = await auth.getClient();
+//onst googleSheetsInstance = google.sheets({
+// version: "v4",
+// auth: authClientObject,
+//);
+//
+//onst spreadsheetId = "1gsSQ5pMJUjkBjr9eYkSbQ5nqpZ0ZVIwJg81qKujm5Nc";
+//
+//oogleSheetsInstance.spreadsheets.values.append({
+// auth, //auth object
+// spreadsheetId, //spreadsheet id
+// range: "a!A:B", //sheet name and range of cells
+// valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
+// resource: {
+//   values: [[
+//     new Date,
+//     da_cognome,
+//     da_nome,
+//     da_città_di_nascita,
+//     da_provincia_di_nascita,
+//     `0${da_giorno_datadinascitadeltutore}-0${months[da_mese_datadinascitadeltutore]}-${da_anno_datadinascitadeltutore}`,
+//     da_codice_fiscale,
+//     da_via,
+//     da_numero_civico,
+//     da_città,
+//     da_cap,
+//     da_provincia,
+//     da_cellulare,
+//     da_email,
+//     da_cognome_minore,
+//     da_nome_minore,
+//     da_città_di_nascita_minore,
+//     da_provincia_di_nascita_minore,
+//     `0${da_giorno_datadinascitadelminore}-0${months[da_mese_datadinascitadelminore]}-${da_anno_datadinascitadelminore}`,
+//     da_codice_fiscale_minore,
+//     da_via_minore,
+//     da_numero_civico_minore,
+//     da_città_minore,
+//     da_cap_minore,
+//     da_provincia_minore,
+//     "Accettata",
+//     "Accettato",
+//     "Accettato",
+//     "Accettato",
+//     "Accettato",
+//     key
+//   ]],
+// },
+//);
 
   const doc = new PDFDocument({ size: "A4" });
   doc.fontSize(12);
@@ -193,10 +192,12 @@ googleSheetsInstance.spreadsheets.values.append({
   doc.text(`${new Date()}`);
   doc.end(); 
  
+  var client = new postmark.ServerClient("a271a58b-ea4a-407b-8c8a-ee43f15d5ecc");
+
     try {
       const array = await toArray(doc);
       var buffer = Buffer.concat(array).toString('base64')
-      await sendgrid.send({
+      await client.sendMail({
         to: "info@gallettosport.it",
         cc:"franceschinicolo@gmail.com",
         from: `Galletto Sport Accademy <info@pineappsrl.com>`,

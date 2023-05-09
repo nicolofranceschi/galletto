@@ -376,6 +376,14 @@ export default function B() {
                   </select>
                 </Wrapper>
               </Section>
+              <Section title="CONVENZIONI AZIENDALI">
+                <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
+                  <select {...methods.register("convenzione")}>
+                    <option value="none">No</option>
+                    {(camp.length >= (conciliazione*1+2)) && <option value="FLORIM">FLORIM</option>}
+                  </select>
+                </Wrapper>
+              </Section>
               <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select defaultValue="0" {...methods.register("conciliazione")}>
@@ -396,14 +404,7 @@ export default function B() {
                   </select>
                 </Wrapper>
               </Section>
-              <Section title="CONVENZIONI AZIENDALI">
-                <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
-                  <select {...methods.register("convenzione")}>
-                    <option value="none">No</option>
-                    {(turni.length >= Math.round(conciliazione/2+1) || week.length >= (conciliazione*1+2)) && <option value="FLORIM">FLORIM</option>}
-                  </select>
-                </Wrapper>
-              </Section>
+              
               <Section title="Con servizio di trasporto">
                 <Wrapper title="Indicare la fermata del Galletto Bus">
                   <select {...methods.register("fermata")}>

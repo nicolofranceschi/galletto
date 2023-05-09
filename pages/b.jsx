@@ -152,6 +152,7 @@ export default function B() {
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
   const tot = (turni.length * 290) + (g1.length * 145) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
+  if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
   for (let i = 0; i < minor; i++) {
     coniliazione.push(camp[i])
@@ -382,7 +383,7 @@ export default function B() {
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
-                    {(camp.length >= (conciliazione*1+2)) && <option value="FLORIM">FLORIM</option>}
+                    <option value="FLORIM">FLORIM</option>
                   </select>
                 </Wrapper>
               </Section>

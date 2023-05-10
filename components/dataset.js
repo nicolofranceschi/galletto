@@ -23,6 +23,30 @@ export const dataset = {
         desc: "6° Turno Galletto Baby Magic: da Lunedì 28/08 a Venerdì 08/09",
         price: 290
     },
+    TC1: {
+        desc: "1° Turno Galletto Cresci con Noi: non disponibile",
+        price: 230
+    },
+    TC2: {
+        desc: "2° Turno Galletto Cresci con Noi: da Lunedì 26/06 a Venerdì 07/07",
+        price: 230
+    },
+    TC3: {
+        desc: "3° Turno Galletto Cresci con Noi: da Lunedì 10/07 a Venerdì 21/07",
+        price: 230
+    },
+    TC4: {
+        desc: "4° Turno Galletto Cresci con Noi: da lunedì 21/06 a venerdì 02/07",
+        price: 230
+    },
+    TC5: {
+        desc: "5° Turno Galletto Cresci con Noi: da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08",
+        price: 230
+    },
+    TC6: {
+        desc: "6° Turno Galletto Cresci con Noi: da Lunedì 28/08 a Venerdì 08/09",
+        price: 230
+    },
     TS1: {
         desc: "1° Turno Galletto Sport Avventura: da Lunedì 12/06 a Venerdì 23/06",
         price: 290
@@ -142,6 +166,54 @@ export const dataset = {
     S12: {
         desc: "12° Settimana Galletto Sport Avventura: 04/09 - 08/09",
         price: 170
+    },
+    C1: {
+        desc: "1° Settimana Galletto Cresci con Noi: 12/06 - 16/06",
+        price: 130
+    },
+    C2: {
+        desc: "2° Settimana Galletto Cresci con Noi: 19/06 - 23/06",
+        price: 130
+    },
+    C3: {
+        desc: "3° Settimana Galletto Cresci con Noi: 26/06 - 30/06",
+        price: 130
+    },
+    C4: {
+        desc: "4° Settimana Galletto Cresci con Noi: 03/07 - 07/07",
+        price: 130
+    },
+    C5: {
+        desc: "5° Settimana Galletto Cresci con Noi: 10/07 - 14/07",
+        price: 130
+    },
+    C6: {
+        desc: "6° Settimana Galletto Cresci con Noi: 17/07 - 21/07",
+        price: 130
+    },
+    C7: {
+        desc: "7° Settimana Galletto Cresci con Noi: 24/07 - 28/07",
+        price: 130
+    },
+    C8: {
+        desc: "8° Settimana Galletto Cresci con Noi: 31/07 - 04/08",
+        price: 130
+    },
+    C9: {
+        desc: "9° Settimana Galletto Cresci con Noi:  07/08 - 11/08",
+        price: 130
+    },
+    C10: {
+        desc: "10° Settimana Galletto Cresci con Noi: 21/08 - 25/08",
+        price: 130
+    },
+    C11: {
+        desc: "11° Settimana Galletto Cresci con Noi: 28/08 - 01/09",
+        price: 130
+    },
+    C12: {
+        desc: "12° Settimana Galletto Cresci con Noi: 04/09 - 08/09",
+        price: 130
     },
     
 }

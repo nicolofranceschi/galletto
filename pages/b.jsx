@@ -92,6 +92,30 @@ export default function B() {
       data = [...data, "TS6"]
       newCamp = newCamp.filter(e => e !== "S11" && e !== "S12")
     }
+    if (newCamp.some(e => e === "C1") && newCamp.some(e => e === "C2")) {
+      data = [...data, "TC1"]
+      newCamp = newCamp.filter(e => e !== "C1" && e !== "C2")
+    }
+    if (newCamp.some(e => e === "C3") && newCamp.some(e => e === "C4")) {
+      data = [...data, "TC2"]
+      newCamp = newCamp.filter(e => e !== "C3" && e !== "C4")
+    }
+    if (newCamp.some(e => e === "C5") && newCamp.some(e => e === "C6")) {
+      data = [...data, "TC3"]
+      newCamp = newCamp.filter(e => e !== "C5" && e !== "C6")
+    }
+    if (newCamp.some(e => e === "C7") && newCamp.some(e => e === "C8")) {
+      data = [...data, "TC4"]
+      newCamp = newCamp.filter(e => e !== "C7" && e !== "C8")
+    }
+    if (newCamp.some(e => e === "C9") && newCamp.some(e => e === "C10")) {
+      data = [...data, "TC5"]
+      newCamp = newCamp.filter(e => e !== "C9" && e !== "C10")
+    }
+    if (newCamp.some(e => e === "C11") && newCamp.some(e => e === "C12")) {
+      data = [...data, "TC6"]
+      newCamp = newCamp.filter(e => e !== "C11" && e !== "C12")
+    }
     data = [...data, ...newCamp]
     setData(data)
   }
@@ -144,13 +168,23 @@ export default function B() {
     );
   };
 
+  function addTruni(accumulator, a) {
+    return accumulator + dataset[a].price;
+  }
+
+  function addWeekg1(accumulator, a) {
+    if (a.startsWith("C")) return accumulator + 115;
+    else return accumulator + 145;
+  }
+
+  
 
   const week = data.filter(e => !e.startsWith("T"))
   const turni = data.filter(e => e.startsWith("T"))
   const g1 = week.slice(0, week.length - week.length % 2)
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
-  const tot = (turni.length * 290) + (g1.length * 145) + (g2.length * 170) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const tot = (turni.reduce(addTruni,0)) + (g1.reduce(addWeekg1,0)) + (g2.reduce(addTruni,0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
@@ -298,7 +332,6 @@ export default function B() {
                         </p>
                       </div>
                     </div>
-
                     <div className="pt-4 flex flex-wrap text-left gap-2">
                       <Turno title={"1 TURNO"} desc={"da Lunedì 12/06 a Venerdì 23/06"} addCamp={() => addCamp(["S1", "S2"])} condi={camp.some(e => e === "S1") && camp.some(e => e === "S2")} color={"bg-orange-200"} />
                       <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["S3", "S4"])} condi={camp.some(e => e === "S3") && camp.some(e => e === "S4")} color={"bg-orange-200"} />
@@ -347,13 +380,29 @@ export default function B() {
                           </p>
                         </div>
                       </div>
-                      <button type="button" className="flex w-full grow items-start bg-green-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
-                        <div className="font-bold flex gap-1 text-green-600 items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-green-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
-                          <p></p>GALLETTO CRESCI CON NOI
-                        </div>
-                        <p className="text-xs">per informazioni e iscrizioni contattaci al 3240957228</p>
-                      </button>
+                      <div className="pt-4 flex flex-wrap text-left gap-2">
+                        <Turno title={"1 TURNO"} desc={"da Lunedì 12/06 a Venerdì 23/06"} addCamp={() => addCamp(["C1", "C2"])} condi={camp.some(e => e === "C1") && camp.some(e => e === "C2")} color={"bg-green-200"} />
+                        <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["C3", "C4"])} condi={camp.some(e => e === "C3") && camp.some(e => e === "C4")} color={"bg-green-200"} />
+                        <Turno title={"3 TURNO"} desc={"da Lunedì 10/07 a Venerdì 21/07"} addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Turno title={"4 TURNO"} desc={"da Lunedì 24/07 a Venerdì 04/08"} addCamp={() => addCamp(["C7", "C8"])} condi={camp.some(e => e === "C7") && camp.some(e => e === "C8")} color={"bg-green-200"} />
+                        <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["C9", "C10"])} condi={camp.some(e => e === "C9") && camp.some(e => e === "C10")} color={"bg-green-200"} />
+                        <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["C11", "C12"])} condi={camp.some(e => e === "C11") && camp.some(e => e === "C12")} color={"bg-green-200"} />
+                      </div>
+                      <p className="pt-4">oppure settimane personalizzate</p>
+                      <div className="flex flex-wrap mt-2 gap-2">
+                        <Week title={"1 SETTIMANA: 12/06 - 16/06"} addCamp={() => addCamp(["C1"])} condi={camp.some(e => e === "C1")} color={"bg-green-200"} />
+                        <Week title={"2 SETTIMANA: 19/06 - 23/06"} addCamp={() => addCamp(["C2"])} condi={camp.some(e => e === "C2")} color={"bg-green-200"} />
+                        <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["C3"])} condi={camp.some(e => e === "C3")} color={"bg-green-200"} />
+                        <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["C4"])} condi={camp.some(e => e === "C4")} color={"bg-green-200"} />
+                        <Week title={"5 SETTIMANA: 10/07 - 14/07"} addCamp={() => addCamp(["C5"])} condi={camp.some(e => e === "C5")} color={"bg-green-200"} />
+                        <Week title={"6 SETTIMANA: 17/07 - 21/07"} addCamp={() => addCamp(["C6"])} condi={camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Week title={"7 SETTIMANA: 24/07 - 28/07"} addCamp={() => addCamp(["C7"])} condi={camp.some(e => e === "C7")} color={"bg-green-200"} />
+                        <Week title={"8 SETTIMANA: 31/07 - 04/08"} addCamp={() => addCamp(["C8"])} condi={camp.some(e => e === "C8")} color={"bg-green-200"} />
+                        <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["C9"])} condi={camp.some(e => e === "C9")} color={"bg-green-200"} />
+                        <Week title={"10 SETTIMANA: 21/08 - 25/08"} addCamp={() => addCamp(["C10"])} condi={camp.some(e => e === "C10")} color={"bg-green-200"} />
+                        <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["C11"])} condi={camp.some(e => e === "C11")} color={"bg-green-200"} />
+                        <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["C12"])} condi={camp.some(e => e === "C12")} color={"bg-green-200"} />
+                      </div>
                     </div>
                   }
                 </div>
@@ -391,7 +440,7 @@ export default function B() {
                     {fratelli === "No" &&
                       <>
                         {coniliazione.map((item, number) => (
-                          <option key={"b"+ item} value={number + 1}> {number + 1}</option>
+                          <option key={"b" + item} value={number + 1}> {number + 1}</option>
                         ))}
                       </>
                     }
@@ -404,7 +453,7 @@ export default function B() {
                   </select>
                 </Wrapper>
               </Section>
-              
+
               <Section title="Con servizio di trasporto">
                 <Wrapper title="Indicare la fermata del Galletto Bus">
                   <select {...methods.register("fermata")}>
@@ -495,7 +544,7 @@ export default function B() {
                       {g1.map((val, i) => (
                         <tr key={i} className="border-b-2 text-left">
                           <td className="py-2">{dataset[val].desc}</td>
-                          <td className="py-2">145 €</td>
+                          <td className="py-2">{val.startsWith("C") ? "115 €" : "145 €"}</td>
                         </tr>
                       ))}
                       {g2.map((val, i) => (
@@ -504,7 +553,7 @@ export default function B() {
                           <td className="py-2">{dataset[val].price} €</td>
                         </tr>
                       ))}
-                      {(assicurazione === "Yes" && camp.length > 0 )  && (
+                      {(assicurazione === "Yes" && camp.length > 0) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Rimborso per malattia</td>
                           <td className="py-2">{10 * camp.length} €</td>
@@ -540,7 +589,7 @@ export default function B() {
                       </tr>
                     </tbody>
                   </table>
-                 <p className="xs">se il totale della spesa non ritorna con il tuo calcolo o con la tua idea di spesa puoi contattarci per farlo insieme al 324 0957228</p> 
+                  <p className="xs">se il totale della spesa non ritorna con il tuo calcolo o con la tua idea di spesa puoi contattarci per farlo insieme al 324 0957228</p>
                 </div>
               </Section>
               <Section title="Manifestazione del consenso e presa visione termini del Progetto Conciliazione">
@@ -549,7 +598,7 @@ export default function B() {
                   label="Accetto"
                   registername="conciliazioneAccept"
                 />
-                </Section>
+              </Section>
               <Section
                 family="BC_"
                 title="Dati relativi al pagamento effettuato a mezzo bonifico"

@@ -115,7 +115,7 @@ export default async function sendB(req, res) {
         camp.filter(e => !e.startsWith("T")).map(e => dataset[e].desc).toString(),
         fermata,
         fermatacustom,
-        Number(assicurazione) > 0  ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
+        assicurazione === "Yes"  ? "ATTIVARE Assicurazione" : "SENZA Assicurazione",
         fratelli,
         conciliazione,
         convenzione,
@@ -237,7 +237,7 @@ export default async function sendB(req, res) {
   );
   doc.moveDown(0.1);
   doc.font("Helvetica-Bold");
-  Number(assicurazione) > 0 ? doc.text("Attiva") : doc.text("Non Attiva");
+  assicurazione === "Yes" ? doc.text("Attiva") : doc.text("Non Attiva");
   doc.moveDown(1);
   doc.fontSize(7);
   doc.text(

@@ -150,7 +150,7 @@ export default function B() {
   const g1 = week.slice(0, week.length - week.length % 2)
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
-  const tot = (turni.length * 290) + (g1.length * 145) + (g2.length * 170) + (assicurazione >= 1 ? 10 * assicurazione : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const tot = (turni.length * 290) + (g1.length * 145) + (g2.length * 170) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
@@ -217,15 +217,14 @@ export default function B() {
               <DatiAnagrafici />
               <Section
                 family="EM_"
-                title="CONTATTI URGENTI (ALMENO UNO DEI DUE NUMERI DEVE ESSERE SEMPRE ATTIVO DURANTE IL CAMP) (QUESTO TELEFONO SARÀ UTILIZZATO PER LE COMUNICAZIONI BROADCAST)"
+                title="CONTATTI URGENTI (ALMENO UNO DEI DUE NUMERI DEVE ESSERE SEMPRE ATTIVO DURANTE IL CAMP) ( il numero emergenza 1 sarà utilizzato per le comunicazioni broadcast, salvare il numero 3240957228 )"
               >
                 <Wrapper title="Numeri di emergenza">
                   <Number name="Emergenza1" />
                   <Number name="Emergenza2" />
                 </Wrapper>
                 <p>
-                  il primo numero sarà utilizzato come principale, il secondo
-                  solo in caso di emergenza
+                  in caso di necessità sarete contattati prima sul numero di emergenza 1 e poi sul numero di emergenza 1
                 </p>
               </Section>
               <Section family="AL_" title="ALLERGIE, INTOLLERANZE ALIMENTARI">
@@ -360,19 +359,17 @@ export default function B() {
                 </div>
               </Section>
               <Section family="AL_" title="RIMBORSO ASSENZA MALATTIA">
-                <Wrapper title="INDICA IL NUMERO DELLE SETT.SU CUI CALCOLARE IL RIMBORSO. La copertura prevede il
+                <Wrapper title="INDICA IL NUMERO DELLE SETTIMANE SU CUI CALCOLARE IL RIMBORSO. La copertura prevede il
                     rimborso di 20€ per ogni giorno di assenza causa malattia
-                    attestata da certificato medico">
+                    attestata da certificato medico. Il costo per ogni settimana è di 10 euro">
                   <select {...methods.register("assicurazione")}>
-                    <option value="0">0</option>
-                    {camp.map((item, number) => (
-                      <option key={"a"+ item} value={number + 1}>{number + 1}</option>
-                    ))}
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
                   </select>
                 </Wrapper>
               </Section>
               <Section title="UTENTE GIA' TESSERATO">
-                <Wrapper title="L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE ?">
+                <Wrapper title="L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE ? (Es. Sei già tesserato nel 2023 se hai partecipato a Galletto Winter 2023)">
                   <select {...methods.register("tesserato")}>
                     <option value="No">No</option>
                     <option value="Si">Si</option>
@@ -467,7 +464,7 @@ export default function B() {
 
               <Section title="Manifestazione del consenso e presa visione (Privacy, Regolamento UE n. 2016/679 - Regolamento SSD e Campi estivi)">
                 <CheckBox
-                  text="DICHIARO di aver provveduto al tesseramento del partecipante. 2. DICHIARO di aver preso visione del regolamento del camp, del regolamento interno e dello statuto della GSA ssd a rl condividendone le finalità istituzionali e i valori. 3. CONFERMO che in caso di rinuncia la quota ora saldata sarà restituita decurtata di 30.00 euro nel caso in cui la disdetta pervenga alla direzione in forma scritta almeno 15gg prima dell’inizio del camp oppure nel caso in cui disposizioni anticovid impediscano la realizzazione del camp. In tutti gli altri casi non sono previsti rimborsi parziali o totali o recuperi per giorni di assenza. 4. AUTORIZZO ad inviare comunicazioni tramite Email / SMS / WhatsApp in merito allo svolgimento delle attività SPORTIVE al telefono indicato sopra alla voce telefono principale utilizzato per comunicazioni broadcast. A tale scopo si richiede di salvare tra i propri contatti il numero 324 0957228, diversamente non sarà possibile ricevere i messaggi WhatsApp inviati tramite liste broadcast. 5. ACCETTO i termini e le condizioni della Privacy Policy"
+                  text={"DICHIARO di aver provveduto al tesseramento del partecipante. 2. DICHIARO di aver preso visione del regolamento del camp, del regolamento interno e dello statuto della GSA ssd a rl condividendone le finalità istituzionali e i valori. 3. CONFERMO che in caso di rinuncia la quota ora saldata sarà restituita decurtata di 30.00 euro nel caso in cui la disdetta pervenga alla direzione in forma scritta almeno 15gg prima dell’inizio del camp oppure nel caso in cui disposizioni anticovid impediscano la realizzazione del camp. In tutti gli altri casi non sono previsti rimborsi parziali o totali o recuperi per giorni di assenza. 4. AUTORIZZO ad inviare comunicazioni tramite Email / SMS / WhatsApp in merito allo svolgimento delle attività SPORTIVE al numero emergenza 1 indicato sopra alla voce contatti urgenti, utilizzato per comunicazioni broadcast. A tale scopo si richiede di salvare tra i propri contatti il numero 324 0957228, diversamente non sarà possibile ricevere i messaggi WhatsApp inviati tramite liste broadcast. 5. ACCETTO i termini e le condizioni della Privacy Policy."}
                   label="Presa visione e accettazione dei"
                   registername="accetto"
                 >
@@ -507,10 +504,10 @@ export default function B() {
                           <td className="py-2">{dataset[val].price} €</td>
                         </tr>
                       ))}
-                      {assicurazione >= 1 && (
+                      {(assicurazione === "Yes" && camp.length > 0 )  && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Rimborso per malattia</td>
-                          <td className="py-2">{10 * assicurazione} €</td>
+                          <td className="py-2">{10 * camp.length} €</td>
                         </tr>
                       )}
                       {(tesserato === "Si" || virtualTurni > 1) && (
@@ -543,13 +540,14 @@ export default function B() {
                       </tr>
                     </tbody>
                   </table>
+                 <p className="xs">se il totale della spesa non ritorna con il tuo calcolo o con la tua idea di spesa puoi contattarci per farlo insieme al 324 0957228</p> 
                 </div>
               </Section>
               <Section title="Manifestazione del consenso e presa visione termini del Progetto Conciliazione">
                 <CheckBox
-                  text="Nel caso non si disponga dei diritti per aderire al progetto conciliazione, il genitore accetta a provvedere per la parte mancante del pagamento riguardante l'iscrizione entro l'inizio del camp"
+                  text=" Nel caso non si disponga dei diritti per aderire al progetto conciliazione, il genitore accetta a provvedere al pagamento completo dell'iscrizione entro 5 giorni dalla pubblicazione del bando, altrimenti la prenotazione verrà cancellata"
                   label="Accetto"
-                  registername="conciliazione"
+                  registername="conciliazioneAccept"
                 />
                 </Section>
               <Section
@@ -578,7 +576,7 @@ export default function B() {
                   </div>
                 </Wrapper>
               </Section>
-              {!sendMail.isSuccess ? (
+              {sendMail.isSuccess ? (
                 <>
                   <div className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-green-600 ">
                     <p className="text-green-100 font-bold ">

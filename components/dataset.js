@@ -24,7 +24,7 @@ export const dataset = {
         price: 290
     },
     TC1: {
-        desc: "1° Turno Galletto Cresci con Noi: non disponibile",
+        desc: "1° Turno Galletto Cresci con Noi: da Lunedì 12/06 a Venerdì 23/06",
         price: 230
     },
     TC2: {

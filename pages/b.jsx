@@ -177,14 +177,14 @@ export default function B() {
     else return accumulator + 145;
   }
 
-  
+
 
   const week = data.filter(e => !e.startsWith("T"))
   const turni = data.filter(e => e.startsWith("T"))
   const g1 = week.slice(0, week.length - week.length % 2)
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
-  const tot = (turni.reduce(addTruni,0)) + (g1.reduce(addWeekg1,0)) + (g2.reduce(addTruni,0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const tot = (turni.reduce(addTruni, 0)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
@@ -590,6 +590,12 @@ export default function B() {
                     </tbody>
                   </table>
                   <p className="xs">se il totale della spesa non ritorna con il tuo calcolo o con la tua idea di spesa puoi contattarci per farlo insieme al 324 0957228</p>
+                  <p>
+                    IBAN: IT79Q 08542 36700 0000 0031 0763<br />
+                    Galletto Sport Academy ssd a rl<br />
+                    Via Ambrogini, 5 -40022 Castel del Rio BO<br />
+                    P.Iva/CF: 03812341208<br />
+                  </p>
                 </div>
               </Section>
               <Section title="Manifestazione del consenso e presa visione termini del Progetto Conciliazione">

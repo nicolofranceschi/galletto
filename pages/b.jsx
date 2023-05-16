@@ -430,6 +430,7 @@ export default function B() {
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
                     <option value="FLORIM">FLORIM</option>
+                    <option value="CRAL">CRAL</option>
                   </select>
                 </Wrapper>
               </Section>
@@ -577,6 +578,12 @@ export default function B() {
                           <td className="py-2">- 290 €</td>
                         </tr>
                       )}
+                      {convenzione === "CRAL" && (turni.length > 0 || week.length > 1  )  && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto Dipendenti Cral</td>
+                          <td className="py-2">- {turni.length * 10 + Math.trunc(week.length / 2) * 10} €</td>
+                        </tr>
+                      )}
                       {conciliazione >= 1 && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Progetto Conciliazione</td>
@@ -675,22 +682,6 @@ export default function B() {
                       </svg>
                     </div>
                   </div>
-                  <Link href="/a">
-                    <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-[#693A44] ">
-                      <p className="text-[#DBBDC4] font-bold ">
-                        Compila il modulo A
-                      </p>
-                      <div className="p-3 w-10 h-10 flex items-center bg-[#DBBDC4] rounded-md ">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="fill-[#693A44]"
-                          viewBox="0 0 384 512"
-                        >
-                          <path d="M381.5 435.7l-160-384C216.6 39.78 204.9 32.01 192 32.01S167.4 39.78 162.5 51.7l-160 384c-6.797 16.31 .9062 35.05 17.22 41.84c16.38 6.828 35.08-.9219 41.84-17.22l31.8-76.31h197.3l31.8 76.31c5.109 12.28 17.02 19.7 29.55 19.7c4.094 0 8.266-.7969 12.3-2.484C380.6 470.7 388.3 452 381.5 435.7zM119.1 320L192 147.2l72 172.8H119.1z" />
-                        </svg>
-                      </div>
-                    </a>
-                  </Link>
                   <Link href="/">
                     <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-white ">
                       <div className="p-3 flex items-center w-10 h-10 bg-slate-200 rounded-md">
@@ -709,13 +700,8 @@ export default function B() {
                   </Link>
                 </>
               ) : (
-                <button
-                  className={
-                    "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"
-                  }
-                  type="submit"
-                >
-                  INVIA
+                <button className={ "w-full p-4 bg-sky-600 drop-shadow-2xl rounded-xl text-white font-bold"} type="submit" disabled={sendMail.isLoading} >
+                  {sendMail.isLoading ? "Caricamento, attendi l' invio dei dati rimanendo su questa pagina" : "INVIA"}
                 </button>
               )}
             </div>

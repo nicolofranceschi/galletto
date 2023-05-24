@@ -383,7 +383,7 @@ export default function B() {
                       <div className="pt-4 flex flex-wrap text-left gap-2">
                         <Turno title={"1 TURNO"} desc={"da Lunedì 12/06 a Venerdì 23/06"} addCamp={() => addCamp(["C1", "C2"])} condi={camp.some(e => e === "C1") && camp.some(e => e === "C2")} color={"bg-green-200"} />
                         <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["C3", "C4"])} condi={camp.some(e => e === "C3") && camp.some(e => e === "C4")} color={"bg-green-200"} />
-                        <Turno title={"3 TURNO"} desc={"da Lunedì 10/07 a Venerdì 21/07"} addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Turno title={"3 TURNO"} desc={"SOLD OUT"} disabled addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
                         <Turno title={"4 TURNO"} desc={"SOLD OUT"} disabled addCamp={() => addCamp(["C7", "C8"])} condi={camp.some(e => e === "C7") && camp.some(e => e === "C8")} color={"bg-green-200"} />
                         <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["C9", "C10"])} condi={camp.some(e => e === "C9") && camp.some(e => e === "C10")} color={"bg-green-200"} />
                         <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["C11", "C12"])} condi={camp.some(e => e === "C11") && camp.some(e => e === "C12")} color={"bg-green-200"} />
@@ -395,7 +395,7 @@ export default function B() {
                         <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["C3"])} condi={camp.some(e => e === "C3")} color={"bg-green-200"} />
                         <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["C4"])} condi={camp.some(e => e === "C4")} color={"bg-green-200"} />
                         <Week title={"5 SETTIMANA: 10/07 - 14/07"} addCamp={() => addCamp(["C5"])} condi={camp.some(e => e === "C5")} color={"bg-green-200"} />
-                        <Week title={"6 SETTIMANA: 17/07 - 21/07"} addCamp={() => addCamp(["C6"])} condi={camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Week title={"6 SETTIMANA: SOLD OUT "} disabled addCamp={() => addCamp(["C6"])} condi={camp.some(e => e === "C6")} color={"bg-green-200"} />
                         <Week title={"7 SETTIMANA: SOLD OUT "} disabled addCamp={() => addCamp(["C7"])} condi={camp.some(e => e === "C7")} color={"bg-green-200"} />
                         <Week title={"8 SETTIMANA: 31/07 - 04/08"} addCamp={() => addCamp(["C8"])} condi={camp.some(e => e === "C8")} color={"bg-green-200"} />
                         <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["C9"])} condi={camp.some(e => e === "C9")} color={"bg-green-200"} />
@@ -578,7 +578,7 @@ export default function B() {
                           <td className="py-2">- 290 €</td>
                         </tr>
                       )}
-                      {convenzione === "CRAL" && (turni.length > 0 || week.length > 1  )  && (
+                      {convenzione === "CRAL" && (turni.length > 0 || week.length > 1) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Dipendenti Cral</td>
                           <td className="py-2">- {turni.length * 10 + Math.trunc(week.length / 2) * 10} €</td>
@@ -700,7 +700,7 @@ export default function B() {
                   </Link>
                 </>
               ) : (
-                <button className={ "w-full p-4 bg-sky-600 disabled:animate-pulse drop-shadow-2xl rounded-xl text-white font-bold"} type="submit" disabled={sendMail.isLoading} >
+                <button className={"w-full p-4 bg-sky-600 disabled:animate-pulse drop-shadow-2xl rounded-xl text-white font-bold"} type="submit" disabled={sendMail.isLoading} >
                   {sendMail.isLoading ? "Caricamento, attendi l' invio dei dati rimanendo su questa pagina" : "INVIA"}
                 </button>
               )}

@@ -600,7 +600,7 @@ export default function B() {
                       </tr>
                     </tbody>
                   </table>
-                  <p className="font-bold text-red-500">Il costo di Galletto Resident da pagare riguarda solo la parte sportiva. La parte alberghiera verrà saldata al momento dell'arrivo al campo</p>
+                  <p className="font-bold text-red-500">Il costo di Galletto Resident da pagare riguarda solo la parte sportiva. La parte alberghiera verrà saldata al momento dell'arrivo al camp</p>
                   <p className="xs">se il totale della spesa non ritorna con il tuo calcolo o con la tua idea di spesa puoi contattarci per farlo insieme al 324 0957228</p>
                   <p>
                     IBAN: IT79Q 08542 36700 0000 0031 0763<br />

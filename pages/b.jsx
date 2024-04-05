@@ -619,7 +619,7 @@ export default function B() {
               </Section>}
               <Section
                 family="BC_"
-                title="Dati relativi al pagamento effettuato a mezzo bonifico"
+                title="Dati relativi al pagamento effettuato a mezzo bonifico bancario che il genitore si impegna a effettuare subito dopo l'iscrizione."
               >
                 <Wrapper title="BONIFICO BANCARIO ORDINANTE (Cognome e Nome)">
                   <Input name="Intestatario" />

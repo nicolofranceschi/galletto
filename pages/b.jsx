@@ -367,7 +367,7 @@ export default function B() {
                       </div>
                     </div>
                     <div className="pt-4 flex flex-wrap text-left gap-2">
-                      <Turno title={"TURNO UNICO"} desc={"da lunedì 10/06 a venerdì 21/06"} addCamp={() => addCamp(["R1"])} condi={camp.some(e => e === "R1")} color={"bg-orange-200"} />
+                      <Turno title={"TURNO UNICO"} desc={"da lunedì 9/06 a venerdì 15/06"} addCamp={() => addCamp(["R1"])} condi={camp.some(e => e === "R1")} color={"bg-orange-200"} />
                     </div>
                   </div>}
                   {
@@ -610,13 +610,13 @@ export default function B() {
                   </p>
                 </div>
               </Section>
-              <Section title="Manifestazione del consenso e presa visione termini del Progetto Conciliazione">
+              {!isResident && <Section title="Manifestazione del consenso e presa visione termini del Progetto Conciliazione">
                 <CheckBox
-                  text=" Nel caso non si disponga dei diritti per aderire al progetto conciliazione, il genitore accetta a provvedere al pagamento completo dell'iscrizione entro 5 giorni dalla pubblicazione del bando, altrimenti la prenotazione verrà cancellata"
+                  text="Nel caso non si disponga dei diritti per aderire al progetto conciliazione, il genitore accetta a provvedere al pagamento completo dell'iscrizione entro 5 giorni dalla pubblicazione del bando, altrimenti la prenotazione verrà cancellata"
                   label="Accetto"
                   registername="conciliazioneAccept"
                 />
-              </Section>
+              </Section>}
               <Section
                 family="BC_"
                 title="Dati relativi al pagamento effettuato a mezzo bonifico"

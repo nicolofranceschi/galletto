@@ -39,6 +39,8 @@ export default function B() {
     });
   });
 
+  const isResident = camp.some(e => e === "R1")
+
   const addCamp = (camps) => {
     const tempCamp = [...camp]
     const newCamp = tempCamp.some(e => camps.some(el => el === e)) ? tempCamp.filter(e => !camps.some(el => el === e)) : [...camps, ...camp]
@@ -178,9 +180,8 @@ export default function B() {
   }
 
 
-
-  const week = data.filter(e => !e.startsWith("T"))
-  const turni = data.filter(e => e.startsWith("T"))
+  const week = data.filter(e => !e.startsWith("T") && !e.startsWith("R"))
+  const turni = data.filter(e => e.startsWith("T")  || e.startsWith("R"))
   const g1 = week.slice(0, week.length - week.length % 2)
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
@@ -223,7 +224,7 @@ export default function B() {
                   </a>
                 </Link>
                 <div className="flex flex-grow gap-2 flex-col bg-white p-4 rounded-xl drop-shadow-lg  ">
-                  <h3>DOMANDA DI ISCRIZIONE CAMP SUMMER 2023</h3>
+                  <h3>DOMANDA DI ISCRIZIONE CAMP SUMMER 2024</h3>
                   <p>Mod.B</p>
                 </div>
               </div>
@@ -266,7 +267,8 @@ export default function B() {
                   <Input name="Allergie" />
                 </Wrapper>
               </Section>
-              <Section title="SIA ISCRITTO AL CAMP SUMMER 2023">
+              <Section title="SIA ISCRITTO AL CAMP SUMMER 2024">
+                <p className="px-4 py-2 bg-yellow-200 border-2 border-yellow-400 font-bold text-yellow-700 rounded-lg">Prenotazioni aperte solo per Galletto Resident</p>
                 <div className="flex flex-col gap-4">
                   <p>Scegli la fascia di età</p>
                   <div className="flex flex-col items-start gap-2">
@@ -298,26 +300,26 @@ export default function B() {
                     </div>
                     <div className="pt-4 flex flex-wrap text-left gap-2">
                       <Turno title={"1 TURNO"} desc={"NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1", "B2"])} condi={camp.some(e => e === "B1") && camp.some(e => e === "B2")} color={"bg-pink-200"} />
-                      <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["B3", "B4"])} condi={camp.some(e => e === "B3") && camp.some(e => e === "B4")} color={"bg-pink-200"} />
-                      <Turno title={"3 TURNO"} desc={"SOLD OUT "} disabled addCamp={() => addCamp(["B5", "B6"])} condi={camp.some(e => e === "B5") && camp.some(e => e === "B6")} color={"bg-pink-200"} />
-                      <Turno title={"4 TURNO"} desc={"da Lunedì 24/07 a Venerdì 04/08"} addCamp={() => addCamp(["B7", "B8"])} condi={camp.some(e => e === "B7") && camp.some(e => e === "B8")} color={"bg-pink-200"} />
-                      <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["B9", "B10"])} condi={camp.some(e => e === "B9") && camp.some(e => e === "B10")} color={"bg-pink-200"} />
-                      <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["B11", "B12"])} condi={camp.some(e => e === "B11") && camp.some(e => e === "B12")} color={"bg-pink-200"} />
+                      <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} disabled addCamp={() => addCamp(["B3", "B4"])} condi={camp.some(e => e === "B3") && camp.some(e => e === "B4")} color={"bg-pink-200"} />
+                      <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} disabled addCamp={() => addCamp(["B5", "B6"])} condi={camp.some(e => e === "B5") && camp.some(e => e === "B6")} color={"bg-pink-200"} />
+                      <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"} disabled addCamp={() => addCamp(["B7", "B8"])} condi={camp.some(e => e === "B7") && camp.some(e => e === "B8")} color={"bg-pink-200"} />
+                      <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"} disabled addCamp={() => addCamp(["B9", "B10"])} condi={camp.some(e => e === "B9") && camp.some(e => e === "B10")} color={"bg-pink-200"} />
+                      <Turno title={"6 TURNO"} desc={"da lunedì 19/08 a venerdì 30/08"} disabled addCamp={() => addCamp(["B11", "B12"])} condi={camp.some(e => e === "B11") && camp.some(e => e === "B12")} color={"bg-pink-200"} />
                     </div>
                     <p className="pt-4">oppure settimane personalizzate</p>
                     <div className="flex flex-wrap mt-2 gap-2">
                       <Week title={"1 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1"])} condi={camp.some(e => e === "B1")} color={"bg-pink-200"} />
                       <Week title={"2 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B2"])} condi={camp.some(e => e === "B2")} color={"bg-pink-200"} />
-                      <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["B3"])} condi={camp.some(e => e === "B3")} color={"bg-pink-200"} />
-                      <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["B4"])} condi={camp.some(e => e === "B4")} color={"bg-pink-200"} />
-                      <Week title={"5 SETTIMANA: SOLD OUT "} disabled addCamp={() => addCamp(["B5"])} condi={camp.some(e => e === "B5")} color={"bg-pink-200"} />
-                      <Week title={"6 SETTIMANA: SOLD OUT "} disabled addCamp={() => addCamp(["B6"])} condi={camp.some(e => e === "B6")} color={"bg-pink-200"} />
-                      <Week title={"7 SETTIMANA: 24/07 - 28/07"} addCamp={() => addCamp(["B7"])} condi={camp.some(e => e === "B7")} color={"bg-pink-200"} />
-                      <Week title={"8 SETTIMANA: 31/07 - 04/08"} addCamp={() => addCamp(["B8"])} condi={camp.some(e => e === "B8")} color={"bg-pink-200"} />
-                      <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["B9"])} condi={camp.some(e => e === "B9")} color={"bg-pink-200"} />
-                      <Week title={"10 SETTIMANA: 21/08 - 25/08"} addCamp={() => addCamp(["B10"])} condi={camp.some(e => e === "B10")} color={"bg-pink-200"} />
-                      <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["B11"])} condi={camp.some(e => e === "B11")} color={"bg-pink-200"} />
-                      <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["B12"])} condi={camp.some(e => e === "B12")} color={"bg-pink-200"} />
+                      <Week title={"3 SETTIMANA: 24/06 - 28/06"} disabled addCamp={() => addCamp(["B3"])} condi={camp.some(e => e === "B3")} color={"bg-pink-200"} />
+                      <Week title={"4 SETTIMANA: 01/07 - 05/07"} disabled addCamp={() => addCamp(["B4"])} condi={camp.some(e => e === "B4")} color={"bg-pink-200"} />
+                      <Week title={"5 SETTIMANA: 08/07 - 12/07"} disabled addCamp={() => addCamp(["B5"])} condi={camp.some(e => e === "B5")} color={"bg-pink-200"} />
+                      <Week title={"6 SETTIMANA: 15/07 - 19/07"} disabled addCamp={() => addCamp(["B6"])} condi={camp.some(e => e === "B6")} color={"bg-pink-200"} />
+                      <Week title={"7 SETTIMANA: 22/07 - 26/07"} disabled addCamp={() => addCamp(["B7"])} condi={camp.some(e => e === "B7")} color={"bg-pink-200"} />
+                      <Week title={"8 SETTIMANA: 29/07 - 02/08"} disabled addCamp={() => addCamp(["B8"])} condi={camp.some(e => e === "B8")} color={"bg-pink-200"} />
+                      <Week title={"9 SETTIMANA: 05/08 - 09/08"} disabled addCamp={() => addCamp(["B9"])} condi={camp.some(e => e === "B9")} color={"bg-pink-200"} />
+                      <Week title={"10 SETTIMANA: 12/08 - 16/08"} disabled addCamp={() => addCamp(["B10"])} condi={camp.some(e => e === "B10")} color={"bg-pink-200"} />
+                      <Week title={"11 SETTIMANA: 19/08 - 23/08"} disabled addCamp={() => addCamp(["B11"])} condi={camp.some(e => e === "B11")} color={"bg-pink-200"} />
+                      <Week title={"12 SETTIMANA: 26/08 - 30/08"} disabled addCamp={() => addCamp(["B12"])} condi={camp.some(e => e === "B12")} color={"bg-pink-200"} />
                     </div>
                   </div>}
                   {age === 1 && <div>
@@ -333,38 +335,40 @@ export default function B() {
                       </div>
                     </div>
                     <div className="pt-4 flex flex-wrap text-left gap-2">
-                      <Turno title={"1 TURNO"} desc={"da Lunedì 12/06 a Venerdì 23/06"} addCamp={() => addCamp(["S1", "S2"])} condi={camp.some(e => e === "S1") && camp.some(e => e === "S2")} color={"bg-orange-200"} />
-                      <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["S3", "S4"])} condi={camp.some(e => e === "S3") && camp.some(e => e === "S4")} color={"bg-orange-200"} />
-                      <Turno title={"3 TURNO"} desc={"SOLD OUT "} disabled addCamp={() => addCamp(["S5", "S6"])} condi={camp.some(e => e === "S5") && camp.some(e => e === "S6")} color={"bg-orange-200"} />
-                      <Turno title={"4 TURNO"} desc={"da Lunedì 24/07 a Venerdì 04/08"} addCamp={() => addCamp(["S7", "S8"])} condi={camp.some(e => e === "S7") && camp.some(e => e === "S8")} color={"bg-orange-200"} />
-                      <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["S9", "S10"])} condi={camp.some(e => e === "S9") && camp.some(e => e === "S10")} color={"bg-orange-200"} />
-                      <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["S11", "S12"])} condi={camp.some(e => e === "S11") && camp.some(e => e === "S12")} color={"bg-orange-200"} />
+                      <Turno title={"1 TURNO"} desc={"da lunedì 10/06 a venerdì 21/06"} disabled addCamp={() => addCamp(["S1", "S2"])} condi={camp.some(e => e === "S1") && camp.some(e => e === "S2")} color={"bg-orange-200"} />
+                      <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} disabled addCamp={() => addCamp(["S3", "S4"])} condi={camp.some(e => e === "S3") && camp.some(e => e === "S4")} color={"bg-orange-200"} />
+                      <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} disabled addCamp={() => addCamp(["S5", "S6"])} condi={camp.some(e => e === "S5") && camp.some(e => e === "S6")} color={"bg-orange-200"} />
+                      <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"} disabled addCamp={() => addCamp(["S7", "S8"])} condi={camp.some(e => e === "S7") && camp.some(e => e === "S8")} color={"bg-orange-200"} />
+                      <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"} disabled addCamp={() => addCamp(["S9", "S10"])} condi={camp.some(e => e === "S9") && camp.some(e => e === "S10")} color={"bg-orange-200"} />
+                      <Turno title={"6 TURNO"} desc={"da lunedì 19/08 a venerdì 30/08"} disabled addCamp={() => addCamp(["S11", "S12"])} condi={camp.some(e => e === "S11") && camp.some(e => e === "S12")} color={"bg-orange-200"} />
                     </div>
                     <p className="pt-4">oppure settimane personalizzate</p>
                     <div className="flex flex-wrap mt-2 gap-2">
-                      <Week title={"1 SETTIMANA: 12/06 - 16/06"} addCamp={() => addCamp(["S1"])} condi={camp.some(e => e === "S1")} color={"bg-orange-200"} />
-                      <Week title={"2 SETTIMANA: 19/06 - 23/06"} addCamp={() => addCamp(["S2"])} condi={camp.some(e => e === "S2")} color={"bg-orange-200"} />
-                      <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["S3"])} condi={camp.some(e => e === "S3")} color={"bg-orange-200"} />
-                      <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["S4"])} condi={camp.some(e => e === "S4")} color={"bg-orange-200"} />
-                      <Week title={"5 SETTIMANA: SOLD OUT "}  disabled addCamp={() => addCamp(["S5"])} condi={camp.some(e => e === "S5")} color={"bg-orange-200"} />
-                      <Week title={"6 SETTIMANA: SOLD OUT "}  disabled addCamp={() => addCamp(["S6"])} condi={camp.some(e => e === "S6")} color={"bg-orange-200"} />
-                      <Week title={"7 SETTIMANA: 24/07 - 28/07"} addCamp={() => addCamp(["S7"])} condi={camp.some(e => e === "S7")} color={"bg-orange-200"} />
-                      <Week title={"8 SETTIMANA: 31/07 - 04/08"} addCamp={() => addCamp(["S8"])} condi={camp.some(e => e === "S8")} color={"bg-orange-200"} />
-                      <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["S9"])} condi={camp.some(e => e === "S9")} color={"bg-orange-200"} />
-                      <Week title={"10 SETTIMANA: 21/08 - 25/08"} addCamp={() => addCamp(["S10"])} condi={camp.some(e => e === "S10")} color={"bg-orange-200"} />
-                      <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["S11"])} condi={camp.some(e => e === "S11")} color={"bg-orange-200"} />
-                      <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["S12"])} condi={camp.some(e => e === "S12")} color={"bg-orange-200"} />
+                      <Week title={"1 SETTIMANA: 10/06 - 14/06"} disabled addCamp={() => addCamp(["S1"])} condi={camp.some(e => e === "S1")} color={"bg-orange-200"} />
+                      <Week title={"2 SETTIMANA: 17/06 - 21/06"} disabled addCamp={() => addCamp(["S2"])} condi={camp.some(e => e === "S2")} color={"bg-orange-200"} />
+                      <Week title={"3 SETTIMANA: 24/06 - 28/06"} disabled addCamp={() => addCamp(["S3"])} condi={camp.some(e => e === "S3")} color={"bg-orange-200"} />
+                      <Week title={"4 SETTIMANA: 01/07 - 05/07"} disabled addCamp={() => addCamp(["S4"])} condi={camp.some(e => e === "S4")} color={"bg-orange-200"} />
+                      <Week title={"5 SETTIMANA: 08/07 - 12/07"} disabled addCamp={() => addCamp(["S5"])} condi={camp.some(e => e === "S5")} color={"bg-orange-200"} />
+                      <Week title={"6 SETTIMANA: 15/07 - 19/07"} disabled addCamp={() => addCamp(["S6"])} condi={camp.some(e => e === "S6")} color={"bg-orange-200"} />
+                      <Week title={"7 SETTIMANA: 22/07 - 26/07"} disabled addCamp={() => addCamp(["S7"])} condi={camp.some(e => e === "S7")} color={"bg-orange-200"} />
+                      <Week title={"8 SETTIMANA: 29/07 - 02/08"} disabled addCamp={() => addCamp(["S8"])} condi={camp.some(e => e === "S8")} color={"bg-orange-200"} />
+                      <Week title={"9 SETTIMANA: 05/08 - 09/08"} disabled addCamp={() => addCamp(["S9"])} condi={camp.some(e => e === "S9")} color={"bg-orange-200"} />
+                      <Week title={"10 SETTIMANA: 12/08 - 16/08"} disabled addCamp={() => addCamp(["S10"])} condi={camp.some(e => e === "S10")} color={"bg-orange-200"} />
+                      <Week title={"11 SETTIMANA: 19/08 - 23/08"} disabled addCamp={() => addCamp(["S11"])} condi={camp.some(e => e === "S11")} color={"bg-orange-200"} />
+                      <Week title={"12 SETTIMANA: 26/08 - 30/08"} disabled addCamp={() => addCamp(["S12"])} condi={camp.some(e => e === "S12")} color={"bg-orange-200"} />
                     </div>
-                    <button type="button" className="flex  w-full grow items-start bg-orange-200 mt-2 p-4 flex-col gap-1 rounded-md hover:bg-slate-200">
-                      <div className="font-bold flex gap-1 text-orange-600 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-4 fill-orange-600"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
-                        <p></p>GALETTO RESIDENT
+                    <div className="flex gap-2 items-start mt-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="h-10 w-14 fill-orange-500"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" /></svg>
+                      <div className="flex flex-col">
+                        <h1 className="text-xl text-orange-500">GALLETTO RESIDENT</h1>
+                        <p className="text-[8px]">
+                          Il costo comprende la parte sportiva dell'evento.
+                        </p>
                       </div>
-                      <p className="text-xs text-left">per informazioni e iscrizioni contattaci al 3240957228</p>
-                      <a target="_blank" rel="noopener noreferrer" href="https://forms.gle/zqPPpJhicd9y8qDz7" >
-                        <p className="font-bold bg-orange-700 text-white p-2 rounded-lg mt-2">Iscriviti</p>
-                      </a>
-                    </button>
+                    </div>
+                    <div className="pt-4 flex flex-wrap text-left gap-2">
+                      <Turno title={"TURNO UNICO"} desc={"da lunedì 10/06 a venerdì 21/06"} addCamp={() => addCamp(["R1"])} condi={camp.some(e => e === "R1")} color={"bg-orange-200"} />
+                    </div>
                   </div>}
                   {
                     age === 2 &&
@@ -381,27 +385,27 @@ export default function B() {
                         </div>
                       </div>
                       <div className="pt-4 flex flex-wrap text-left gap-2">
-                        <Turno title={"1 TURNO"} desc={"da Lunedì 12/06 a Venerdì 23/06"} addCamp={() => addCamp(["C1", "C2"])} condi={camp.some(e => e === "C1") && camp.some(e => e === "C2")} color={"bg-green-200"} />
-                        <Turno title={"2 TURNO"} desc={"da Lunedì 26/06 a Venerdì 07/07"} addCamp={() => addCamp(["C3", "C4"])} condi={camp.some(e => e === "C3") && camp.some(e => e === "C4")} color={"bg-green-200"} />
-                        <Turno title={"3 TURNO"} desc={"SOLD OUT"} disabled addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
-                        <Turno title={"4 TURNO"} desc={"SOLD OUT"} disabled addCamp={() => addCamp(["C7", "C8"])} condi={camp.some(e => e === "C7") && camp.some(e => e === "C8")} color={"bg-green-200"} />
-                        <Turno title={"5 TURNO"} desc={"da Lunedì 07/08 a Venerdì 11/08 e da Lunedì 21/08 a Venerdì 25/08"} addCamp={() => addCamp(["C9", "C10"])} condi={camp.some(e => e === "C9") && camp.some(e => e === "C10")} color={"bg-green-200"} />
-                        <Turno title={"6 TURNO"} desc={"da Lunedì 28/08 a Venerdì 08/09"} addCamp={() => addCamp(["C11", "C12"])} condi={camp.some(e => e === "C11") && camp.some(e => e === "C12")} color={"bg-green-200"} />
+                        <Turno title={"1 TURNO"} desc={"da lunedì 10/06 a venerdì 21/06"} disabled addCamp={() => addCamp(["C1", "C2"])} condi={camp.some(e => e === "C1") && camp.some(e => e === "C2")} color={"bg-green-200"} />
+                        <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} disabled addCamp={() => addCamp(["C3", "C4"])} condi={camp.some(e => e === "C3") && camp.some(e => e === "C4")} color={"bg-green-200"} />
+                        <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} disabled addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"} disabled addCamp={() => addCamp(["C7", "C8"])} condi={camp.some(e => e === "C7") && camp.some(e => e === "C8")} color={"bg-green-200"} />
+                        <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"} disabled addCamp={() => addCamp(["C9", "C10"])} condi={camp.some(e => e === "C9") && camp.some(e => e === "C10")} color={"bg-green-200"} />
+                        <Turno title={"6 TURNO"} desc={"da lunedì 19/08 a venerdì 30/08"} disabled addCamp={() => addCamp(["C11", "C12"])} condi={camp.some(e => e === "C11") && camp.some(e => e === "C12")} color={"bg-green-200"} />
                       </div>
                       <p className="pt-4">oppure settimane personalizzate</p>
                       <div className="flex flex-wrap mt-2 gap-2">
-                        <Week title={"1 SETTIMANA: 12/06 - 16/06"} addCamp={() => addCamp(["C1"])} condi={camp.some(e => e === "C1")} color={"bg-green-200"} />
-                        <Week title={"2 SETTIMANA: 19/06 - 23/06"} addCamp={() => addCamp(["C2"])} condi={camp.some(e => e === "C2")} color={"bg-green-200"} />
-                        <Week title={"3 SETTIMANA: 26/06 - 30/06"} addCamp={() => addCamp(["C3"])} condi={camp.some(e => e === "C3")} color={"bg-green-200"} />
-                        <Week title={"4 SETTIMANA: 03/07 - 07/07"} addCamp={() => addCamp(["C4"])} condi={camp.some(e => e === "C4")} color={"bg-green-200"} />
-                        <Week title={"5 SETTIMANA: SOLD OUT"} disabled addCamp={() => addCamp(["C5"])} condi={camp.some(e => e === "C5")} color={"bg-green-200"} />
-                        <Week title={"6 SETTIMANA: SOLD OUT"} disabled addCamp={() => addCamp(["C6"])} condi={camp.some(e => e === "C6")} color={"bg-green-200"} />
-                        <Week title={"7 SETTIMANA: SOLD OUT"} disabled addCamp={() => addCamp(["C7"])} condi={camp.some(e => e === "C7")} color={"bg-green-200"} />
-                        <Week title={"8 SETTIMANA: SOLD OUT"} disabled addCamp={() => addCamp(["C8"])} condi={camp.some(e => e === "C8")} color={"bg-green-200"} />
-                        <Week title={"9 SETTIMANA: 07/08 - 11/08"} addCamp={() => addCamp(["C9"])} condi={camp.some(e => e === "C9")} color={"bg-green-200"} />
-                        <Week title={"10 SETTIMANA: 21/08 - 25/08"} addCamp={() => addCamp(["C10"])} condi={camp.some(e => e === "C10")} color={"bg-green-200"} />
-                        <Week title={"11 SETTIMANA: 28/08 - 01/09"} addCamp={() => addCamp(["C11"])} condi={camp.some(e => e === "C11")} color={"bg-green-200"} />
-                        <Week title={"12 SETTIMANA: 04/09 - 08/09"} addCamp={() => addCamp(["C12"])} condi={camp.some(e => e === "C12")} color={"bg-green-200"} />
+                        <Week title={"1 SETTIMANA: 10/06 - 14/06"} disabled addCamp={() => addCamp(["C1"])} condi={camp.some(e => e === "C1")} color={"bg-green-200"} />
+                        <Week title={"2 SETTIMANA: 17/06 - 21/06"} disabled addCamp={() => addCamp(["C2"])} condi={camp.some(e => e === "C2")} color={"bg-green-200"} />
+                        <Week title={"3 SETTIMANA: 24/06 - 28/06"} disabled addCamp={() => addCamp(["C3"])} condi={camp.some(e => e === "C3")} color={"bg-green-200"} />
+                        <Week title={"4 SETTIMANA: 01/07 - 05/07"} disabled addCamp={() => addCamp(["C4"])} condi={camp.some(e => e === "C4")} color={"bg-green-200"} />
+                        <Week title={"5 SETTIMANA: 08/07 - 12/07"} disabled addCamp={() => addCamp(["C5"])} condi={camp.some(e => e === "C5")} color={"bg-green-200"} />
+                        <Week title={"6 SETTIMANA: 15/07 - 19/07"} disabled addCamp={() => addCamp(["C6"])} condi={camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Week title={"7 SETTIMANA: 22/07 - 26/07"} disabled addCamp={() => addCamp(["C7"])} condi={camp.some(e => e === "C7")} color={"bg-green-200"} />
+                        <Week title={"8 SETTIMANA: 29/07 - 02/08"} disabled addCamp={() => addCamp(["C8"])} condi={camp.some(e => e === "C8")} color={"bg-green-200"} />
+                        <Week title={"9 SETTIMANA: 05/08 - 09/08"} disabled addCamp={() => addCamp(["C9"])} condi={camp.some(e => e === "C9")} color={"bg-green-200"} />
+                        <Week title={"10 SETTIMANA: 12/08 - 16/08"} disabled addCamp={() => addCamp(["C10"])} condi={camp.some(e => e === "C10")} color={"bg-green-200"} />
+                        <Week title={"11 SETTIMANA: 19/08 - 23/08"} disabled addCamp={() => addCamp(["C11"])} condi={camp.some(e => e === "C11")} color={"bg-green-200"} />
+                        <Week title={"12 SETTIMANA: 26/08 - 30/08"} disabled addCamp={() => addCamp(["C12"])} condi={camp.some(e => e === "C12")} color={"bg-green-200"} />
                       </div>
                     </div>
                   }
@@ -418,14 +422,14 @@ export default function B() {
                 </Wrapper>
               </Section>
               <Section title="UTENTE GIA' TESSERATO">
-                <Wrapper title="L'ISCRITTO ERA GIA' TESSERATO NEL 2023 PRIMA DI QUESTA ISCRIZIONE ? (Es. Sei già tesserato nel 2023 se hai partecipato a Galletto Winter 2023)">
+                <Wrapper title="L'ISCRITTO ERA GIA' TESSERATO NEL 2024 PRIMA DI QUESTA ISCRIZIONE ? (Es. Sei già tesserato nel 2024 se hai partecipato a Galletto Winter 2024)">
                   <select {...methods.register("tesserato")}>
                     <option value="No">No</option>
                     <option value="Si">Si</option>
                   </select>
                 </Wrapper>
               </Section>
-              <Section title="CONVENZIONI AZIENDALI">
+             {!isResident && <Section title="CONVENZIONI AZIENDALI">
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
@@ -433,9 +437,9 @@ export default function B() {
                     <option value="CRAL">CRAL</option>
                   </select>
                 </Wrapper>
-              </Section>
+              </Section>}
               <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
-                <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
+              {!isResident &&  <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select defaultValue="0" {...methods.register("conciliazione")}>
                     <option value="0">0</option>
                     {fratelli === "No" &&
@@ -446,7 +450,7 @@ export default function B() {
                       </>
                     }
                   </select>
-                </Wrapper>
+                </Wrapper>}
                 <Wrapper title="HAI UN FRATELLO/SORELLA ISCRITTO ?">
                   <select {...methods.register("fratelli")}>
                     <option value="No">No</option>
@@ -455,7 +459,7 @@ export default function B() {
                 </Wrapper>
               </Section>
 
-              <Section title="Con servizio di trasporto">
+              {!isResident && <Section title="Con servizio di trasporto">
                 <Wrapper title="Indicare la fermata del Galletto Bus">
                   <select {...methods.register("fermata")}>
                     <option value="Nessun Servizio di Trasporto">
@@ -510,7 +514,7 @@ export default function B() {
                     <span>Note</span>
                   </div>
                 </Wrapper>
-              </Section>
+              </Section>}
 
               <Section title="Manifestazione del consenso e presa visione (Privacy, Regolamento UE n. 2016/679 - Regolamento SSD e Campi estivi)">
                 <CheckBox

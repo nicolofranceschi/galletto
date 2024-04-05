@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="p-4 bg-slate-100 flex flex-col gap-4">
       <div className="drop-shadow-lg  p-4 rounded-xl text-white bg-indigo-700">
-        <h2>Benvenuto alle iscrizioni per Galletto Summer 2023</h2>
+        <h2>Benvenuto alle iscrizioni per Galletto Summer 2024</h2>
       </div>
       <div className="flex flex-wrap gap-4">
         <Link href="/a">
@@ -13,7 +13,7 @@ export default function Home() {
             <p className="p-1 font-bold">
               DOMANDA DI TESSERAMENTO ALLA GSA SSD RL - MODULO A
             </p>
-            <p className="py-1 font-thin">compilare solo se NON siete già tesserati nell'anno 2023.</p>
+            <p className="py-1 font-thin">compilare solo se NON siete già tesserati nell'anno 2024.</p>
             <div className="bg-[#DBBDC4] relative overflow-hidden rounded-xl h-[70vh]">
               <p className="text-[115vh] absolute top-[-60%] right-[-10%] font-bold text-[#693A44]">
                 A
@@ -24,7 +24,7 @@ export default function Home() {
         <Link href="/b">
           <a className="flex text-black flex-grow flex-col p-4 rounded-xl drop-shadow-lg hover:drop-shadow-2xl bg-white justify-between">
             <p className="p-1 font-bold">
-              DOMANDA DI ISCRIZIONE CAMP SUMMER 2023 - MODULO B
+              DOMANDA DI ISCRIZIONE CAMP SUMMER 2024 - MODULO B
             </p>
             <div className="bg-[#9E95EE] relative overflow-hidden rounded-xl h-[70vh]">
               <p className="text-[115vh] absolute top-[-60%] right-[-10%] font-bold text-[#1E137C]">

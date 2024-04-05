@@ -174,7 +174,7 @@ export default async function sendB(req, res) {
   doc.text(`Allergie: ${al_allergie}`);
   doc.moveDown(1);
   doc.fontSize(12);
-  doc.text("SIA ISCRITTO AL CAMP SUMMER 2023");
+  doc.text("SIA ISCRITTO AL CAMP SUMMER 2024");
   doc.moveDown(0.2);
   doc.fontSize(11);
   doc.text("Turni");

@@ -56,11 +56,12 @@ export default async function sendA(req, res) {
 
   const spreadsheetId = "1gsSQ5pMJUjkBjr9eYkSbQ5nqpZ0ZVIwJg81qKujm5Nc";
 
-  googleSheetsInstance.spreadsheets.values.append({
+  await googleSheetsInstance.spreadsheets.values.append({
     auth, //auth object
     spreadsheetId, //spreadsheet id
     range: "a!A:B", //sheet name and range of cells
     valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
+    insertDataOption: 'INSERT_ROWS',
     resource: {
       values: [[
         new Date,

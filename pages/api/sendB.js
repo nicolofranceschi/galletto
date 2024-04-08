@@ -70,11 +70,12 @@ export default async function sendB(req, res) {
     auth: authClientObject,
   })
   const spreadsheetId = "1K71GqEErwxoS_t276AiuoSQtypxu_lCyv1jITSVSaxo"
-  googleSheetsInstance.spreadsheets.values.append({
+  const data = await googleSheetsInstance.spreadsheets.values.append({
     auth, //auth object
     spreadsheetId, //spreadsheet id
     range: "b!A:B", //sheet name and range of cells
     valueInputOption: "USER_ENTERED", // The information will be passed according to what the usere passes in as date, number or text
+    insertDataOption: 'INSERT_ROWS',
     resource: {
       values: [[
         new Date,
@@ -124,6 +125,8 @@ export default async function sendB(req, res) {
       ]],
     },
   });
+
+  console.log("excle add - " + data?.statusText);
 
   const doc = new PDFDocument({ size: "A4" });
   doc.fontSize(12);

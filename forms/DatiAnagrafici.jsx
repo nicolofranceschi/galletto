@@ -25,8 +25,8 @@ export default function DatiAnagrafici() {
         <Wrapper title="Codice Fiscale">
           <Input name="Codice fiscale" />
         </Wrapper>
-        <Wrapper title="Residente in">
-          <Input name="Via" />
+        <Wrapper title="Residente in via">
+          <Input name="Via" hidden={true} />
           <Input name="Numero Civico" />
         </Wrapper>
         <Wrapper>

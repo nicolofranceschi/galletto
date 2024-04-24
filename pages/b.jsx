@@ -299,7 +299,7 @@ export default function B() {
                       </div>
                     </div>
                     <div className="pt-4 flex flex-wrap text-left gap-2">
-                      <Turno title={"1 TURNO"} desc={"NON DISPONIBILE"} addCamp={() => addCamp(["B1", "B2"])} condi={camp.some(e => e === "B1") && camp.some(e => e === "B2")} color={"bg-pink-200"} />
+                      <Turno title={"1 TURNO"} desc={"NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1", "B2"])} condi={camp.some(e => e === "B1") && camp.some(e => e === "B2")} color={"bg-pink-200"} />
                       <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} addCamp={() => addCamp(["B3", "B4"])} condi={camp.some(e => e === "B3") && camp.some(e => e === "B4")} color={"bg-pink-200"} />
                       <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} addCamp={() => addCamp(["B5", "B6"])} condi={camp.some(e => e === "B5") && camp.some(e => e === "B6")} color={"bg-pink-200"} />
                       <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"} addCamp={() => addCamp(["B7", "B8"])} condi={camp.some(e => e === "B7") && camp.some(e => e === "B8")} color={"bg-pink-200"} />
@@ -308,8 +308,8 @@ export default function B() {
                     </div>
                     <p className="pt-4">oppure settimane personalizzate</p>
                     <div className="flex flex-wrap mt-2 gap-2">
-                      <Week title={"1 SETTIMANA: NON DISPONIBILE"} addCamp={() => addCamp(["B1"])} condi={camp.some(e => e === "B1")} color={"bg-pink-200"} />
-                      <Week title={"2 SETTIMANA: NON DISPONIBILE"} addCamp={() => addCamp(["B2"])} condi={camp.some(e => e === "B2")} color={"bg-pink-200"} />
+                      <Week title={"1 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1"])} condi={camp.some(e => e === "B1")} color={"bg-pink-200"} />
+                      <Week title={"2 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B2"])} condi={camp.some(e => e === "B2")} color={"bg-pink-200"} />
                       <Week title={"3 SETTIMANA: 24/06 - 28/06"} addCamp={() => addCamp(["B3"])} condi={camp.some(e => e === "B3")} color={"bg-pink-200"} />
                       <Week title={"4 SETTIMANA: 01/07 - 05/07"} addCamp={() => addCamp(["B4"])} condi={camp.some(e => e === "B4")} color={"bg-pink-200"} />
                       <Week title={"5 SETTIMANA: 08/07 - 12/07"} addCamp={() => addCamp(["B5"])} condi={camp.some(e => e === "B5")} color={"bg-pink-200"} />

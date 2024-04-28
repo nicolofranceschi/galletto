@@ -175,17 +175,26 @@ export default function B() {
   }
 
   function addWeekg1(accumulator, a) {
-    if (a.startsWith("C")) return accumulator + 115;
-    else return accumulator + 145;
+    console.log(dataset[a].price)
+    return accumulator + dataset[a].price;
   }
 
+  const scontoMultiSettimana = () => {
+    let multi = 0
+    if (!week[0]) return 0
+    if (week[0].startsWith("B")) multi = 50
+    if (week[0].startsWith("S")) multi = 30
+    if (week[0].startsWith("C")) multi = 0
+    return Math.trunc(week.length / 2) * multi
+  }
 
   const week = data.filter(e => !e.startsWith("T") && !e.startsWith("R"))
-  const turni = data.filter(e => e.startsWith("T")  || e.startsWith("R"))
+  const turni = data.filter(e => e.startsWith("T") || e.startsWith("R"))
   const g1 = week.slice(0, week.length - week.length % 2)
+  const scontoFratelli = turni.length * 10 + Math.trunc(week.length / 2) * 10
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
-  const tot = (turni.reduce(addTruni, 0)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli === "Si" ? data.filter(e => e.startsWith("T")).length * 10 + data.filter(e => !e.startsWith("T")).length * 5 : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - scontoFratelli - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
@@ -193,6 +202,9 @@ export default function B() {
     coniliazione.push(camp[i])
   }
 
+  console.log("multi", scontoMultiSettimana())
+  console.log("virtualturni", virtualTurni)
+  
 
   return (
     <FormProvider {...methods}>
@@ -335,11 +347,11 @@ export default function B() {
                       </div>
                     </div>
                     <div className="pt-4 flex flex-wrap text-left gap-2">
-                      <Turno title={"1 TURNO"} desc={"da lunedì 10/06 a venerdì 21/06"}  addCamp={() => addCamp(["S1", "S2"])} condi={camp.some(e => e === "S1") && camp.some(e => e === "S2")} color={"bg-orange-200"} />
-                      <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"}  addCamp={() => addCamp(["S3", "S4"])} condi={camp.some(e => e === "S3") && camp.some(e => e === "S4")} color={"bg-orange-200"} />
-                      <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"}  addCamp={() => addCamp(["S5", "S6"])} condi={camp.some(e => e === "S5") && camp.some(e => e === "S6")} color={"bg-orange-200"} />
-                      <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"}  addCamp={() => addCamp(["S7", "S8"])} condi={camp.some(e => e === "S7") && camp.some(e => e === "S8")} color={"bg-orange-200"} />
-                      <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"}  addCamp={() => addCamp(["S9", "S10"])} condi={camp.some(e => e === "S9") && camp.some(e => e === "S10")} color={"bg-orange-200"} />
+                      <Turno title={"1 TURNO"} desc={"da lunedì 10/06 a venerdì 21/06"} addCamp={() => addCamp(["S1", "S2"])} condi={camp.some(e => e === "S1") && camp.some(e => e === "S2")} color={"bg-orange-200"} />
+                      <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} addCamp={() => addCamp(["S3", "S4"])} condi={camp.some(e => e === "S3") && camp.some(e => e === "S4")} color={"bg-orange-200"} />
+                      <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} addCamp={() => addCamp(["S5", "S6"])} condi={camp.some(e => e === "S5") && camp.some(e => e === "S6")} color={"bg-orange-200"} />
+                      <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"} addCamp={() => addCamp(["S7", "S8"])} condi={camp.some(e => e === "S7") && camp.some(e => e === "S8")} color={"bg-orange-200"} />
+                      <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"} addCamp={() => addCamp(["S9", "S10"])} condi={camp.some(e => e === "S9") && camp.some(e => e === "S10")} color={"bg-orange-200"} />
                       <Turno title={"6 TURNO"} desc={"da lunedì 19/08 a venerdì 30/08"} addCamp={() => addCamp(["S11", "S12"])} condi={camp.some(e => e === "S11") && camp.some(e => e === "S12")} color={"bg-orange-200"} />
                     </div>
                     <p className="pt-4">oppure settimane personalizzate</p>
@@ -429,7 +441,7 @@ export default function B() {
                   </select>
                 </Wrapper>
               </Section>
-             {!isResident && <Section title="CONVENZIONI AZIENDALI">
+              {!isResident && <Section title="CONVENZIONI AZIENDALI">
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
@@ -439,7 +451,7 @@ export default function B() {
                 </Wrapper>
               </Section>}
               <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
-              {!isResident &&  <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
+                {!isResident && <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select defaultValue="0" {...methods.register("conciliazione")}>
                     <option value="0">0</option>
                     {fratelli === "No" &&
@@ -550,7 +562,7 @@ export default function B() {
                       {g1.map((val, i) => (
                         <tr key={i} className="border-b-2 text-left">
                           <td className="py-2">{dataset[val].desc}</td>
-                          <td className="py-2">{val.startsWith("C") ? "115 €" : "145 €"}</td>
+                          <td className="py-2">{dataset[val].price} €</td>
                         </tr>
                       ))}
                       {g2.map((val, i) => (
@@ -571,7 +583,7 @@ export default function B() {
                           <td className="py-2 "> - {30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)} €</td>
                         </tr>
                       )}
-                      {fratelli === "Si" && (
+                      {fratelli === "Si" && (scontoFratelli > 0) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Fratelli</td>
                           <td className="py-2"> - {turni.length * 10 + Math.trunc(week.length / 2) * 10} € </td>
@@ -593,6 +605,12 @@ export default function B() {
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Progetto Conciliazione</td>
                           <td className="py-2"> - {100 * conciliazione} €</td>
+                        </tr>
+                      )}
+                      {scontoMultiSettimana() > 0 && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto Multi settimana</td>
+                          <td className="py-2"> - {scontoMultiSettimana()} €</td>
                         </tr>
                       )}
                       <tr className="text-left">

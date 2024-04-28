@@ -280,7 +280,6 @@ export default function B() {
                 </Wrapper>
               </Section>
               <Section title="SIA ISCRITTO AL CAMP SUMMER 2024">
-                <p className="px-4 py-2 bg-yellow-200 border-2 border-yellow-400 font-bold text-yellow-700 rounded-lg">Prenotazioni aperte solo per Galletto Resident</p>
                 <div className="flex flex-col gap-4">
                   <p>Scegli la fascia di età</p>
                   <div className="flex flex-col items-start gap-2">

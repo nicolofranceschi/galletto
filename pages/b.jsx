@@ -194,7 +194,8 @@ export default function B() {
   const scontoFratelli = turni.length * 10 + Math.trunc(week.length / 2) * 10
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
-  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (20 * (virtualTurni - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const virtualWeek = turni.length + Math.trunc(week.length / 2)
+  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
@@ -582,10 +583,10 @@ export default function B() {
                           <td className="py-2 "> - {30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)} €</td>
                         </tr>
                       )}
-                      {(virtualTurni > 1) && (
+                      {(virtualWeek > 1) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto multi turno</td>
-                          <td className="py-2 "> - {20 * (virtualTurni - 1) } €</td>
+                          <td className="py-2 "> - {20 * (virtualWeek - 1) } €</td>
                         </tr>
                       )}
                       {fratelli === "Si" && (scontoFratelli > 0) && (

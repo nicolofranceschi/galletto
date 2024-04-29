@@ -211,7 +211,7 @@ export default function B() {
   const assicurazioneMalattiaFlorim = assicurazioneMalattia > 20 ? 20 : assicurazioneMalattia
   const florim = convenzione === "FLORIM" ? age === 0 ? 310 + assicurazioneMalattiaFlorim : 330 + assicurazioneMalattiaFlorim : 0
   const tesseramento = 30 * ((age === 2 ? virtualweekCrewschi : virtualTurni) + (tesserato === "Si" ? 1 : 0) - 1)
-  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + assicurazioneMalattia - tesseramento - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - florim
+  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + assicurazioneMalattia - (tesseramento > 30 ? tesseramento : 30) - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - florim
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   const concNumber = minor < 0 ? 0 : minor
   if (conciliazione > concNumber) methods.setValue("conciliazione", concNumber)

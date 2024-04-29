@@ -4,7 +4,7 @@ import Section from "../components/Section";
 import CheckBox from "../components/CheckBox";
 import toast from "react-hot-toast";
 import useLocalStorage from "../hooks/useLocalStorage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileUploader from "../components/FileUploader";
 import Link from "next/link";
 import { useMutation } from "react-query";
@@ -25,11 +25,22 @@ export default function B() {
 
   const [percent, setPercent] = useState(0);
 
+ 
+
   const [camp, setCamp] = useState([]);
 
   const [data, setData] = useState([]);
 
   const [age, setAge] = useState(0)
+
+  useEffect(() => {
+    methods.setValue("convenzione", "none");
+    methods.setValue("conciliazione", 0);
+    methods.setValue("tesserato", "No");
+    methods.setValue("assicurazione", "No");
+    methods.setValue("fratelli", "No");
+    methods.setValue("fermata", "No");
+  }, [age]);
 
   const sendMail = useMutation(({ data }) => {
     return fetch("api/sendB", {
@@ -195,19 +206,17 @@ export default function B() {
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
   const virtualWeek = turni.length + Math.trunc(week.length / 2)
-  const virtualweekCrewschi = (turni.length * 2) + week.length - 1 
-  const tesseramento = 30 * ( (age === 2 ? virtualweekCrewschi : virtualTurni) + (tesserato === "Si" ? 1 : 0) + (age === 2 ? 0 : -1))
-  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - tesseramento  - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? age === 0 ? 310 : 330 : 0)
+  const virtualweekCrewschi = (turni.length * 2) + week.length - 1
+  const assicurazioneMalattia = assicurazione === "Yes" ? 10 * camp.length : 0
+  const assicurazioneMalattiaFlorim = assicurazioneMalattia > 20 ? 20 : assicurazioneMalattia
+  const florim = convenzione === "FLORIM" ? age === 0 ? 310 + assicurazioneMalattiaFlorim : 330 + assicurazioneMalattiaFlorim : 0
+  const tesseramento = 30 * ((age === 2 ? virtualweekCrewschi : virtualTurni) + (tesserato === "Si" ? 1 : 0) - 1)
+  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + assicurazioneMalattia - tesseramento - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - florim
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
-  if (conciliazione > minor) methods.setValue("conciliazione", minor)
-  const coniliazione = []
-  for (let i = 0; i < minor; i++) {
-    coniliazione.push(camp[i])
-  }
+  const concNumber = minor < 0 ? 0 : minor
+  if (conciliazione > concNumber) methods.setValue("conciliazione", concNumber)
+  const coniliazione = Array.from(Array(concNumber).keys())
 
-  console.log("multi", scontoMultiSettimana())
-  console.log("virtualturni", virtualTurni)
-  
 
   return (
     <FormProvider {...methods}>
@@ -443,17 +452,17 @@ export default function B() {
                   </select>
                 </Wrapper>
               </Section>
-              {!isResident && <Section title="CONVENZIONI AZIENDALI">
+              {age !== 2 && <Section title="CONVENZIONI AZIENDALI">
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
-                    <option value="FLORIM">FLORIM</option>
+                    {camp.length > 1 && <option value="FLORIM">FLORIM</option>}
                     <option value="CRAL">CRAL</option>
                   </select>
                 </Wrapper>
               </Section>}
-              <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
-                {!isResident && <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
+              {age !== 2 && <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
+                <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select defaultValue="0" {...methods.register("conciliazione")}>
                     <option value="0">0</option>
                     {fratelli === "No" &&
@@ -464,14 +473,14 @@ export default function B() {
                       </>
                     }
                   </select>
-                </Wrapper>}
+                </Wrapper>
                 <Wrapper title="HAI UN FRATELLO/SORELLA ISCRITTO ?">
                   <select {...methods.register("fratelli")}>
                     <option value="No">No</option>
                     {conciliazione === "0" && <option value="Si">Si</option>}
                   </select>
                 </Wrapper>
-              </Section>
+              </Section>}
 
               {!isResident && <Section title="Con servizio di trasporto">
                 <Wrapper title="Indicare la fermata del Galletto Bus">
@@ -588,7 +597,7 @@ export default function B() {
                       {(virtualWeek > 1 && age !== 2) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto multi turno</td>
-                          <td className="py-2 "> - {20 * (virtualWeek - 1) } €</td>
+                          <td className="py-2 "> - {20 * (virtualWeek - 1)} €</td>
                         </tr>
                       )}
                       {fratelli === "Si" && (scontoFratelli > 0) && (
@@ -600,7 +609,7 @@ export default function B() {
                       {convenzione === "FLORIM" && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Dipendenti Florim</td>
-                          <td className="py-2">- {age === 0 ? 310 : 330} €</td>
+                          <td className="py-2">- {florim} €</td>
                         </tr>
                       )}
                       {convenzione === "CRAL" && (turni.length > 0 || week.length > 1) && (

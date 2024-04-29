@@ -182,8 +182,8 @@ export default function B() {
   const scontoMultiSettimana = () => {
     let multi = 0
     if (!week[0]) return 0
-    if (week[0].startsWith("B")) multi = 50
-    if (week[0].startsWith("S")) multi = 30
+    if (week[0].startsWith("B")) multi = 110
+    if (week[0].startsWith("S")) multi = 90
     if (week[0].startsWith("C")) multi = 0
     return Math.trunc(week.length / 2) * multi
   }
@@ -195,7 +195,9 @@ export default function B() {
   const g2 = week.slice(week.length - week.length % 2)
   const virtualTurni = turni.length + Math.trunc(week.length / 2) + week.length % 2
   const virtualWeek = turni.length + Math.trunc(week.length / 2)
-  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - ((tesserato === "Si" || data.length > 1) ? (30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)) : 0) - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? 290 : 0)
+  const virtualweekCrewschi = (turni.length * 2) + week.length - 1 
+  const tesseramento = 30 * ( (age === 2 ? virtualweekCrewschi : virtualTurni) + (tesserato === "Si" ? 1 : 0) + (age === 2 ? 0 : -1))
+  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + (assicurazione === "Yes" ? 10 * camp.length : 0) - tesseramento  - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - (convenzione === "FLORIM" ? age === 0 ? 310 : 330 : 0)
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   if (conciliazione > minor) methods.setValue("conciliazione", minor)
   const coniliazione = []
@@ -424,7 +426,7 @@ export default function B() {
                 </div>
               </Section>
               <Section family="AL_" title="RIMBORSO ASSENZA MALATTIA">
-                <Wrapper title="INDICA IL NUMERO DELLE SETTIMANE SU CUI CALCOLARE IL RIMBORSO. La copertura prevede il
+                <Wrapper title="La copertura prevede il
                     rimborso di 20€ per ogni giorno di assenza causa malattia
                     attestata da certificato medico. Il costo per ogni settimana è di 10 euro">
                   <select {...methods.register("assicurazione")}>
@@ -577,13 +579,13 @@ export default function B() {
                           <td className="py-2">{10 * camp.length} €</td>
                         </tr>
                       )}
-                      {(tesserato === "Si" || virtualTurni > 1) && (
+                      {(tesseramento > 0) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto tesseramento</td>
-                          <td className="py-2 "> - {30 * (virtualTurni + (tesserato === "Si" ? 1 : 0) - 1)} €</td>
+                          <td className="py-2 "> - {tesseramento} €</td>
                         </tr>
                       )}
-                      {(virtualWeek > 1) && (
+                      {(virtualWeek > 1 && age !== 2) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto multi turno</td>
                           <td className="py-2 "> - {20 * (virtualWeek - 1) } €</td>
@@ -598,7 +600,7 @@ export default function B() {
                       {convenzione === "FLORIM" && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Dipendenti Florim</td>
-                          <td className="py-2">- 290 €</td>
+                          <td className="py-2">- {age === 0 ? 310 : 330} €</td>
                         </tr>
                       )}
                       {convenzione === "CRAL" && (turni.length > 0 || week.length > 1) && (

@@ -33,7 +33,7 @@ export default function B() {
 
   useEffect(() => {
     methods.setValue("convenzione", "none");
-    methods.setValue("conciliazione", 0);
+    methods.setValue("conciliazione", "0");
     methods.setValue("tesserato", "No");
     methods.setValue("assicurazione", "No");
     methods.setValue("fratelli", "No");

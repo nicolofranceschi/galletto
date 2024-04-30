@@ -56,11 +56,11 @@ export const dataset = {
         price: 330
     },
     TS3: {
-        desc: "3° Turno Galletto Sport Avventura: da Lunedì 10/07a Venerdì 21/07",
+        desc: "3° Turno Galletto Sport Avventura: da Lunedì 08/07 a Venerdì 19/07",
         price: 330
     },
     TS4: {
-        desc: "4° Turno Galletto Sport Avventura: da Lunedì 24/07 a Venerdì 04/08",
+        desc: "4° Turno Galletto Sport Avventura: da Lunedì 22/07 a Venerdì 02/08",
         price: 330
     },
     TS5: {
@@ -152,7 +152,7 @@ export const dataset = {
         price: 210
     },
     S9: {
-        desc: "9° Settimana Galletto Sport Avventura:  05/08 - 09/08",
+        desc: "9° Settimana Galletto Sport Avventura: 05/08 - 09/08",
         price: 210
     },
     S10: {

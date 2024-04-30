@@ -25,8 +25,6 @@ export default function B() {
 
   const [percent, setPercent] = useState(0);
 
- 
-
   const [camp, setCamp] = useState([]);
 
   const [data, setData] = useState([]);

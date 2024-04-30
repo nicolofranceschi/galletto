@@ -12,7 +12,7 @@ export const dataset = {
         price: 310
     },
     TB4: {
-        desc: "4° Turno Galletto Baby Magic: da lunedì 21/06 a venerdì 02/07",
+        desc: "4° Turno Galletto Baby Magic: da lunedì 22/07 a venerdì 02/08",
         price: 310
     },
     TB5: {
@@ -28,7 +28,7 @@ export const dataset = {
         price: 320
     },
     TC2: {
-        desc: "2° Turno Galletto Cresci con Noi: da Lunedì 26/06 a Venerdì 07/07",
+        desc: "2° Turno Galletto Cresci con Noi: da Lunedì 24/06 a Venerdì 05/07",
         price: 320
     },
     TC3: {
@@ -36,7 +36,7 @@ export const dataset = {
         price: 320
     },
     TC4: {
-        desc: "4° Turno Galletto Cresci con Noi: da lunedì 21/06 a venerdì 02/07",
+        desc: "4° Turno Galletto Cresci con Noi: da lunedì 22/07 a venerdì 02/08",
         price: 320
     },
     TC5: {
@@ -52,7 +52,7 @@ export const dataset = {
         price: 330
     },
     TS2: {
-        desc: "2° Turno Galletto Sport Avventura: da Lunedì 26/06 a Venerdì 07/07",
+        desc: "2° Turno Galletto Sport Avventura: da Lunedì 24/06 a Venerdì 05/07",
         price: 330
     },
     TS3: {

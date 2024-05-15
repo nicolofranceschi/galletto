@@ -14,6 +14,7 @@ import Input from "../components/Input";
 import DatePicker from "../components/Date";
 import { createDocument } from "../firebase/db";
 import { dataset } from "../components/dataset";
+import { useRouter } from "next/router";
 
 export default function B() {
 
@@ -28,7 +29,7 @@ export default function B() {
   const [camp, setCamp] = useState([]);
 
   const [data, setData] = useState([]);
-
+  const router = useRouter()
   const [age, setAge] = useState(0)
 
   useEffect(() => {
@@ -215,7 +216,13 @@ export default function B() {
   if (conciliazione > concNumber) methods.setValue("conciliazione", concNumber)
   const coniliazione = Array.from(Array(concNumber).keys())
 
-  console.log(tesseramento)
+ 
+
+  useEffect(() => {
+    if (sendMail.isSuccess) {
+     router.push("/success")
+    }
+  }, [sendMail.isSuccess]);
 
 
   return (
@@ -410,7 +417,7 @@ export default function B() {
                       <div className="pt-4 flex flex-wrap text-left gap-2">
                         <Turno title={"1 TURNO"} desc={"da lunedì 10/06 a venerdì 21/06"} addCamp={() => addCamp(["C1", "C2"])} condi={camp.some(e => e === "C1") && camp.some(e => e === "C2")} color={"bg-green-200"} />
                         <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} addCamp={() => addCamp(["C3", "C4"])} condi={camp.some(e => e === "C3") && camp.some(e => e === "C4")} color={"bg-green-200"} />
-                        <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
+                        <Turno title={"3 TURNO"} disabled desc={"Sold out"} addCamp={() => addCamp(["C5", "C6"])} condi={camp.some(e => e === "C5") && camp.some(e => e === "C6")} color={"bg-green-200"} />
                         <Turno title={"4 TURNO"} desc={"da lunedì 22/07 a venerdì 02/08"} addCamp={() => addCamp(["C7", "C8"])} condi={camp.some(e => e === "C7") && camp.some(e => e === "C8")} color={"bg-green-200"} />
                         <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"} addCamp={() => addCamp(["C9", "C10"])} condi={camp.some(e => e === "C9") && camp.some(e => e === "C10")} color={"bg-green-200"} />
                         <Turno title={"6 TURNO"} desc={"da lunedì 19/08 a venerdì 30/08"} addCamp={() => addCamp(["C11", "C12"])} condi={camp.some(e => e === "C11") && camp.some(e => e === "C12")} color={"bg-green-200"} />
@@ -421,7 +428,7 @@ export default function B() {
                         <Week title={"2 SETTIMANA: 17/06 - 21/06"} addCamp={() => addCamp(["C2"])} condi={camp.some(e => e === "C2")} color={"bg-green-200"} />
                         <Week title={"3 SETTIMANA: 24/06 - 28/06"} addCamp={() => addCamp(["C3"])} condi={camp.some(e => e === "C3")} color={"bg-green-200"} />
                         <Week title={"4 SETTIMANA: 01/07 - 05/07"} addCamp={() => addCamp(["C4"])} condi={camp.some(e => e === "C4")} color={"bg-green-200"} />
-                        <Week title={"5 SETTIMANA: 08/07 - 12/07"} addCamp={() => addCamp(["C5"])} condi={camp.some(e => e === "C5")} color={"bg-green-200"} />
+                        <Week title={"5 SETTIMANA: Sold out"} disabled addCamp={() => addCamp(["C5"])} condi={camp.some(e => e === "C5")} color={"bg-green-200"} />
                         <Week title={"6 SETTIMANA: 15/07 - 19/07"} addCamp={() => addCamp(["C6"])} condi={camp.some(e => e === "C6")} color={"bg-green-200"} />
                         <Week title={"7 SETTIMANA: 22/07 - 26/07"} addCamp={() => addCamp(["C7"])} condi={camp.some(e => e === "C7")} color={"bg-green-200"} />
                         <Week title={"8 SETTIMANA: 29/07 - 02/08"} addCamp={() => addCamp(["C8"])} condi={camp.some(e => e === "C8")} color={"bg-green-200"} />
@@ -701,43 +708,6 @@ export default function B() {
                       </svg>
                     </div>
                   </div>
-                  <div className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-green-600 ">
-                    <p className="text-green-100 font-bold ">
-                      Riceverai un e-mail di conferma entro 48H
-                    </p>
-                    <div className="p-2 w-10 h-10 flex items-center bg-green-300 rounded-md">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="fill-green-600"
-                        viewBox="0 0 640 512"
-                      >
-                        <path
-                          className="opacity-40"
-                          d="M51.26 152.2L31.26 100.3C46.62 71.85 66.04 45.97 88.75 23.39L132 37.81C96.46 68.47 68.47 107.7 51.26 152.2zM55.14 12.18C40.89 27.64 27.99 44.36 16.6 62.14L1.067 21.74C-1.156 15.97 .1552 9.423 4.433 4.947C8.71 .4702 15.19-1.136 21.06 .8215L55.14 12.18zM182.4 236.8C175.3 231.5 173.9 221.5 179.2 214.4C209.6 173.9 270.4 173.9 300.8 214.4C306.1 221.5 304.7 231.5 297.6 236.8C290.5 242.1 280.5 240.7 275.2 233.6C257.6 210.1 222.4 210.1 204.8 233.6C199.5 240.7 189.5 242.1 182.4 236.8V236.8zM342.4 236.8C335.3 231.5 333.9 221.5 339.2 214.4C369.6 173.9 430.4 173.9 460.8 214.4C466.1 221.5 464.7 231.5 457.6 236.8C450.5 242.1 440.5 240.7 435.2 233.6C417.6 210.1 382.4 210.1 364.8 233.6C359.5 240.7 349.5 242.1 342.4 236.8zM512 255.1C512 229.5 533.5 207.1 560 207.1H592C618.5 207.1 640 229.5 640 255.1V319.1C640 346.5 618.5 368 592 368H400C391.2 368 384 360.8 384 352C384 343.2 391.2 336 400 336H592C600.8 336 608 328.8 608 319.1V255.1C608 247.2 600.8 239.1 592 239.1H560C551.2 239.1 544 247.2 544 255.1C544 264.8 551.2 271.1 560 271.1H576C584.8 271.1 592 279.2 592 287.1C592 296.8 584.8 303.1 576 303.1H560C533.5 303.1 512 282.5 512 255.1z"
-                        />
-                        <path
-                          className="opacity-100"
-                          d="M531.7 400C485.6 467.6 407.1 512 320 512C178.6 512 64 397.4 64 256C64 114.6 178.6 0 320 0C433.4 0 529.7 73.79 563.3 176H560C515.8 176 480 211.8 480 256C480 274 485.1 290.6 495.1 304H416C414.1 304 413.1 304 412.1 304.1C411.8 301.8 410.3 299.7 408.7 297.7C404.4 292.5 398.5 287.1 391.9 284.3C378.7 276.9 361.4 272 344 272C340.4 272 337.2 274.5 336.3 277.1C335.3 281.5 336.9 285.2 340.1 286.1L340.1 286.1L340.3 287.1C340.5 287.2 340.8 287.4 341.2 287.7C342 288.1 343.2 288.9 344.6 289.8C347.4 291.6 351.2 294.3 354.8 297.4C358.6 300.5 362 303.1 364.5 307.4C366.1 310.1 368 313.8 368 315.1C368 318.2 366.1 321 364.5 324.6C362 328 358.6 331.5 354.8 334.6C351.2 337.7 347.4 340.4 344.6 342.2C343.2 343.1 342 343.9 341.2 344.3C340.8 344.6 340.5 344.8 340.3 344.9L340.1 345L340.1 345C337.6 346.4 336 349.1 336 352C336 354.9 337.6 357.6 340.1 358.1L340.1 358.1L340.3 359.1C340.5 359.2 340.8 359.4 341.2 359.7C342 360.1 343.2 360.9 344.6 361.8C347.4 363.6 351.2 366.3 354.8 369.4C358.6 372.5 362 375.9 364.5 379.4C366.1 382.1 368 385.8 368 388C368 390.2 366.1 393 364.5 396.6C362 400 358.6 403.5 354.8 406.6C351.2 409.7 347.4 412.4 344.6 414.2C343.2 415.1 342 415.9 341.2 416.3C340.8 416.6 340.5 416.8 340.3 416.9L340.1 417L340.1 417C336.9 418.8 335.3 422.5 336.3 426C337.2 429.5 340.4 431.1 344 431.1C361.4 431.1 378.7 427.1 391.9 419.7C398.5 416 404.4 411.5 408.7 406.3C410.3 404.3 411.8 402.2 412.1 399.9C413.1 399.1 414.1 399.1 416 399.1L531.7 400zM297.6 236.8C304.7 231.5 306.1 221.5 300.8 214.4C270.4 173.9 209.6 173.9 179.2 214.4C173.9 221.5 175.3 231.5 182.4 236.8C189.5 242.1 199.5 240.7 204.8 233.6C222.4 210.1 257.6 210.1 275.2 233.6C280.5 240.7 290.5 242.1 297.6 236.8zM364.8 233.6C382.4 210.1 417.6 210.1 435.2 233.6C440.5 240.7 450.5 242.1 457.6 236.8C464.7 231.5 466.1 221.5 460.8 214.4C430.4 173.9 369.6 173.9 339.2 214.4C333.9 221.5 335.3 231.5 342.4 236.8C349.5 242.1 359.5 240.7 364.8 233.6z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <Link href="/">
-                    <a className=" btn flex gap-2 p-4 rounded-xl drop-shadow-lg justify-between items-center bg-white ">
-                      <div className="p-3 flex items-center w-10 h-10 bg-slate-200 rounded-md">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="30px"
-                          height="30px"
-                          className="fill-slate-400 hover:fill-slate-600"
-                          viewBox="0 0 256 512"
-                        >
-                          <path d="M137.4 406.6l-128-127.1C3.125 272.4 0 264.2 0 255.1s3.125-16.38 9.375-22.63l128-127.1c9.156-9.156 22.91-11.9 34.88-6.943S192 115.1 192 128v255.1c0 12.94-7.781 24.62-19.75 29.58S146.5 415.8 137.4 406.6z" />
-                        </svg>
-                      </div>
-                      <p className="text-black font-bold ">Torna alla home per una nuova iscrizione o se hai finito</p>
-                    </a>
-                  </Link>
                 </>
               ) : (
                 <button className={"w-full p-4 bg-sky-600 disabled:animate-pulse drop-shadow-2xl rounded-xl text-white font-bold"} type="submit" disabled={sendMail.isLoading} >

@@ -132,7 +132,7 @@ export const dataset = {
         price: 210
     },
     S4: {
-        desc: "4° Settimana Galetto Sport Avventura: 01/07 - 05/07",
+        desc: "4° Settimana Galletto Sport Avventura: 01/07 - 05/07",
         price: 210
     },
     S5: {

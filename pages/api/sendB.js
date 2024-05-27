@@ -260,7 +260,6 @@ export default async function sendB(req, res) {
     var buffer = Buffer.concat(array).toString("base64");
     await client.sendEmail({
       To: "info@gallettosport.it",
-      Cc: "franceschinicolo@gmail.com",
       From: `Galletto Sport Accademy iscrizioni <info@pineappsrl.com>`,
       Subject: `Modulo B - ${da_cognome_minore} ${da_nome_minore}`,
       ReplyTo: `${da_email}`,

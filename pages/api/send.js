@@ -200,7 +200,6 @@ export default async function sendA(req, res) {
     var buffer = Buffer.concat(array).toString('base64')
     await client.sendEmail({
       To: "info@gallettosport.it",
-      Cc: "franceschinicolo@gmail.com",
       From: `Galletto Sport Accademy <info@pineappsrl.com>`,
       TextBody: "Modulo A",
       ReplyTo: `${da_email}`,

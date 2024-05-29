@@ -210,14 +210,14 @@ export default function B() {
   const assicurazioneMalattiaFlorim = assicurazioneMalattia > 20 ? 20 : assicurazioneMalattia
   const florim = convenzione === "FLORIM" ? age === 0 ? 310 + assicurazioneMalattiaFlorim : 330 + assicurazioneMalattiaFlorim : 0
   const tesseramento = 30 * ((age === 2 ? virtualweekCrewschi : virtualTurni) + (tesserato === "Si" ? 1 : 0) - 1)
-  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + assicurazioneMalattia - (tesseramento > 0 && (tesseramento > 30 ? tesseramento : 30)) - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - florim
+  const cral = convenzione === "CRAL" ? ((week.length + turni.length * 2) * 10) : 0
+  const cefla = convenzione === "CEFLA" ? ((week.length + turni.length * 2) * 10) : 0
+  const tot = (turni.reduce(addTruni, 0)) - scontoMultiSettimana() - (virtualWeek > 1 && age !== 2 && 20 * (virtualWeek - 1)) + (g1.reduce(addWeekg1, 0)) + (g2.reduce(addTruni, 0)) + assicurazioneMalattia - (tesseramento > 0 && (tesseramento > 30 ? tesseramento : 30)) - (fratelli == "Si" ? scontoFratelli : 0) - (conciliazione >= 1 ? (100 * conciliazione) : 0) - florim - cefla - cral
   const minor = camp.length - (convenzione === "FLORIM" ? 2 : 0) >= 3 ? 3 : camp.length - (convenzione === "FLORIM" ? 2 : 0)
   const concNumber = minor < 0 ? 0 : minor
   if (conciliazione > concNumber) methods.setValue("conciliazione", concNumber)
   const coniliazione = Array.from(Array(concNumber).keys())
-
  
-
   useEffect(() => {
     if (sendMail.isSuccess) {
      router.push("/success")
@@ -331,7 +331,7 @@ export default function B() {
                     <div className="pt-4 flex flex-wrap text-left gap-2">
                       <Turno title={"1 TURNO"} desc={"NON DISPONIBILE"} disabled addCamp={() => addCamp(["B1", "B2"])} condi={camp.some(e => e === "B1") && camp.some(e => e === "B2")} color={"bg-pink-200"} />
                       <Turno title={"2 TURNO"} desc={"da lunedì 24/06 a venerdì 05/07"} addCamp={() => addCamp(["B3", "B4"])} condi={camp.some(e => e === "B3") && camp.some(e => e === "B4")} color={"bg-pink-200"} />
-                      <Turno title={"3 TURNO"} desc={"da lunedì 08/07 a venerdì 19/07"} addCamp={() => addCamp(["B5", "B6"])} condi={camp.some(e => e === "B5") && camp.some(e => e === "B6")} color={"bg-pink-200"} />
+                      <Turno title={"3 TURNO"} desc={"Sold out"} disabled addCamp={() => addCamp(["B5", "B6"])} condi={camp.some(e => e === "B5") && camp.some(e => e === "B6")} color={"bg-pink-200"} />
                       <Turno title={"4 TURNO"} desc={"Sold out"} disabled addCamp={() => addCamp(["B7", "B8"])} condi={camp.some(e => e === "B7") && camp.some(e => e === "B8")} color={"bg-pink-200"} />
                       <Turno title={"5 TURNO"} desc={"da lunedì 05/08 a venerdì 16/08"} addCamp={() => addCamp(["B9", "B10"])} condi={camp.some(e => e === "B9") && camp.some(e => e === "B10")} color={"bg-pink-200"} />
                       <Turno title={"6 TURNO"} desc={"da lunedì 19/08 a venerdì 30/08"} addCamp={() => addCamp(["B11", "B12"])} condi={camp.some(e => e === "B11") && camp.some(e => e === "B12")} color={"bg-pink-200"} />
@@ -342,7 +342,7 @@ export default function B() {
                       <Week title={"2 SETTIMANA: NON DISPONIBILE"} disabled addCamp={() => addCamp(["B2"])} condi={camp.some(e => e === "B2")} color={"bg-pink-200"} />
                       <Week title={"3 SETTIMANA: 24/06 - 28/06"} addCamp={() => addCamp(["B3"])} condi={camp.some(e => e === "B3")} color={"bg-pink-200"} />
                       <Week title={"4 SETTIMANA: 01/07 - 05/07"} addCamp={() => addCamp(["B4"])} condi={camp.some(e => e === "B4")} color={"bg-pink-200"} />
-                      <Week title={"5 SETTIMANA: 08/07 - 12/07"} addCamp={() => addCamp(["B5"])} condi={camp.some(e => e === "B5")} color={"bg-pink-200"} />
+                      <Week title={"5 SETTIMANA: Sold out"} disabled addCamp={() => addCamp(["B5"])} condi={camp.some(e => e === "B5")} color={"bg-pink-200"} />
                       <Week title={"6 SETTIMANA: 15/07 - 19/07"} addCamp={() => addCamp(["B6"])} condi={camp.some(e => e === "B6")} color={"bg-pink-200"} />
                       <Week title={"7 SETTIMANA: 22/07 - 26/07"} addCamp={() => addCamp(["B7"])} condi={camp.some(e => e === "B7")} color={"bg-pink-200"} />
                       <Week title={"8 SETTIMANA: Sold out"} disabled addCamp={() => addCamp(["B8"])} condi={camp.some(e => e === "B8")} color={"bg-pink-200"} />
@@ -464,7 +464,8 @@ export default function B() {
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
                     {camp.length > 1 && <option value="FLORIM">FLORIM</option>}
-                    <option value="CRAL">CRAL</option>
+                    {conciliazione === "0" && <option value="CRAL">CRAL</option>}
+                    {conciliazione === "0" && <option value="CEFLA">CEFLA</option>}
                   </select>
                 </Wrapper>
               </Section>}
@@ -472,7 +473,7 @@ export default function B() {
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select defaultValue="0" {...methods.register("conciliazione")}>
                     <option value="0">0</option>
-                    {fratelli === "No" &&
+                    {(fratelli === "No" && convenzione !== "CRAL" && convenzione !== "CEFLA") &&
                       <>
                         {coniliazione.map((item, number) => (
                           <option key={"b" + item} value={number + 1}> {number + 1}</option>
@@ -484,7 +485,7 @@ export default function B() {
                 <Wrapper title="HAI UN FRATELLO/SORELLA ISCRITTO ?">
                   <select {...methods.register("fratelli")}>
                     <option value="No">No</option>
-                    {conciliazione === "0" && <option value="Si">Si</option>}
+                    {(conciliazione === "0" && convenzione !== "CRAL" && convenzione !== "CEFLA") && <option value="Si">Si</option>}
                   </select>
                 </Wrapper>
               </Section>}
@@ -622,7 +623,13 @@ export default function B() {
                       {convenzione === "CRAL" && (turni.length > 0 || week.length > 1) && (
                         <tr className="border-b-2 text-left">
                           <td className="py-2">Sconto Dipendenti Cral</td>
-                          <td className="py-2">- {turni.length * 10 + Math.trunc(week.length / 2) * 10} €</td>
+                          <td className="py-2">- {(week.length + turni.length * 2) * 10} €</td>
+                        </tr>
+                      )}
+                      {convenzione === "CEFLA" && (turni.length > 0 || week.length > 1) && (
+                        <tr className="border-b-2 text-left">
+                          <td className="py-2">Sconto Dipendenti Cefla</td>
+                          <td className="py-2">- {(week.length + turni.length * 2) * 10} €</td>
                         </tr>
                       )}
                       {conciliazione >= 1 && (

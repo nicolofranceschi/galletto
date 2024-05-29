@@ -217,10 +217,10 @@ export default function B() {
   const concNumber = minor < 0 ? 0 : minor
   if (conciliazione > concNumber) methods.setValue("conciliazione", concNumber)
   const coniliazione = Array.from(Array(concNumber).keys())
- 
+
   useEffect(() => {
     if (sendMail.isSuccess) {
-     router.push("/success")
+      router.push("/success")
     }
   }, [sendMail.isSuccess]);
 
@@ -459,7 +459,7 @@ export default function B() {
                   </select>
                 </Wrapper>
               </Section>
-              {age !== 2 && <Section title="CONVENZIONI AZIENDALI">
+              <Section title="CONVENZIONI AZIENDALI">
                 <Wrapper title="SEI DIPENDENTE DI UN AZIENDA CONVENZIONATA ?">
                   <select {...methods.register("convenzione")}>
                     <option value="none">No</option>
@@ -468,7 +468,7 @@ export default function B() {
                     {conciliazione === "0" && <option value="CEFLA">CEFLA</option>}
                   </select>
                 </Wrapper>
-              </Section>}
+              </Section>
               {age !== 2 && <Section title="SCONTISTICHE APPLICABILI (non cumolabili tra loro)">
                 <Wrapper title="N° SETTIMANE PROGETTO CONCILIAZIONE ">
                   <select defaultValue="0" {...methods.register("conciliazione")}>
